@@ -4,7 +4,7 @@
 <module>
 	<inherits name="com.gwtplatform.dispatch.rest.DispatchRest" />
 	<inherits name="com.gwtplatform.dispatch.rest.delegates.ResourceDelegate" />
-	<inherits name="com.gwtplatform.mvp.MvpWithFormFactor" />
+	<inherits name="com.gwtplatform.mvp.MvpWithEntryPoint" />
 	<inherits name="com.gwtplatform.dispatch.rpc.DispatchRpc" />
 
 	<!-- Inherit the default GWT style sheet. -->
@@ -18,7 +18,7 @@
 	<inherits name="org.gwtbootstrap3.extras.cachemanifest.Offline" />
 	<add-linker name="offline" />
 	<extend-configuration-property name="cachemanifest_static_files"
-		value="/carstore/CarStore.html" />	
+		value="/javaleague/javaleague.html" />	
 
 	<generate-with
 		class="org.javahispano.javaleague.rebind.ColumnsInitializerGenerator">

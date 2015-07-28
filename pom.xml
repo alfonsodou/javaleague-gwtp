@@ -8,7 +8,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>javaleague</name>
-	<description>Simple application used for testing GWTP features.</description>
+	<description>javaleague - Torneos javacup.</description>
 
 	<properties>
 		<!-- Client -->
@@ -155,7 +155,7 @@
 
 					<runTarget>javaleague.html</runTarget>
 					<modules>
-						<module>org.javahispano.javaleague.CarStore</module>
+						<module>org.javahispano.javaleague.Javaleague</module>
 					</modules>
 				</configuration>
 				<executions>
