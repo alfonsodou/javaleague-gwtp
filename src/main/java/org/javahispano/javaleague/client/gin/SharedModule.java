@@ -33,7 +33,7 @@ public class SharedModule extends AbstractPresenterModule {
     protected void configure() {
         // GWTP libraries
         install(new DefaultModule.Builder()
-                .defaultPlace(NameTokens.LOGIN)
+                .defaultPlace(NameTokens.HOME)
                 .errorPlace(NameTokens.LOGIN)
                 .unauthorizedPlace(NameTokens.UNAUTHORIZED)
                 .build());

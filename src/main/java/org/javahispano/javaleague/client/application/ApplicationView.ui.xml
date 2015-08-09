@@ -1,37 +1,45 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	xmlns:b="urn:import:org.gwtbootstrap3.client.ui" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:b.html="urn:import:org.gwtbootstrap3.client.ui.html">
 
-    <ui:import field="org.javahispano.javaleague.client.debug.DebugIds.*"/>
+	<ui:import field="org.javahispano.javaleague.client.debug.DebugIds.*" />
 
-    <ui:style>
-        .globalWrapper {
-            position: relative;
-        }
+	<ui:style>
+	.globalWrapper {
+		position: relative;
+	}
+	
+	.messagesWrapper {
+		width: 300px;
+		position: absolute;
+		top: 30px;
+		left: 50%;
+		margin-left: -150px;
+	}
+	
+	.container {
+		width: 1000px;
+		margin: 20px auto;
+	}
+	</ui:style>
 
-        .messagesWrapper {
-            width: 300px;
-            position: absolute;
-            top: 30px;
-            left: 50%;
-            margin-left: -150px;
-        }
+	<g:HTMLPanel styleName="{style.globalWrapper}">
+		<g:SimplePanel ui:field="header" />
 
-        .container {
-            width: 1000px;
-            margin: 20px auto;
-        }
-    </ui:style>
+		<g:SimplePanel ui:field="messages" styleName="{style.messagesWrapper}" />
 
-    <g:HTMLPanel styleName="{style.globalWrapper}">
-        <g:SimplePanel ui:field="header"/>
+		<g:HTMLPanel ui:field="container" styleName="{style.container}">
+			<g:SimplePanel ui:field="main" />
+		</g:HTMLPanel>
+		<g:InlineLabel debugId="{DBG_DOM}" />
 
-        <g:SimplePanel ui:field="messages" styleName="{style.messagesWrapper}"/>
+		<g:SimplePanel ui:field="footer">
+			<b:Row>
+				<b:Column size="XS_12">
+					<b:ImageAnchor href="http://www.javahispano.org" url="/images/logoJavaHispano.png"></b:ImageAnchor>
+				</b:Column>
+			</b:Row>
 
-        <g:HTMLPanel ui:field="container" styleName="{style.container}">
-            <g:SimplePanel ui:field="main"/>
-        </g:HTMLPanel>
-        <g:InlineLabel debugId="{DBG_DOM}"/>
-        
-        <g:SimplePanel ui:field="footer" />
-    </g:HTMLPanel>
+		</g:SimplePanel>
+	</g:HTMLPanel>
 </ui:UiBinder>
