@@ -10,6 +10,7 @@
 	}
 	
 	.messagesWrapper {
+		padding-top: 50px;
 		width: 300px;
 		position: absolute;
 		top: 30px;
@@ -18,12 +19,25 @@
 	}
 	
 	.container {
+		padding-top: 50px;
 		width: 1000px;
 		margin: 20px auto;
 	}
+	
+	.buttons button {
+		margin: 0.5em;
+	}
+	
+	.labels span {
+		margin-right: 5px;
+	}
+	
+	.push {
+		padding-top: 70px;
+	}
 	</ui:style>
 
-	<g:ScrollPanel styleName="{style.globalWrapper}">
+	<g:ScrollPanel>
 		<b:Container>
 			<g:SimplePanel ui:field="header" />
 
@@ -34,14 +48,7 @@
 			</g:HTMLPanel>
 			<g:InlineLabel debugId="{DBG_DOM}" />
 
-			<g:SimplePanel ui:field="footer">
-				<b:Row>
-					<b:Column size="XS_12">
-						<b:ImageAnchor href="http://www.javahispano.org"
-							url="/images/logoJavaHispano.png"></b:ImageAnchor>
-					</b:Column>
-				</b:Row>
-			</g:SimplePanel>
+			<g:SimplePanel ui:field="footer" />
 		</b:Container>
 	</g:ScrollPanel>
 </ui:UiBinder>

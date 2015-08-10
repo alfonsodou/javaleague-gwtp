@@ -18,6 +18,7 @@ package org.javahispano.javaleague.client.application;
 
 import org.javahispano.javaleague.client.application.event.ActionBarVisibilityEvent;
 import org.javahispano.javaleague.client.application.event.ChangeActionBarEvent;
+import org.javahispano.javaleague.client.application.widget.footer.FooterPresenter;
 import org.javahispano.javaleague.client.application.widget.header.HeaderPresenter;
 import org.javahispano.javaleague.client.application.widget.message.MessagesPresenter;
 
@@ -49,9 +50,11 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
     public static final Object SLOT_MESSAGES_CONTENT = new Object();
     public static final Object SLOT_HEADER_CONTENT = new Object();
+    public static final Object SLOT_FOOTER_CONTENT = new Object();
 
     private final HeaderPresenter headerPresenter;
     private final MessagesPresenter messagesPresenter;
+    private final FooterPresenter footerPresenter;
 
     @Inject
     ApplicationPresenter(
@@ -59,11 +62,13 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
             MyView view,
             MyProxy proxy,
             HeaderPresenter headerPresenter,
-            MessagesPresenter messagesPresenter) {
+            MessagesPresenter messagesPresenter,
+            FooterPresenter footerPresenter) {
         super(eventBus, view, proxy, RevealType.RootLayout);
 
         this.headerPresenter = headerPresenter;
         this.messagesPresenter = messagesPresenter;
+        this.footerPresenter = footerPresenter;
     }
 
     @Override
@@ -80,6 +85,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     protected void onBind() {
         setInSlot(SLOT_HEADER_CONTENT, headerPresenter);
         setInSlot(SLOT_MESSAGES_CONTENT, messagesPresenter);
+        setInSlot(SLOT_FOOTER_CONTENT, footerPresenter);
 
         addRegisteredHandler(ChangeActionBarEvent.getType(), this);
         addRegisteredHandler(ActionBarVisibilityEvent.getType(), this);

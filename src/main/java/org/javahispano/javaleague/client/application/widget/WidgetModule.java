@@ -16,6 +16,9 @@
 
 package org.javahispano.javaleague.client.application.widget;
 
+import org.javahispano.javaleague.client.application.widget.footer.FooterPresenter;
+import org.javahispano.javaleague.client.application.widget.footer.FooterUiHandlers;
+import org.javahispano.javaleague.client.application.widget.footer.FooterView;
 import org.javahispano.javaleague.client.application.widget.header.HeaderPresenter;
 import org.javahispano.javaleague.client.application.widget.header.HeaderUiHandlers;
 import org.javahispano.javaleague.client.application.widget.header.HeaderView;
@@ -27,7 +30,10 @@ public class WidgetModule extends AbstractPresenterModule {
     protected void configure() {
         bindSingletonPresenterWidget(HeaderPresenter.class, HeaderPresenter.MyView.class,
                 HeaderView.class);
+        bindSingletonPresenterWidget(FooterPresenter.class, FooterPresenter.MyView.class,
+                FooterView.class);
 
         bind(HeaderUiHandlers.class).to(HeaderPresenter.class);
+        bind(FooterUiHandlers.class).to(FooterPresenter.class);
     }
 }

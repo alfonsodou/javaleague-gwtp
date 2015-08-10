@@ -38,6 +38,8 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     SimplePanel header;
     @UiField
     SimplePanel messages;
+    @UiField
+    SimplePanel footer;
 
     @Inject
     ApplicationView(
@@ -53,6 +55,8 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
             header.setWidget(content);
         } else if (slot == ApplicationPresenter.SLOT_MESSAGES_CONTENT) {
             messages.setWidget(content);
+        } else if (slot == ApplicationPresenter.SLOT_FOOTER_CONTENT) {
+        	footer.setWidget(content);
         }
     }
 
