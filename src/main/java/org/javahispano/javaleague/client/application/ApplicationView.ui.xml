@@ -23,23 +23,25 @@
 	}
 	</ui:style>
 
-	<g:HTMLPanel styleName="{style.globalWrapper}">
-		<g:SimplePanel ui:field="header" />
+	<g:ScrollPanel styleName="{style.globalWrapper}">
+		<b:Container>
+			<g:SimplePanel ui:field="header" />
 
-		<g:SimplePanel ui:field="messages" styleName="{style.messagesWrapper}" />
+			<g:SimplePanel ui:field="messages" styleName="{style.messagesWrapper}" />
 
-		<g:HTMLPanel ui:field="container" styleName="{style.container}">
-			<g:SimplePanel ui:field="main" />
-		</g:HTMLPanel>
-		<g:InlineLabel debugId="{DBG_DOM}" />
+			<g:HTMLPanel ui:field="container" styleName="{style.container}">
+				<g:SimplePanel ui:field="main" />
+			</g:HTMLPanel>
+			<g:InlineLabel debugId="{DBG_DOM}" />
 
-		<g:SimplePanel ui:field="footer">
-			<b:Row>
-				<b:Column size="XS_12">
-					<b:ImageAnchor href="http://www.javahispano.org" url="/images/logoJavaHispano.png"></b:ImageAnchor>
-				</b:Column>
-			</b:Row>
-
-		</g:SimplePanel>
-	</g:HTMLPanel>
+			<g:SimplePanel ui:field="footer">
+				<b:Row>
+					<b:Column size="XS_12">
+						<b:ImageAnchor href="http://www.javahispano.org"
+							url="/images/logoJavaHispano.png"></b:ImageAnchor>
+					</b:Column>
+				</b:Row>
+			</g:SimplePanel>
+		</b:Container>
+	</g:ScrollPanel>
 </ui:UiBinder>

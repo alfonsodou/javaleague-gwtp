@@ -16,9 +16,8 @@
 
 package org.javahispano.javaleague.client.application;
 
-
-
 import org.javahispano.javaleague.client.application.cars.CarsDesktopModule;
+import org.javahispano.javaleague.client.application.home.HomeModule;
 import org.javahispano.javaleague.client.application.login.LoginModule;
 import org.javahispano.javaleague.client.application.manufacturer.ManufacturerModule;
 import org.javahispano.javaleague.client.application.rating.RatingModule;
@@ -30,19 +29,21 @@ import org.javahispano.javaleague.client.application.widget.message.MessagesModu
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class ApplicationDesktopModule extends AbstractPresenterModule {
-    @Override
-    protected void configure() {
-        install(new UnauthorizedModule());
-        install(new LoginModule());
-        install(new ManufacturerModule());
-        install(new CarsDesktopModule());
-        install(new RatingModule());
-        install(new WidgetModule());
-        install(new MessagesModule());
-        install(new ReportModule());
-        install(new StatisticsModule());
+	@Override
+	protected void configure() {
+		install(new UnauthorizedModule());
+		install(new LoginModule());
+		install(new ManufacturerModule());
+		install(new CarsDesktopModule());
+		install(new RatingModule());
+		install(new WidgetModule());
+		install(new MessagesModule());
+		install(new ReportModule());
+		install(new StatisticsModule());
+		install(new HomeModule());
 
-        bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
-                ApplicationPresenter.MyProxy.class);
-    }
+		bindPresenter(ApplicationPresenter.class,
+				ApplicationPresenter.MyView.class, ApplicationView.class,
+				ApplicationPresenter.MyProxy.class);
+	}
 }

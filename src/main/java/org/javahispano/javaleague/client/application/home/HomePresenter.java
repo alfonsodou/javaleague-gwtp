@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.application.home;
 
 import java.util.logging.Logger;
 
+import org.javahispano.javaleague.client.application.ApplicationPresenter;
 import org.javahispano.javaleague.client.application.home.HomePresenter.MyProxy;
 import org.javahispano.javaleague.client.application.home.HomePresenter.MyView;
 import org.javahispano.javaleague.client.place.NameTokens;
@@ -53,7 +54,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 			PlaceManager placeManager, DispatchAsync dispatcher,
 			ResourceDelegate<SessionResource> sessionResource,
 			CurrentUser currentUser) {
-		super(eventBus, view, proxy, RevealType.RootLayout);
+		super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
 
 		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
