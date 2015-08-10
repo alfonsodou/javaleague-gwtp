@@ -104,11 +104,7 @@ public class FooterPresenter extends PresenterWidget<FooterPresenter.MyView>
 
     @Override
     protected void onBind() {
-        addRegisteredHandler(UserLoginEvent.getType(), this);
-        addRegisteredHandler(NavigationEvent.getType(), this);
 
-        getView().enableUserOptions(currentUser);
-        getView().setMenuItemActive(placeManager.getCurrentPlaceRequest().getNameToken());
     }
 
     private void onLogoutSuccess() {
