@@ -17,8 +17,6 @@
 package org.javahispano.javaleague.client.gin;
 
 
-
-
 import org.javahispano.javaleague.client.dispatch.rest.AppRestDispatchHooks;
 import org.javahispano.javaleague.client.dispatch.rest.RestInterceptorRegistry;
 import org.javahispano.javaleague.client.dispatch.rpc.AppRpcDispatchHooks;
