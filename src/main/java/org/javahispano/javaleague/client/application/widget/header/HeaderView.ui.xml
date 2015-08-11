@@ -2,9 +2,6 @@
 	xmlns:b="urn:import:org.gwtbootstrap3.client.ui" xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:b.html="urn:import:org.gwtbootstrap3.client.ui.html">
 
-	<ui:with field="nameTokens"
-		type="org.javahispano.javaleague.client.place.NameTokens" />
-
 	<ui:import field="org.javahispano.javaleague.client.place.NameTokens.*" />
 	<ui:import field="org.javahispano.javaleague.client.debug.DebugIds.*" />
 
@@ -14,18 +11,34 @@
 	<b:Navbar position="FIXED_TOP">
 		<b:Container>
 			<b:NavbarHeader>
-				<b:ImageAnchor targetHistoryToken="{MANUFACTURER}" url="/images/logo_small.png"
-					ui:field="brand"></b:ImageAnchor>
+				<b:ImageAnchor targetHistoryToken="{HOME}"
+					url="/images/logo_small.png" ui:field="brand"></b:ImageAnchor>
 				<b:NavbarCollapseButton dataTarget="#navbar-collapse" />
 			</b:NavbarHeader>
 			<b:NavbarCollapse b:id="navbar-collapse">
 				<b:NavbarNav>
-					<b:AnchorListItem targetHistoryToken="{MANUFACTURER}">Ingreso / Registro</b:AnchorListItem>
-					<b:AnchorListItem href="">Torneo</b:AnchorListItem>
-					<b:AnchorListItem href="">Descargas</b:AnchorListItem>
-					<b:AnchorListItem href="">Reglas</b:AnchorListItem>
-					<b:AnchorListItem href="http://www.javahispano.org/foro-de-la-javacup/">Foro</b:AnchorListItem>
+					<b:AnchorListItem ui:field="login"
+						targetHistoryToken="{LOGIN};redirectTo={HOME}">Ingreso / Registro</b:AnchorListItem>
+					<b:AnchorListItem ui:field="tactic"
+						targetHistoryToken="{TACTIC}">Táctica</b:AnchorListItem>
+					<b:AnchorListItem ui:field="tournament"
+						targetHistoryToken="{TOURNAMENT}">Torneo</b:AnchorListItem>
+					<b:AnchorListItem ui:field="download"
+						targetHistoryToken="{DOWNLOAD}">Descargas</b:AnchorListItem>
+					<b:AnchorListItem ui:field="rules"
+						targetHistoryToken="{RULES}">Reglas</b:AnchorListItem>
+					<b:AnchorListItem ui:field="forum"
+						href="http://www.javahispano.org/foro-de-la-javacup/">Foro</b:AnchorListItem>
+					<b:ListDropDown ui:field="userLogin" pull="RIGHT">
+						<b:AnchorButton ui:field="userName" dataToggle="DROPDOWN" />
+						<b:DropDownMenu>
+							<b:AnchorListItem ui:field="perfil"
+								targetHistoryToken="{PROFILE}">Perfil</b:AnchorListItem>
+							<b:AnchorListItem ui:field="logout">Salir</b:AnchorListItem>
+						</b:DropDownMenu>
+					</b:ListDropDown>
 				</b:NavbarNav>
+
 			</b:NavbarCollapse>
 		</b:Container>
 	</b:Navbar>

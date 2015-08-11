@@ -16,47 +16,68 @@
 
 package org.javahispano.javaleague.client.application.widget.header;
 
+import org.gwtbootstrap3.client.ui.AnchorButton;
+import org.gwtbootstrap3.client.ui.AnchorListItem;
+import org.gwtbootstrap3.client.ui.ListDropDown;
 import org.javahispano.javaleague.client.resources.WidgetResources;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.dto.UserDto;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
-    interface Binder extends UiBinder<Widget, HeaderView> {
-    }
+public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements
+		HeaderPresenter.MyView {
+	interface Binder extends UiBinder<Widget, HeaderView> {
+	}
 
-    private final WidgetResources widgetRes;
+	private final WidgetResources widgetRes;
 
-    @Inject
-    HeaderView(
-            Binder uiBinder,
-            WidgetResources widgetResources) {
-        this.widgetRes = widgetResources;
+	@UiField
+	AnchorListItem login;
+	@UiField
+	AnchorListItem tactic;
+	@UiField
+	ListDropDown userLogin;
+	@UiField
+	AnchorButton userName;
 
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+	@Inject
+	HeaderView(Binder uiBinder, WidgetResources widgetResources) {
+		this.widgetRes = widgetResources;
 
-    @Override
-    public void enableUserOptions(CurrentUser currentUser) {
-         UserDto userDto = currentUser.getUser();
-     }
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 
-    @Override
-    public void disableUserOptions() {
-     }
+	@Override
+	public void enableUserOptions(CurrentUser currentUser) {
+		UserDto userDto = currentUser.getUser();
+		login.setVisible(false);
+		tactic.setVisible(true);
+		userLogin.setVisible(true);
+		userName.setText(userDto.getUsername());
+	}
 
-    @Override
-    public void setMenuItemActive(String nameToken) {
-    }
+	@Override
+	public void disableUserOptions() {
+		login.setVisible(true);
+		tactic.setVisible(false);
+		userLogin.setVisible(false);
+		userName.setText("");
 
-/*    @UiHandler("logout")
-    void onLogoutClicked(ClickEvent event) {
-        getUiHandlers().logout();
-    }*/
+	}
+
+	@Override
+	public void setMenuItemActive(String nameToken) {
+	}
+
+	@UiHandler("logout")
+	void onLogoutClicked(ClickEvent event) {
+		getUiHandlers().logout();
+	}
 }

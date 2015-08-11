@@ -107,7 +107,7 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView>
         addRegisteredHandler(UserLoginEvent.getType(), this);
         addRegisteredHandler(NavigationEvent.getType(), this);
 
-        getView().enableUserOptions(currentUser);
+        getView().disableUserOptions();
         getView().setMenuItemActive(placeManager.getCurrentPlaceRequest().getNameToken());
     }
 

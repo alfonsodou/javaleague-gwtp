@@ -28,9 +28,14 @@ public class NameTokens {
     public static final String NEW_CAR = "newCar";
     public static final String STATS = "stats";
     public static final String HOME = "home";
+    public static final String TOURNAMENT = "tournament";
+    public static final String TACTIC = "tactic";
+    public static final String DOWNLOAD = "download";
+    public static final String RULES = "rules";
+    public static final String PROFILE = "profile";
 
     public static String getOnLoginDefaultPage() {
-        return MANUFACTURER;
+        return TACTIC;
     }
 
     public static String getManufacturer() {
@@ -59,5 +64,25 @@ public class NameTokens {
     
     public static String getHome() {
     	return HOME;
+    }
+    
+    public static String getTactic() {
+    	return TACTIC;
+    }
+    
+    public static String getTournament() {
+    	return TOURNAMENT;
+    }
+    
+    public static String getDownload() {
+    	return DOWNLOAD;
+    }
+    
+    public static String getRules() {
+    	return RULES;
+    }
+    
+    public static String getProfile() {
+    	return PROFILE;
     }
 }
