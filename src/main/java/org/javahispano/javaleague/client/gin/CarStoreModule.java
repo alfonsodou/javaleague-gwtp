@@ -16,16 +16,20 @@
 
 package org.javahispano.javaleague.client.gin;
 
+
+
+
 import org.javahispano.javaleague.shared.api.ApiPaths;
 
 import com.gwtplatform.dispatch.rest.client.RestApplicationPath;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class CarStoreModule extends AbstractPresenterModule {
-    @Override
-    protected void configure() {
-        install(new SharedModule());
+	@Override
+	protected void configure() {
+		install(new SharedModule());
 
-        bindConstant().annotatedWith(RestApplicationPath.class).to(ApiPaths.ROOT);
-    }
+		bindConstant().annotatedWith(RestApplicationPath.class).to(
+				ApiPaths.ROOT);
+	}
 }

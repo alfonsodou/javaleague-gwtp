@@ -25,51 +25,62 @@
 	</ui:style>
 
 	<b:Row>
-		<b:Alert type="DANGER" dismissable="true">
-			<b.html:Strong>
-				<ui:msg key="test">Estamos en pruebas</ui:msg>
-			</b.html:Strong>
-		</b:Alert>
-		<b:Jumbotron ui:field="jumbotron">
-			<b:Row>
-				<b:Column size="MD_12">
-					<b.html:Paragraph>
-						<ui:msg key="welcome">Bienvenido a javaLeague</ui:msg>
-					</b.html:Paragraph>
-
-					<b.html:Paragraph>
-						<b:Image url="images/javacup_logo.png" width="100%" />
-					</b.html:Paragraph>
-				</b:Column>
-			</b:Row>
-			<b:Row>
-				<b:Column size="MD_6">
-					<b.html:Paragraph>
-						<ui:msg key="intro1">
-							Descárgate el framework para poder crear tu
-							táctica y
-							empezar a competir.
-						</ui:msg>
-					</b.html:Paragraph>
-					<b.html:Paragraph>
-						<ui:msg key="intro2">
-							javaLeague te
-							permitirá crear y participar en
-							diferentes
-							ligas.
-						</ui:msg>
-					</b.html:Paragraph>
-				</b:Column>
-				<b:Column size="MD_5" offset="MD_1">
-					<b.html:Paragraph>
-						<iframe src='//www.youtube.com/embed/Dvbkd_OpHYg'
-							frameborder='0' allowfullscreen='true' width='100%' height='315'></iframe>
-					</b.html:Paragraph>
-
-				</b:Column>
-			</b:Row>
-
-		</b:Jumbotron>
+		<b:Column size="XS_12">
+			<b:Carousel b:id="carousel-captions">
+				<b:CarouselIndicators>
+					<b:CarouselIndicator dataTarget="#carousel-captions"
+						dataSlideTo="0" active="true" />
+					<b:CarouselIndicator dataTarget="#carousel-captions"
+						dataSlideTo="1" />
+					<b:CarouselIndicator dataTarget="#carousel-captions"
+						dataSlideTo="2" />
+				</b:CarouselIndicators>
+				<b:CarouselInner>
+					<b:CarouselSlide active="true">
+						<b:Image width="100%" url="images/carousel1.png" />
+						<b:CarouselCaption>
+							<b:Heading size="H3" text="Slide 1" />
+							<b.html:Paragraph text="Caption!" />
+						</b:CarouselCaption>
+					</b:CarouselSlide>
+					<b:CarouselSlide>
+						<b:Image width="100%" url="images/carousel2.png" />
+						<b:CarouselCaption>
+							<b:Heading size="H3" text="Slide 2" />
+							<b.html:Paragraph text="Caption!" />
+						</b:CarouselCaption>
+					</b:CarouselSlide>
+					<b:CarouselSlide>
+						<b:Image width="100%" url="images/carousel3.png" />
+						<b:CarouselCaption>
+							<b:Heading size="H3" text="Slide 3" />
+							<b.html:Paragraph text="Caption!" />
+						</b:CarouselCaption>
+					</b:CarouselSlide>
+				</b:CarouselInner>
+				<b:CarouselControl dataTarget="#carousel-captions"
+					prev="true" iconType="CHEVRON_CIRCLE_LEFT" />
+				<b:CarouselControl dataTarget="#carousel-captions"
+					next="true" iconType="CHEVRON_CIRCLE_RIGHT" />
+			</b:Carousel>
+			<b:Jumbotron>
+				<b:Heading size="H1" text="Demo for GwtBootstrap" />
+				<g:InlineHyperlink targetHistoryToken="{nameTokens.getRules}">Rules
+				</g:InlineHyperlink>
+				<b.html:Paragraph>
+					A
+					<a href="http://gwtproject.org/">GWT</a>
+					wrapper for
+					<a href="http://getbootstrap.com/">Bootstrap</a>
+				</b.html:Paragraph>
+				<b.html:Paragraph>
+					This is the demo for
+					<a href="https://github.com/gwtbootstrap3/gwtbootstrap3">GwtBootstrap3</a>
+					version 1.0-SNAPSHOT. For previous releases please go to:
+					<a href="https://github.com/gwtbootstrap3/gwtbootstrap3/releases">Previous Releases</a>
+				</b.html:Paragraph>
+			</b:Jumbotron>
+		</b:Column>
 	</b:Row>
 
 </ui:UiBinder>

@@ -16,6 +16,7 @@
 
 package org.javahispano.javaleague.client.gin;
 
+
 import org.javahispano.javaleague.client.application.ApplicationDesktopModule;
 import org.javahispano.javaleague.shared.api.ApiPaths;
 

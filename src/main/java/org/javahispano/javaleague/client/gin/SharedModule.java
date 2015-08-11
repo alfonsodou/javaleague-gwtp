@@ -16,6 +16,9 @@
 
 package org.javahispano.javaleague.client.gin;
 
+
+
+
 import org.javahispano.javaleague.client.dispatch.rest.AppRestDispatchHooks;
 import org.javahispano.javaleague.client.dispatch.rest.RestInterceptorRegistry;
 import org.javahispano.javaleague.client.dispatch.rpc.AppRpcDispatchHooks;
@@ -34,7 +37,7 @@ public class SharedModule extends AbstractPresenterModule {
         // GWTP libraries
         install(new DefaultModule.Builder()
                 .defaultPlace(NameTokens.HOME)
-                .errorPlace(NameTokens.LOGIN)
+                .errorPlace(NameTokens.HOME)
                 .unauthorizedPlace(NameTokens.UNAUTHORIZED)
                 .build());
         install(new RestDispatchAsyncModule.Builder()
