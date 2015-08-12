@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.NewCookie;
 
+import org.javahispano.javaleague.client.application.ApplicationPresenter;
 import org.javahispano.javaleague.client.application.event.ActionBarVisibilityEvent;
 import org.javahispano.javaleague.client.application.event.DisplayMessageEvent;
 import org.javahispano.javaleague.client.application.event.UserLoginEvent;
@@ -88,7 +89,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
             ResourceDelegate<SessionResource> sessionResource,
             CurrentUser currentUser,
             LoginMessages messages) {
-        super(eventBus, view, proxy, RevealType.RootLayout);
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
 
         this.placeManager = placeManager;
         this.dispatcher = dispatcher;

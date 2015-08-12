@@ -16,15 +16,16 @@
 
 package org.javahispano.javaleague.client.application.login;
 
+import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Input;
+import org.gwtbootstrap3.client.ui.TextBox;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -36,16 +37,16 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements Lo
     @UiField
     Button login;
     @UiField
-    PasswordTextBox password;
+    Input password;
     @UiField
-    TextBox username;
+    TextBox email;
 
     @Inject
     LoginView(
             Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        username.getElement().setAttribute("placeholder", "Username");
+        email.getElement().setAttribute("placeholder", "Username");
         password.getElement().setAttribute("placeholder", "Password");
     }
 
@@ -67,9 +68,9 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements Lo
     }
 
     private void processLogin() {
-        getUiHandlers().login(username.getValue(), password.getValue());
+        getUiHandlers().login(email.getValue(), password.getValue());
 
-        username.setText("");
+        email.setText("");
         password.setText("");
     }
 }
