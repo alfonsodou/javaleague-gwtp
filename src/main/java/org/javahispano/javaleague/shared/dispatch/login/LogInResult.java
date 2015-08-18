@@ -14,14 +14,18 @@
  * the License.
  */
 
-package org.javahispano.javaleague.shared.dispatch;
+package org.javahispano.javaleague.shared.dispatch.login;
 
 import org.javahispano.javaleague.shared.dto.CurrentUserDto;
 
 import com.gwtplatform.dispatch.rpc.shared.Result;
 
 public class LogInResult implements Result {
-    private ActionType actionType;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6408192749934143405L;
+	private ActionType actionType;
     private CurrentUserDto currentUserDto;
     private String loggedInCookie;
 

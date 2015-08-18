@@ -33,10 +33,13 @@ import org.javahispano.javaleague.client.resources.LoginMessages;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.api.ApiParameters;
 import org.javahispano.javaleague.shared.api.SessionResource;
-import org.javahispano.javaleague.shared.dispatch.ActionType;
-import org.javahispano.javaleague.shared.dispatch.LogInAction;
-import org.javahispano.javaleague.shared.dispatch.LogInResult;
+import org.javahispano.javaleague.shared.dispatch.login.ActionType;
+import org.javahispano.javaleague.shared.dispatch.login.LogInAction;
+import org.javahispano.javaleague.shared.dispatch.login.LogInResult;
+import org.javahispano.javaleague.shared.dispatch.register.RegisterAction;
+import org.javahispano.javaleague.shared.dispatch.register.RegisterResult;
 import org.javahispano.javaleague.shared.dto.CurrentUserDto;
+import org.javahispano.javaleague.shared.dto.UserDto;
 
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.GWT;
@@ -57,147 +60,200 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest.Builder;
 
-public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresenter.MyProxy>
-        implements LoginUiHandlers {
+public class LoginPresenter extends
+		Presenter<LoginPresenter.MyView, LoginPresenter.MyProxy> implements
+		LoginUiHandlers {
 
-    interface MyView extends View, HasUiHandlers<LoginUiHandlers> {
-        void setLoginButtonEnabled(boolean enabled);
-    }
+	interface MyView extends View, HasUiHandlers<LoginUiHandlers> {
+		void setLoginButtonEnabled(boolean enabled);
+	}
 
-    @ProxyStandard
-    @NameToken(NameTokens.LOGIN)
-    @NoGatekeeper
-    interface MyProxy extends ProxyPlace<LoginPresenter> {
-    }
+	@ProxyStandard
+	@NameToken(NameTokens.LOGIN)
+	@NoGatekeeper
+	interface MyProxy extends ProxyPlace<LoginPresenter> {
+	}
 
-    private static final Logger LOGGER = Logger.getLogger(LoginPresenter.class.getName());
-    private static final int REMEMBER_ME_DAYS = 14;
+	private static final Logger LOGGER = Logger.getLogger(LoginPresenter.class
+			.getName());
+	private static final int REMEMBER_ME_DAYS = 14;
 
-    private final PlaceManager placeManager;
-    private final DispatchAsync dispatcher;
-    private final ResourceDelegate<SessionResource> sessionResource;
-    private final CurrentUser currentUser;
-    private final LoginMessages messages;
+	private final PlaceManager placeManager;
+	private final DispatchAsync dispatcher;
+	private final ResourceDelegate<SessionResource> sessionResource;
+	private final CurrentUser currentUser;
+	private final LoginMessages messages;
 
-    @Inject
-    LoginPresenter(
-            EventBus eventBus,
-            MyView view,
-            MyProxy proxy,
-            PlaceManager placeManager,
-            DispatchAsync dispatcher,
-            ResourceDelegate<SessionResource> sessionResource,
-            CurrentUser currentUser,
-            LoginMessages messages) {
-        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
+	@Inject
+	LoginPresenter(EventBus eventBus, MyView view, MyProxy proxy,
+			PlaceManager placeManager, DispatchAsync dispatcher,
+			ResourceDelegate<SessionResource> sessionResource,
+			CurrentUser currentUser, LoginMessages messages) {
+		super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
 
-        this.placeManager = placeManager;
-        this.dispatcher = dispatcher;
-        this.sessionResource = sessionResource;
-        this.currentUser = currentUser;
-        this.messages = messages;
+		this.placeManager = placeManager;
+		this.dispatcher = dispatcher;
+		this.sessionResource = sessionResource;
+		this.currentUser = currentUser;
+		this.messages = messages;
 
-        getView().setUiHandlers(this);
-    }
+		getView().setUiHandlers(this);
+	}
 
-    @Override
-    public void login(String username, String password) {
-        LogInAction logInAction = new LogInAction(username, password);
-        callServerLoginAction(logInAction);
-    }
+	@Override
+	public void login(String username, String password) {
+		LogInAction logInAction = new LogInAction(username, password);
+		callServerLoginAction(logInAction);
+	}
 
-    @Override
-    protected void onReveal() {
-        ActionBarVisibilityEvent.fire(this, false);
+	@Override
+	protected void onReveal() {
+		ActionBarVisibilityEvent.fire(this, false);
 
-        if (!Strings.isNullOrEmpty(getLoggedInCookie())) {
-            tryLoggingInWithCookieFirst();
-        }
-    }
+		if (!Strings.isNullOrEmpty(getLoggedInCookie())) {
+			tryLoggingInWithCookieFirst();
+		}
+	}
 
-    private void callServerLoginAction(LogInAction logInAction) {
-        dispatcher.execute(logInAction, new AsyncCallback<LogInResult>() {
-            @Override
-            public void onFailure(Throwable e) {
-                DisplayMessageEvent.fire(LoginPresenter.this, new Message(messages.unableToContactServer(),
-                        MessageStyle.ERROR));
+	private void callServerLoginAction(LogInAction logInAction) {
+		dispatcher.execute(logInAction, new AsyncCallback<LogInResult>() {
+			@Override
+			public void onFailure(Throwable e) {
+				DisplayMessageEvent.fire(LoginPresenter.this, new Message(
+						messages.unableToContactServer(), MessageStyle.ERROR));
 
-                LOGGER.log(Level.SEVERE, "callServerLoginAction(): Server failed to process login call.", e);
-            }
+				LOGGER.log(
+						Level.SEVERE,
+						"callServerLoginAction(): Server failed to process login call.",
+						e);
+			}
 
-            @Override
-            public void onSuccess(LogInResult result) {
-                if (result.getCurrentUserDto().isLoggedIn()) {
-                    setLoggedInCookie(result.getLoggedInCookie());
-                }
+			@Override
+			public void onSuccess(LogInResult result) {
+				if (result.getCurrentUserDto().isLoggedIn()) {
+					setLoggedInCookie(result.getLoggedInCookie());
+				}
 
-                if (result.getActionType() == ActionType.VIA_COOKIE) {
-                    onLoginCallSucceededForCookie(result.getCurrentUserDto());
-                } else {
-                    onLoginCallSucceeded(result.getCurrentUserDto());
-                }
-            }
-        });
-    }
+				if (result.getActionType() == ActionType.VIA_COOKIE) {
+					onLoginCallSucceededForCookie(result.getCurrentUserDto());
+				} else {
+					onLoginCallSucceeded(result.getCurrentUserDto());
+				}
+			}
+		});
+	}
 
-    private void onLoginCallSucceededForCookie(CurrentUserDto currentUserDto) {
-        getView().setLoginButtonEnabled(true);
+	private void onLoginCallSucceededForCookie(CurrentUserDto currentUserDto) {
+		getView().setLoginButtonEnabled(true);
 
-        if (currentUserDto.isLoggedIn()) {
-            onLoginCallSucceeded(currentUserDto);
-        }
-    }
+		if (currentUserDto.isLoggedIn()) {
+			onLoginCallSucceeded(currentUserDto);
+		}
+	}
 
-    private void onLoginCallSucceeded(CurrentUserDto currentUserDto) {
-        if (currentUserDto.isLoggedIn()) {
-            currentUser.fromCurrentUserDto(currentUserDto);
+	private void onLoginCallSucceeded(CurrentUserDto currentUserDto) {
+		if (currentUserDto.isLoggedIn()) {
+			currentUser.fromCurrentUserDto(currentUserDto);
 
-            redirectToLoggedOnPage();
+			redirectToLoggedOnPage();
 
-            UserLoginEvent.fire(this);
-            DisplayMessageEvent.fire(this, new Message(messages.onSuccessfulLogin(), MessageStyle.SUCCESS));
-        } else {
-            DisplayMessageEvent.fire(this, new Message(messages.invalidEmailOrPassword(), MessageStyle.ERROR));
-        }
-    }
+			UserLoginEvent.fire(this);
+			DisplayMessageEvent.fire(this,
+					new Message(messages.onSuccessfulLogin(),
+							MessageStyle.SUCCESS));
+		} else {
+			DisplayMessageEvent.fire(this,
+					new Message(messages.invalidEmailOrPassword(),
+							MessageStyle.ERROR));
+		}
+	}
 
-    private void redirectToLoggedOnPage() {
-        String token = placeManager
-                .getCurrentPlaceRequest()
-                .getParameter(ParameterTokens.REDIRECT, NameTokens.getOnLoginDefaultPage());
-        PlaceRequest placeRequest = new Builder().nameToken(token).build();
+	private void redirectToLoggedOnPage() {
+		String token = placeManager.getCurrentPlaceRequest().getParameter(
+				ParameterTokens.REDIRECT, NameTokens.getOnLoginDefaultPage());
+		PlaceRequest placeRequest = new Builder().nameToken(token).build();
 
-        placeManager.revealPlace(placeRequest);
-    }
+		placeManager.revealPlace(placeRequest);
+	}
 
-    private void setLoggedInCookie(String value) {
-        String path = "/";
-        String domain = getDomain();
-        int maxAge = REMEMBER_ME_DAYS * 24 * 60 * 60 * 1000;
-        boolean secure = false;
+	private void setLoggedInCookie(String value) {
+		String path = "/";
+		String domain = getDomain();
+		int maxAge = REMEMBER_ME_DAYS * 24 * 60 * 60 * 1000;
+		boolean secure = false;
 
-        NewCookie newCookie = new NewCookie(ApiParameters.LOGIN_COOKIE, value, path, domain, "", maxAge, secure);
-        sessionResource.withoutCallback().rememberMe(newCookie);
+		NewCookie newCookie = new NewCookie(ApiParameters.LOGIN_COOKIE, value,
+				path, domain, "", maxAge, secure);
+		sessionResource.withoutCallback().rememberMe(newCookie);
 
-        LOGGER.info("LoginPresenter.setLoggedInCookie() Set client cookie=" + value);
-    }
+		LOGGER.info("LoginPresenter.setLoggedInCookie() Set client cookie="
+				+ value);
+	}
 
-    private String getDomain() {
-        String domain = GWT.getHostPageBaseURL()
-                .replaceAll(".*//", "")
-                .replaceAll("/", "")
-                .replaceAll(":.*", "");
+	private String getDomain() {
+		String domain = GWT.getHostPageBaseURL().replaceAll(".*//", "")
+				.replaceAll("/", "").replaceAll(":.*", "");
 
-        return "localhost".equalsIgnoreCase(domain) ? null : domain;
-    }
+		return "localhost".equalsIgnoreCase(domain) ? null : domain;
+	}
 
-    private void tryLoggingInWithCookieFirst() {
-        getView().setLoginButtonEnabled(false);
-        LogInAction logInAction = new LogInAction(getLoggedInCookie());
-        callServerLoginAction(logInAction);
-    }
+	private void tryLoggingInWithCookieFirst() {
+		getView().setLoginButtonEnabled(false);
+		LogInAction logInAction = new LogInAction(getLoggedInCookie());
+		callServerLoginAction(logInAction);
+	}
 
-    private String getLoggedInCookie() {
-        return Cookies.getCookie(ApiParameters.LOGIN_COOKIE);
-    }
+	private String getLoggedInCookie() {
+		return Cookies.getCookie(ApiParameters.LOGIN_COOKIE);
+	}
+
+	@Override
+	public void register(String username, String password, String email) {
+		RegisterAction registerAction = new RegisterAction(username, password,
+				email);
+		callServerRegisterAction(registerAction);
+	}
+
+	private void callServerRegisterAction(RegisterAction registerAction) {
+		dispatcher.execute(registerAction, new AsyncCallback<RegisterResult>() {
+			@Override
+			public void onFailure(Throwable e) {
+				DisplayMessageEvent.fire(LoginPresenter.this, new Message(
+						messages.unableToContactServer(), MessageStyle.ERROR));
+
+				LOGGER.log(
+						Level.SEVERE,
+						"callServerRegisterAction(): Server failed to process login call.",
+						e);
+			}
+
+			@Override
+			public void onSuccess(RegisterResult result) {
+				if (result.getUserDto() != null) {
+					onRegisterCallSucceededOK(result.getUserDto());
+				} else {
+					onRegisterCallSucceededKO(result.getUserDto());
+				}
+			}
+		});
+	}
+
+	private void onRegisterCallSucceededOK(UserDto userDto) {
+		DisplayMessageEvent.fire(LoginPresenter.this,
+				new Message(messages.onSuccessfulRegister(),
+						MessageStyle.SUCCESS));
+		LOGGER.log(Level.INFO,
+				"onRegisterCallSucceededOK(): User registration OK! Email: "
+						+ userDto.getEmail());
+	}
+
+	private void onRegisterCallSucceededKO(UserDto userDto) {
+		DisplayMessageEvent.fire(LoginPresenter.this,
+				new Message(messages.duplicateEmailForRegister(),
+						MessageStyle.ERROR));
+		LOGGER.log(
+				Level.WARNING,
+				"onRegisterCallSuccededKO(): Email duplicate: "
+						+ userDto.getEmail());
+	}
 }

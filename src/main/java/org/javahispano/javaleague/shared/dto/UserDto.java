@@ -21,6 +21,7 @@ public class UserDto extends BaseEntity {
     private String hashPassword;
     private String firstName;
     private String lastName;
+    private String email;
 
     public UserDto() {
         firstName = "";
@@ -31,11 +32,13 @@ public class UserDto extends BaseEntity {
             String username,
             String hashPassword,
             String firstName,
-            String lastName) {
+            String lastName,
+            String email) {
         this.username = username;
         this.hashPassword = hashPassword;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -70,7 +73,21 @@ public class UserDto extends BaseEntity {
         this.hashPassword = hashPassword;
     }
 
-    @Override
+    /**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
     public String toString() {
         String s = " { User ";
         s += "id=" + id + " ";
@@ -78,6 +95,7 @@ public class UserDto extends BaseEntity {
         s += "hasPassword=" + hashPassword + " ";
         s += "firstName=" + firstName + " ";
         s += "lastName=" + lastName + " ";
+        s += "email=" + email + " ";
         s += " User } ";
         return s;
     }

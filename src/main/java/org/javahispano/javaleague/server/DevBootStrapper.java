@@ -40,101 +40,108 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
 
 public class DevBootStrapper {
-    private final UserDao userDao;
-    private final PasswordSecurity passwordSecurity;
-    private final ManufacturerDao manufacturerDao;
-    private final CarDao carDao;
-    private final RatingDao ratingDao;
-    private final CarPropertiesDao carPropertiesDao;
+	private final UserDao userDao;
+	private final PasswordSecurity passwordSecurity;
+	private final ManufacturerDao manufacturerDao;
+	private final CarDao carDao;
+	private final RatingDao ratingDao;
+	private final CarPropertiesDao carPropertiesDao;
 
-    @Inject
-    DevBootStrapper(
-            UserDao userDao,
-            PasswordSecurity passwordSecurity,
-            ManufacturerDao manufacturerDao,
-            CarDao carDao,
-            RatingDao ratingDao,
-            CarPropertiesDao carPropertiesDao) {
-        this.userDao = userDao;
-        this.passwordSecurity = passwordSecurity;
-        this.manufacturerDao = manufacturerDao;
-        this.carDao = carDao;
-        this.ratingDao = ratingDao;
-        this.carPropertiesDao = carPropertiesDao;
+	@Inject
+	DevBootStrapper(UserDao userDao, PasswordSecurity passwordSecurity,
+			ManufacturerDao manufacturerDao, CarDao carDao,
+			RatingDao ratingDao, CarPropertiesDao carPropertiesDao) {
+		this.userDao = userDao;
+		this.passwordSecurity = passwordSecurity;
+		this.manufacturerDao = manufacturerDao;
+		this.carDao = carDao;
+		this.ratingDao = ratingDao;
+		this.carPropertiesDao = carPropertiesDao;
 
-        ObjectifyService.run(new VoidWork() {
-            @Override
-            public void vrun() {
-                init();
-            }
-        });
-    }
+		ObjectifyService.run(new VoidWork() {
+			@Override
+			public void vrun() {
+				init();
+			}
+		});
+	}
 
-    private void init() {
-        deleteAllEntities();
+	private void init() {
+		deleteAllEntities();
 
-        long userCount = userDao.countAll();
+		long userCount = userDao.countAll();
 
-        if (userCount == 0) {
-            createBasicUser();
-        }
+		if (userCount == 0) {
+			createBasicUser();
+		}
 
-        createMockData();
-    }
+		createMockData();
+	}
 
-    private void deleteAllEntities() {
-        manufacturerDao.deleteAll();
-        carDao.deleteAll();
-        ratingDao.deleteAll();
-        carPropertiesDao.deleteAll();
-    }
+	private void deleteAllEntities() {
+		manufacturerDao.deleteAll();
+		carDao.deleteAll();
+		ratingDao.deleteAll();
+		carPropertiesDao.deleteAll();
+	}
 
-    private void createBasicUser() {
-        UserDto userDto = new UserDto("admin", passwordSecurity.hashPassword("qwerty"), "FirstName", "LastName");
-        userDao.put(User.create(userDto));
-    }
+	private void createBasicUser() {
+		UserDto userDto = new UserDto("admin",
+				passwordSecurity.hashPassword("qwerty"), "FirstName",
+				"LastName", "admin@admin.com");
+		userDao.put(User.create(userDto));
+	}
 
-    private void createMockData() {
-        long manufacturerCount = manufacturerDao.countAll();
+	private void createMockData() {
+		long manufacturerCount = manufacturerDao.countAll();
 
-        if (manufacturerCount == 0) {
-            ManufacturerDto honda = new ManufacturerDto("Honda");
-            ManufacturerDto mitsubishi = new ManufacturerDto("Mitsubishi");
+		if (manufacturerCount == 0) {
+			ManufacturerDto honda = new ManufacturerDto("Honda");
+			ManufacturerDto mitsubishi = new ManufacturerDto("Mitsubishi");
 
-            honda = Manufacturer.createDto(manufacturerDao.put(Manufacturer.create(honda)));
-            mitsubishi = Manufacturer.createDto(manufacturerDao.put(Manufacturer.create(mitsubishi)));
+			honda = Manufacturer.createDto(manufacturerDao.put(Manufacturer
+					.create(honda)));
+			mitsubishi = Manufacturer.createDto(manufacturerDao
+					.put(Manufacturer.create(mitsubishi)));
 
-            CarPropertiesDto carPropertiesCivic = new CarPropertiesDto("Cat", 0, new Date());
-            carPropertiesCivic = carPropertiesDao.put(carPropertiesCivic);
+			CarPropertiesDto carPropertiesCivic = new CarPropertiesDto("Cat",
+					0, new Date());
+			carPropertiesCivic = carPropertiesDao.put(carPropertiesCivic);
 
-            CarPropertiesDto carPropertiesAccord = new CarPropertiesDto("Fish", 1, new Date());
-            carPropertiesAccord = carPropertiesDao.put(carPropertiesAccord);
+			CarPropertiesDto carPropertiesAccord = new CarPropertiesDto("Fish",
+					1, new Date());
+			carPropertiesAccord = carPropertiesDao.put(carPropertiesAccord);
 
-            CarPropertiesDto carPropertiesLancer = new CarPropertiesDto("Dog", 2, new Date());
-            carPropertiesLancer = carPropertiesDao.put(carPropertiesLancer);
+			CarPropertiesDto carPropertiesLancer = new CarPropertiesDto("Dog",
+					2, new Date());
+			carPropertiesLancer = carPropertiesDao.put(carPropertiesLancer);
 
-            CarPropertiesDto carPropertiesMitsubishi = new CarPropertiesDto("Cow", 3, new Date());
-            carPropertiesMitsubishi = carPropertiesDao.put(carPropertiesMitsubishi);
+			CarPropertiesDto carPropertiesMitsubishi = new CarPropertiesDto(
+					"Cow", 3, new Date());
+			carPropertiesMitsubishi = carPropertiesDao
+					.put(carPropertiesMitsubishi);
 
-            CarDto civic = new CarDto("Civic", honda, carPropertiesCivic);
-            CarDto accord = new CarDto("Accord", honda, carPropertiesAccord);
-            CarDto lancer = new CarDto("Lancer", mitsubishi, carPropertiesLancer);
-            CarDto galant = new CarDto("Galant", mitsubishi, carPropertiesMitsubishi);
+			CarDto civic = new CarDto("Civic", honda, carPropertiesCivic);
+			CarDto accord = new CarDto("Accord", honda, carPropertiesAccord);
+			CarDto lancer = new CarDto("Lancer", mitsubishi,
+					carPropertiesLancer);
+			CarDto galant = new CarDto("Galant", mitsubishi,
+					carPropertiesMitsubishi);
 
-            civic = Car.createDto(carDao.put(Car.create(civic)));
-            accord = Car.createDto(carDao.put(Car.create(accord)));
-            lancer = Car.createDto(carDao.put(Car.create(lancer)));
-            galant = Car.createDto(carDao.put(Car.create(galant)));
+			civic = Car.createDto(carDao.put(Car.create(civic)));
+			accord = Car.createDto(carDao.put(Car.create(accord)));
+			lancer = Car.createDto(carDao.put(Car.create(lancer)));
+			galant = Car.createDto(carDao.put(Car.create(galant)));
 
-            RatingDto rating1 = new RatingDto(accord, 4);
-            RatingDto rating2 = new RatingDto(civic, 2);
-            RatingDto rating3 = new RatingDto(galant, 3);
-            RatingDto rating4 = new RatingDto(lancer, 4);
+			RatingDto rating1 = new RatingDto(accord, 4);
+			RatingDto rating2 = new RatingDto(civic, 2);
+			RatingDto rating3 = new RatingDto(galant, 3);
+			RatingDto rating4 = new RatingDto(lancer, 4);
 
-            ratingDao.put(Rating.create(rating1));
-            ratingDao.put(Rating.create(rating2));
-            ratingDao.put(Rating.create(rating3));
-            ratingDao.put(Rating.create(rating4));
-        }
-    }
+			ratingDao.put(Rating.create(rating1));
+			ratingDao.put(Rating.create(rating2));
+			ratingDao.put(Rating.create(rating3));
+			ratingDao.put(Rating.create(rating4));
+		}
+	}
 }

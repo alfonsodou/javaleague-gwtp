@@ -23,7 +23,9 @@ import com.gwtplatform.dispatch.rpc.client.interceptor.DefaultRpcInterceptorRegi
 public class RpcInterceptorRegistry extends DefaultRpcInterceptorRegistry {
     @Inject
     RpcInterceptorRegistry(
-            LogInInterceptor logInInterceptor) {
+            LogInInterceptor logInInterceptor,
+            RegisterInterceptor registerInterceptor) {
         register(logInInterceptor);
+        register(registerInterceptor);
     }
 }

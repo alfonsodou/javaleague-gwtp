@@ -23,9 +23,9 @@ import org.javahispano.javaleague.client.resources.LoginMessages;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.api.ApiParameters;
 import org.javahispano.javaleague.shared.api.SessionResource;
-import org.javahispano.javaleague.shared.dispatch.ActionType;
-import org.javahispano.javaleague.shared.dispatch.LogInAction;
-import org.javahispano.javaleague.shared.dispatch.LogInResult;
+import org.javahispano.javaleague.shared.dispatch.login.ActionType;
+import org.javahispano.javaleague.shared.dispatch.login.LogInAction;
+import org.javahispano.javaleague.shared.dispatch.login.LogInResult;
 import org.javahispano.javaleague.shared.dto.CurrentUserDto;
 
 import com.google.common.base.Strings;

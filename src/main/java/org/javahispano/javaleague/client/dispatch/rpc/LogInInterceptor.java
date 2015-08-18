@@ -16,8 +16,8 @@
 
 package org.javahispano.javaleague.client.dispatch.rpc;
 
-import org.javahispano.javaleague.shared.dispatch.LogInAction;
-import org.javahispano.javaleague.shared.dispatch.LogInResult;
+import org.javahispano.javaleague.shared.dispatch.login.LogInAction;
+import org.javahispano.javaleague.shared.dispatch.login.LogInResult;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.client.interceptor.ExecuteCommand;

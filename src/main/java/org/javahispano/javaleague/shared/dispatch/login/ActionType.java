@@ -14,7 +14,7 @@
  * the License.
  */
 
-package org.javahispano.javaleague.shared.dispatch;
+package org.javahispano.javaleague.shared.dispatch.login;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

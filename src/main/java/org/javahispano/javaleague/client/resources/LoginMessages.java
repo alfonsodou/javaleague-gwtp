@@ -24,4 +24,8 @@ public interface LoginMessages extends Messages {
     String invalidEmailOrPassword();
 
     String onSuccessfulLogin();
+    
+    String onSuccessfulRegister();
+    
+    String duplicateEmailForRegister();
 }

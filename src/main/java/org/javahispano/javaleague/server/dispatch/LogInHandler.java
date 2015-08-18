@@ -21,9 +21,9 @@ import java.util.logging.Logger;
 import org.javahispano.javaleague.server.authentication.AuthenticationException;
 import org.javahispano.javaleague.server.authentication.Authenticator;
 import org.javahispano.javaleague.server.dao.UserSessionDao;
-import org.javahispano.javaleague.shared.dispatch.ActionType;
-import org.javahispano.javaleague.shared.dispatch.LogInAction;
-import org.javahispano.javaleague.shared.dispatch.LogInResult;
+import org.javahispano.javaleague.shared.dispatch.login.ActionType;
+import org.javahispano.javaleague.shared.dispatch.login.LogInAction;
+import org.javahispano.javaleague.shared.dispatch.login.LogInResult;
 import org.javahispano.javaleague.shared.dto.CurrentUserDto;
 import org.javahispano.javaleague.shared.dto.UserDto;
 

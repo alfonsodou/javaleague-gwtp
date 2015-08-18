@@ -16,7 +16,8 @@
 
 package org.javahispano.javaleague.server.dispatch;
 
-import org.javahispano.javaleague.shared.dispatch.LogInAction;
+import org.javahispano.javaleague.shared.dispatch.login.LogInAction;
+import org.javahispano.javaleague.shared.dispatch.register.RegisterAction;
 
 import com.gwtplatform.dispatch.rpc.server.guice.HandlerModule;
 
@@ -26,5 +27,6 @@ public class DispatchModule extends HandlerModule {
         install(new com.gwtplatform.dispatch.rpc.server.guice.DispatchModule());
 
         bindHandler(LogInAction.class, LogInHandler.class);
+        bindHandler(RegisterAction.class, RegisterHandler.class);
     }
 }

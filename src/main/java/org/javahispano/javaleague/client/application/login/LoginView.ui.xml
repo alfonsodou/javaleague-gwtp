@@ -94,8 +94,8 @@
 						</b:Form>
 					</b:PanelBody>
 					<b:PanelFooter addStyleNames="{style.footer}">
-						<b:Button type="PRIMARY" ui:field="registerButton">Registro</b:Button>
-						<b:Button type="DANGER" ui:field="resetRegisterButton">Borrar</b:Button>
+						<b:Button type="PRIMARY" ui:field="register">Registro</b:Button>
+						<b:Button type="DANGER" ui:field="resetRegister">Borrar</b:Button>
 					</b:PanelFooter>
 				</b:Panel>
 			</b:Column>

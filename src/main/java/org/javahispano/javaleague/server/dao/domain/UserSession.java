@@ -52,4 +52,8 @@ public class UserSession implements Dto {
     public Long getUserId() {
         return userId;
     }
+    
+    public Date getDateCreated() {
+    	return dateCreated;
+    }
 }

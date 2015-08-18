@@ -16,61 +16,269 @@
 
 package org.javahispano.javaleague.client.application.login;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.TextBox;
+import org.gwtbootstrap3.client.ui.form.error.BasicEditorError;
 
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements LoginPresenter.MyView {
-    interface Binder extends UiBinder<Widget, LoginView> {
-    }
+public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements
+		LoginPresenter.MyView {
+	interface Binder extends UiBinder<Widget, LoginView> {
+	}
 
-    @UiField
-    Button login;
-    @UiField
-    Input password;
-    @UiField
-    TextBox email;
+	@UiField
+	Button login;
+	@UiField
+	Input password;
+	@UiField
+	TextBox email;
+	@UiField
+	Form formLogin;
+	@UiField
+	Form formRegister;
+	@UiField
+	TextBox emailRegister;
+	@UiField
+	TextBox confirmEmail;
+	@UiField
+	TextBox userName;
+	@UiField
+	Input passwordRegister;
+	@UiField
+	Input confirmPassword;
+	@UiField
+	Button register;
 
-    @Inject
-    LoginView(
-            Binder uiBinder) {
-        initWidget(uiBinder.createAndBindUi(this));
+	@Inject
+	LoginView(Binder uiBinder) {
+		initWidget(uiBinder.createAndBindUi(this));
 
-        email.getElement().setAttribute("placeholder", "Username");
-        password.getElement().setAttribute("placeholder", "Password");
-    }
+		email.getElement().setAttribute("placeholder", "Email");
+		password.getElement().setAttribute("placeholder", "Contraseña");
 
-    @Override
-    public void setLoginButtonEnabled(boolean enabled) {
-        login.setEnabled(enabled);
-    }
+		email.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
+				"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$",
+				"Email no válido"));
 
-    @UiHandler("login")
-    void onLoginClicked(ClickEvent event) {
-        processLogin();
-    }
+		password.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(
+				4, 12, "La contraseña debe tener entre 4 y 12 caracteres"));
 
-    @UiHandler("password")
-    void onPasswordKeyUp(KeyUpEvent event) {
-        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-            processLogin();
-        }
-    }
+		emailRegister
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
+						"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$",
+						"Email no válido"));
 
-    private void processLogin() {
-        getUiHandlers().login(email.getValue(), password.getValue());
+		passwordRegister
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(
+						4, 12,
+						"La contraseña debe tener entre 4 y 12 caracteres"));
 
-        email.setText("");
-        password.setText("");
-    }
+		confirmEmail
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
+						"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$",
+						"Email no válido"));
+
+		confirmPassword
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(
+						4, 12,
+						"La contraseña debe tener entre 4 y 12 caracteres"));
+
+		passwordRegister
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+
+					@Override
+					public int getPriority() {
+						return Priority.MEDIUM;
+					}
+
+					@Override
+					public List<EditorError> validate(Editor<String> editor,
+							String value) {
+						List<EditorError> result = new ArrayList<EditorError>();
+						String valueStr = value == null ? "" : value.toString();
+						if (!confirmPassword.getText().equals(valueStr)) {
+							result.add(new BasicEditorError(passwordRegister,
+									value, "Las contraseñas no coinciden"));
+						}
+
+						return result;
+					}
+
+				});
+
+		emailRegister
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+
+					@Override
+					public int getPriority() {
+						return Priority.MEDIUM;
+					}
+
+					@Override
+					public List<EditorError> validate(Editor<String> editor,
+							String value) {
+						List<EditorError> result = new ArrayList<EditorError>();
+						String valueStr = value == null ? "" : value.toString();
+						if (!confirmEmail.getText().equals(valueStr)) {
+							result.add(new BasicEditorError(emailRegister,
+									value, "El email no coincide"));
+						}
+
+						return result;
+					}
+				});
+
+		confirmPassword
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+
+					@Override
+					public int getPriority() {
+						return Priority.MEDIUM;
+					}
+
+					@Override
+					public List<EditorError> validate(Editor<String> editor,
+							String value) {
+						List<EditorError> result = new ArrayList<EditorError>();
+						String valueStr = value == null ? "" : value.toString();
+						if (!passwordRegister.getText().equals(valueStr)) {
+							result.add(new BasicEditorError(confirmPassword,
+									value, "Las contraseñas no coinciden"));
+						}
+
+						return result;
+					}
+
+				});
+
+		confirmEmail
+				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+
+					@Override
+					public int getPriority() {
+						return Priority.MEDIUM;
+					}
+
+					@Override
+					public List<EditorError> validate(Editor<String> editor,
+							String value) {
+						List<EditorError> result = new ArrayList<EditorError>();
+						String valueStr = value == null ? "" : value.toString();
+						if (!emailRegister.getText().equals(valueStr)) {
+							result.add(new BasicEditorError(confirmEmail,
+									value, "El email no coincide"));
+						}
+
+						return result;
+					}
+
+				});
+
+		emailRegister.addValueChangeHandler(new ValueChangeHandler<String>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				formRegister.validate();
+			}
+		});
+
+		passwordRegister
+				.addValueChangeHandler(new ValueChangeHandler<String>() {
+					@Override
+					public void onValueChange(ValueChangeEvent<String> event) {
+						formRegister.validate();
+					}
+
+				});
+
+		confirmEmail.addValueChangeHandler(new ValueChangeHandler<String>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				formRegister.validate();
+			}
+		});
+
+		confirmPassword.addValueChangeHandler(new ValueChangeHandler<String>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				formRegister.validate();
+			}
+
+		});
+	}
+
+	@Override
+	public void setLoginButtonEnabled(boolean enabled) {
+		login.setEnabled(enabled);
+	}
+
+	@UiHandler("login")
+	void onLoginClicked(ClickEvent event) {
+		processLogin();
+	}
+
+	@UiHandler("password")
+	void onPasswordKeyUp(KeyUpEvent event) {
+		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			processLogin();
+		}
+	}
+
+	@UiHandler("register")
+	void onRegisterClicked(ClickEvent event) {
+		processRegister();
+	}
+
+	private void processLogin() {
+		getUiHandlers()
+				.login(email.getValue(), digest_MD5(password.getValue()));
+
+		formLogin.reset();
+	}
+
+	private void processRegister() {
+		getUiHandlers().register(userName.getValue(),
+				digest_MD5(password.getValue()), email.getValue());
+	}
+
+	public String digest_MD5(String password) {
+		MessageDigest crypt = null;
+
+		try {
+			crypt = java.security.MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			Window.alert("MD5 not supported");
+			return null;
+		}
+
+		byte[] digested = crypt.digest(password.getBytes());
+
+		String crypt_password = new String();
+
+		// Converts bytes to string
+		for (byte b : digested)
+			crypt_password += Integer.toHexString(0xFF & b);
+
+		return crypt_password;
+	}
 }

@@ -18,7 +18,7 @@
 			<b:NavbarCollapse b:id="navbar-collapse">
 				<b:NavbarNav>
 					<b:AnchorListItem ui:field="login"
-						targetHistoryToken="{LOGIN};redirectTo={HOME}">Ingreso / Registro</b:AnchorListItem>
+						targetHistoryToken="{LOGIN}">Ingreso / Registro</b:AnchorListItem>
 					<b:AnchorListItem ui:field="tactic"
 						targetHistoryToken="{TACTIC}">Táctica</b:AnchorListItem>
 					<b:AnchorListItem ui:field="tournament"
