@@ -19,42 +19,18 @@ package org.javahispano.javaleague.shared.dto;
 public class UserDto extends BaseEntity {
     private String username;
     private String hashPassword;
-    private String firstName;
-    private String lastName;
     private String email;
 
     public UserDto() {
-        firstName = "";
-        lastName = "";
     }
 
     public UserDto(
             String username,
             String hashPassword,
-            String firstName,
-            String lastName,
             String email) {
         this.username = username;
         this.hashPassword = hashPassword;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -93,8 +69,6 @@ public class UserDto extends BaseEntity {
         s += "id=" + id + " ";
         s += "username=" + username + " ";
         s += "hasPassword=" + hashPassword + " ";
-        s += "firstName=" + firstName + " ";
-        s += "lastName=" + lastName + " ";
         s += "email=" + email + " ";
         s += " User } ";
         return s;

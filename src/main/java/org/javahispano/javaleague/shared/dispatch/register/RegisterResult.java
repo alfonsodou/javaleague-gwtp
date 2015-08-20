@@ -18,6 +18,7 @@ public class RegisterResult implements Result {
 	 */
 	private static final long serialVersionUID = -1719583673287215760L;
 	private UserDto userDto;
+	private boolean status;
 	
 	protected RegisterResult() {
 		
@@ -27,7 +28,28 @@ public class RegisterResult implements Result {
 		this.userDto = userDto;
 	}
 	
+	public RegisterResult(UserDto userDto, boolean status) {
+		this.userDto = userDto;
+		this.status = status;
+	}
+	
 	public UserDto getUserDto() {
 		return userDto;
 	}
+
+	/**
+	 * @return the status
+	 */
+	public boolean isStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	
+	
 }

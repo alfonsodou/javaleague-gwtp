@@ -18,7 +18,7 @@ public class RegisterAction extends ActionImpl<RegisterResult> {
 		
 	}
 	
-	public RegisterAction(String email, String userName, String password) {
+	public RegisterAction(String userName, String password, String email) {
 		this.email = email;
 		this.userName = userName;
 		this.password = password;

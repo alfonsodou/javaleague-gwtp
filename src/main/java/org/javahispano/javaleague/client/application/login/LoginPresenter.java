@@ -66,6 +66,8 @@ public class LoginPresenter extends
 
 	interface MyView extends View, HasUiHandlers<LoginUiHandlers> {
 		void setLoginButtonEnabled(boolean enabled);
+		void setFormLoginReset();
+		void setFormRegisterReset();
 	}
 
 	@ProxyStandard
@@ -139,6 +141,8 @@ public class LoginPresenter extends
 				} else {
 					onLoginCallSucceeded(result.getCurrentUserDto());
 				}
+				
+				getView().setFormLoginReset();
 			}
 		});
 	}
@@ -208,7 +212,7 @@ public class LoginPresenter extends
 	}
 
 	@Override
-	public void register(String username, String password, String email) {
+	public void registerUser(String username, String password, String email) {
 		RegisterAction registerAction = new RegisterAction(username, password,
 				email);
 		callServerRegisterAction(registerAction);
@@ -229,8 +233,10 @@ public class LoginPresenter extends
 
 			@Override
 			public void onSuccess(RegisterResult result) {
-				if (result.getUserDto() != null) {
+				if (result.isStatus()) {
 					onRegisterCallSucceededOK(result.getUserDto());
+					
+					getView().setFormRegisterReset();
 				} else {
 					onRegisterCallSucceededKO(result.getUserDto());
 				}

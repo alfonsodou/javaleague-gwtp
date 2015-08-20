@@ -42,18 +42,19 @@ public class RegisterHandler extends
 	public RegisterResult execute(RegisterAction action,
 			ExecutionContext context) throws ActionException {
 		User user = userDao.findByEmail(action.getEmail());
-		if (user == null) {
-			user = new User();
-			user.setUsername(action.getUserName());
-			user.setHashPassword(passwordSecurity.hashPassword(action
-					.getPassword()));
-			user.setEmail(action.getEmail());
-			userDao.put(user);
-		}
-		
-		UserDto userDto = User.createDto(user);
 
-		return new RegisterResult(userDto);
+		if (user == null) {
+			UserDto userDto = new UserDto(action.getUserName(),
+					passwordSecurity.hashPassword(action.getPassword()),
+					action.getEmail());
+			userDao.put(User.create(userDto));
+
+			return new RegisterResult(userDto, true);
+		} else {
+			UserDto userDto = User.createDto(user);
+
+			return new RegisterResult(userDto, false);
+		}
 	}
 
 	@Override

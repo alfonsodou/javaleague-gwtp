@@ -27,29 +27,9 @@ import com.googlecode.objectify.annotation.Index;
 public class User extends BaseEntity {
     private String username;
     private String hashPassword;
-    private String firstName;
-    private String lastName;
     private String email;
 
     public User() {
-        firstName = "";
-        lastName = "";
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -88,8 +68,6 @@ public class User extends BaseEntity {
         s += "id=" + id + " ";
         s += "username=" + username + " ";
         s += "hasPassword=" + hashPassword + " ";
-        s += "firstName=" + firstName + " ";
-        s += "lastName=" + lastName + " ";
         s += "email=" + email + " ";
         s += "}";
         return s;
@@ -100,9 +78,7 @@ public class User extends BaseEntity {
             return null;
         }
         UserDto userDto = new UserDto();
-        userDto.setFirstName(user.getFirstName());
         userDto.setId(user.getId());
-        userDto.setLastName(user.getLastName());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
 
@@ -115,11 +91,10 @@ public class User extends BaseEntity {
         }
 
         User user = new User();
-        user.setFirstName(userDto.getFirstName());
         user.setHashPassword(userDto.getHashPassword());
         user.setId(userDto.getId());
-        user.setLastName(userDto.getLastName());
         user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
 
         return user;
     }
