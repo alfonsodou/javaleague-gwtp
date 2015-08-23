@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.javahispano.javaleague.server.authentication.PasswordSecurity;
 import org.javahispano.javaleague.server.dao.UserDao;
 import org.javahispano.javaleague.server.dao.domain.User;
+import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
 import org.javahispano.javaleague.shared.dispatch.register.RegisterAction;
 import org.javahispano.javaleague.shared.dispatch.register.RegisterResult;
 import org.javahispano.javaleague.shared.dto.UserDto;
@@ -44,16 +45,18 @@ public class RegisterHandler extends
 		User user = userDao.findByEmail(action.getEmail());
 
 		if (user == null) {
-			UserDto userDto = new UserDto(action.getUserName(),
-					passwordSecurity.hashPassword(action.getPassword()),
-					action.getEmail());
-			userDao.put(User.create(userDto));
+			user = new User();
+			SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
+			user.setUsername(action.getUserName());
+			user.setHashPassword(passwordSecurity.hashPassword(action.getPassword()));
+			user.setEmail(action.getEmail());
+			user.setActive(false);
+			user.setToken(userTokenGenerator.nextSessionId());
+			userDao.put(user);
 
-			return new RegisterResult(userDto, true);
+			return new RegisterResult(User.createDto(user), true);
 		} else {
-			UserDto userDto = User.createDto(user);
-
-			return new RegisterResult(userDto, false);
+			return new RegisterResult(User.createDto(user), false);
 		}
 	}
 

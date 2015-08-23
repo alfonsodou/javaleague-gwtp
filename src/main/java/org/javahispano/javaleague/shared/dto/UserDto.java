@@ -20,6 +20,8 @@ public class UserDto extends BaseEntity {
     private String username;
     private String hashPassword;
     private String email;
+    private boolean active;
+    private String token;
 
     public UserDto() {
     }
@@ -27,10 +29,14 @@ public class UserDto extends BaseEntity {
     public UserDto(
             String username,
             String hashPassword,
-            String email) {
+            String email,
+            boolean active,
+            String token) {
         this.username = username;
         this.hashPassword = hashPassword;
         this.email = email;
+        this.active = active;
+        this.token = token;
     }
 
     public String getUsername() {
@@ -63,6 +69,34 @@ public class UserDto extends BaseEntity {
 		this.email = email;
 	}
 
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	@Override
     public String toString() {
         String s = " { User ";
@@ -70,6 +104,8 @@ public class UserDto extends BaseEntity {
         s += "username=" + username + " ";
         s += "hasPassword=" + hashPassword + " ";
         s += "email=" + email + " ";
+        s += "active=" + active + " ";
+        s += "token=" + token + " ";
         s += " User } ";
         return s;
     }

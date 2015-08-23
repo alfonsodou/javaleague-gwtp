@@ -28,6 +28,8 @@ public class User extends BaseEntity {
     private String username;
     private String hashPassword;
     private String email;
+    private boolean active;
+    private String token;
 
     public User() {
     }
@@ -62,6 +64,34 @@ public class User extends BaseEntity {
 		this.email = email;
 	}
 
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	@Override
     public String toString() {
         String s = "{ User ";
@@ -69,6 +99,8 @@ public class User extends BaseEntity {
         s += "username=" + username + " ";
         s += "hasPassword=" + hashPassword + " ";
         s += "email=" + email + " ";
+        s += "active=" + active + " ";
+        s += "token= " + token + " ";
         s += "}";
         return s;
     }
@@ -81,6 +113,8 @@ public class User extends BaseEntity {
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
+        userDto.setActive(user.isActive());
+        userDto.setToken(user.getToken());
 
         return userDto;
     }
@@ -95,6 +129,8 @@ public class User extends BaseEntity {
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
+        user.setActive(userDto.isActive());
+        user.setToken(userDto.getToken());
 
         return user;
     }
