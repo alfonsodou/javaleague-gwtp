@@ -24,4 +24,6 @@ public class ApiParameters {
     public static final String DATE = "date";
     public static final String DATE_FORMAT = "MM-yyyy-dd";
     public static final String LOGIN_COOKIE = "LoggedInCookie";
+    public static final String TOKEN = "token";
+    public static final String EMAIL = "email";
 }

@@ -25,8 +25,11 @@ public class ApiPaths {
     public static final String SESSION = "/session";
     public static final String COUNT = "/count";
     public static final String STATS = "/stats";
+    public static final String USER = "/user";
 
     public static final String REMEMBER_ME = "/remember-me";
 
     public static final String PATH_ID = "/{" + ApiParameters.ID + "}";
+    public static final String PATH_TOKEN = "/{" + ApiParameters.TOKEN + "}";
+    public static final String PATH_EMAIL = "/{" + ApiParameters.EMAIL + "}";
 }

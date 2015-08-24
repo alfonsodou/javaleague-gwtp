@@ -3,15 +3,30 @@
  */
 package org.javahispano.javaleague.server.dispatch;
 
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Properties;
 import java.util.logging.Logger;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.javahispano.javaleague.server.authentication.PasswordSecurity;
 import org.javahispano.javaleague.server.dao.UserDao;
 import org.javahispano.javaleague.server.dao.domain.User;
+import org.javahispano.javaleague.server.utils.ServletUtils;
 import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
+import org.javahispano.javaleague.server.utils.VelocityHelper;
 import org.javahispano.javaleague.shared.dispatch.register.RegisterAction;
 import org.javahispano.javaleague.shared.dispatch.register.RegisterResult;
-import org.javahispano.javaleague.shared.dto.UserDto;
 
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.rpc.server.ExecutionContext;
@@ -48,11 +63,46 @@ public class RegisterHandler extends
 			user = new User();
 			SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
 			user.setUsername(action.getUserName());
-			user.setHashPassword(passwordSecurity.hashPassword(action.getPassword()));
+			user.setHashPassword(passwordSecurity.hashPassword(action
+					.getPassword()));
 			user.setEmail(action.getEmail());
 			user.setActive(false);
 			user.setToken(userTokenGenerator.nextSessionId());
 			userDao.put(user);
+
+			VelocityContext velocityContext = new VelocityContext();
+			velocityContext.put("username", user.getUsername());
+			velocityContext.put("url", ServletUtils.getBaseUrl()
+					+ "/authenticateUser?token=" + user.getToken() + "&email="
+					+ user.getEmail());
+
+			VelocityEngine ve = VelocityHelper.getVelocityEngine();
+
+			// Finds template in WEB-INF/classes
+			Template template = ve.getTemplate("emailTemplate_es.vm");
+
+			StringWriter writer = new StringWriter();
+			template.merge(velocityContext, writer);
+
+			Properties props = new Properties();
+			Session session = Session.getDefaultInstance(props, null);
+
+			Message msg = new MimeMessage(session);
+			try {
+				msg.setFrom(new InternetAddress("javaleague@gmail.com",
+						"Administrador javaLeague"));
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
+						user.getEmail(), user.getUsername()));
+				msg.setSubject("Bienvenido a javaLeague!");
+
+				msg.setContent(writer.toString(), "text/html; charset=utf-8");
+				msg.setSentDate(new Date());
+
+				Transport.send(msg);
+			} catch (UnsupportedEncodingException | MessagingException e) {
+				logger.warning("RegisterHandler: Sending mail error :: " + e.getMessage());
+				logger.warning(e.toString());
+			}
 
 			return new RegisterResult(User.createDto(user), true);
 		} else {
@@ -63,7 +113,11 @@ public class RegisterHandler extends
 	@Override
 	public void undo(RegisterAction action, RegisterResult result,
 			ExecutionContext context) throws ActionException {
+		User user = userDao.findByEmail(action.getEmail());
 
+		if (user != null) {
+			userDao.delete(user);
+		}
 	}
 
 }
