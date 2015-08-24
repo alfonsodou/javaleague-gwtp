@@ -1,7 +1,7 @@
 <html>
 <body>
 <p>Hola $username!</p>
-<p>Gracias por registrarte en <b>javaLeague</b>!. Pulsa en este <a href="$url">enlace</a> para verificar tu cuenta de correo y activar tu usuario.</p>
+<p>Gracias por registrarte en <b>javaleague</b>!. Pulsa en este <a href="$url">enlace</a> para verificar tu cuenta de correo y activar tu usuario.</p>
 <p><b>Bienvenido!</b></p>
 </body>
 </html>

@@ -73,8 +73,8 @@ public class RegisterHandler extends
 			VelocityContext velocityContext = new VelocityContext();
 			velocityContext.put("username", user.getUsername());
 			velocityContext.put("url", ServletUtils.getBaseUrl()
-					+ "/authenticateUser?token=" + user.getToken() + "&email="
-					+ user.getEmail());
+					+ "user/token/{" + user.getToken() + "}/email/{"
+					+ user.getEmail() + "}");
 
 			VelocityEngine ve = VelocityHelper.getVelocityEngine();
 
@@ -90,10 +90,10 @@ public class RegisterHandler extends
 			Message msg = new MimeMessage(session);
 			try {
 				msg.setFrom(new InternetAddress("javaleague@gmail.com",
-						"Administrador javaLeague"));
+						"Administrador javaleague"));
 				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
 						user.getEmail(), user.getUsername()));
-				msg.setSubject("Bienvenido a javaLeague!");
+				msg.setSubject("Bienvenido a javaleague!");
 
 				msg.setContent(writer.toString(), "text/html; charset=utf-8");
 				msg.setSentDate(new Date());
