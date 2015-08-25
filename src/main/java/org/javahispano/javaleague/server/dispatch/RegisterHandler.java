@@ -73,8 +73,8 @@ public class RegisterHandler extends
 			VelocityContext velocityContext = new VelocityContext();
 			velocityContext.put("username", user.getUsername());
 			velocityContext.put("url", ServletUtils.getBaseUrl()
-					+ "user/token/{" + user.getToken() + "}/email/{"
-					+ user.getEmail() + "}");
+					+ "authenticate?token=" + user.getToken() + "&email="
+					+ user.getEmail());
 
 			VelocityEngine ve = VelocityHelper.getVelocityEngine();
 

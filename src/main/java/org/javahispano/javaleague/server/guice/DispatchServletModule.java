@@ -16,6 +16,7 @@
 
 package org.javahispano.javaleague.server.guice;
 
+import org.javahispano.javaleague.server.servlet.AuthenticateUserServlet;
 import org.javahispano.javaleague.shared.api.ApiPaths;
 
 import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
@@ -25,11 +26,14 @@ import com.gwtplatform.dispatch.rpc.server.guice.DispatchServiceImpl;
 import com.gwtplatform.dispatch.rpc.shared.ActionImpl;
 
 public class DispatchServletModule extends ServletModule {
-    @Override
-    public void configureServlets() {
-        filter("/*").through(ObjectifyFilter.class);
-        filter(ApiPaths.ROOT + "/*").through(GuiceRestEasyFilterDispatcher.class);
+	@Override
+	public void configureServlets() {
+		filter("/*").through(ObjectifyFilter.class);
+		filter(ApiPaths.ROOT + "/*").through(
+				GuiceRestEasyFilterDispatcher.class);
 
-        serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(DispatchServiceImpl.class);
-    }
+		serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
+				DispatchServiceImpl.class);
+		serve("/authenticate").with(AuthenticateUserServlet.class);
+	}
 }
