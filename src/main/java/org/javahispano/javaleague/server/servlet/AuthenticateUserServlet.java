@@ -51,7 +51,7 @@ public class AuthenticateUserServlet extends HttpServlet {
 				
 				userDao.put(user);
 				
-				resp.sendRedirect(ServletUtils.getBaseUrl() + "#home");
+				resp.sendRedirect(ServletUtils.getBaseUrl() + "#confirmRegister");
 			}
 		}
 		

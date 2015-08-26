@@ -33,6 +33,7 @@ public class NameTokens {
     public static final String DOWNLOAD = "download";
     public static final String RULES = "rules";
     public static final String PROFILE = "profile";
+    public static final String CONFIRM_REGISTER = "confirmRegister"; 
 
     public static String getOnLoginDefaultPage() {
         return TACTIC;
@@ -84,5 +85,9 @@ public class NameTokens {
     
     public static String getProfile() {
     	return PROFILE;
+    }
+    
+    public static String getConfirmRegister() {
+    	return CONFIRM_REGISTER;
     }
 }
