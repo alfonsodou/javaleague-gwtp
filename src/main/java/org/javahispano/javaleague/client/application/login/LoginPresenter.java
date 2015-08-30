@@ -103,8 +103,8 @@ public class LoginPresenter extends
 	}
 
 	@Override
-	public void login(String username, String password) {
-		LogInAction logInAction = new LogInAction(username, password);
+	public void login(String email, String password) {
+		LogInAction logInAction = new LogInAction(email, password);
 		callServerLoginAction(logInAction);
 	}
 

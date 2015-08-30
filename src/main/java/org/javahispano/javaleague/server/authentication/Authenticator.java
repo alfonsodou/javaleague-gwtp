@@ -47,9 +47,9 @@ public class Authenticator {
         this.userSessionDao = userSessionDao;
     }
 
-    public UserDto authenticateCredentials(String username, String password) {
+    public UserDto authenticateCredentials(String email, String password) {
         try {
-            User user = userDao.findByUsername(username);
+            User user = userDao.findByEmail(email);
 
             if (passwordSecurity.check(password, user.getHashPassword())) {
                 UserDto userDto = User.createDto(user);

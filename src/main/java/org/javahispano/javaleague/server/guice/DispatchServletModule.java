@@ -16,7 +16,10 @@
 
 package org.javahispano.javaleague.server.guice;
 
+import javax.inject.Singleton;
+
 import org.javahispano.javaleague.server.servlet.AuthenticateUserServlet;
+import org.javahispano.javaleague.server.servlet.UploadTacticServlet;
 import org.javahispano.javaleague.shared.api.ApiPaths;
 
 import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
@@ -35,5 +38,7 @@ public class DispatchServletModule extends ServletModule {
 		serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
 				DispatchServiceImpl.class);
 		serve("/authenticate").with(AuthenticateUserServlet.class);
+		serve("/upload").with(UploadTacticServlet.class);
+		bind(UploadTacticServlet.class).in(Singleton.class);
 	}
 }

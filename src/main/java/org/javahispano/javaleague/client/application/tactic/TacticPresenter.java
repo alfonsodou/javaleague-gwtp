@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.application.tactic;
 
+
 import org.javahispano.javaleague.client.application.ApplicationPresenter;
 import org.javahispano.javaleague.client.application.tactic.TacticPresenter.MyProxy;
 import org.javahispano.javaleague.client.application.tactic.TacticPresenter.MyView;
@@ -10,6 +11,7 @@ import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.api.UserResource;
 
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.delegates.client.ResourceDelegate;
@@ -26,15 +28,17 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @author alfonso
  *
  */
-public class TacticPresenter extends Presenter<MyView, MyProxy> implements TacticUiHandlers {
+public class TacticPresenter extends Presenter<MyView, MyProxy> implements
+		TacticUiHandlers {
 	interface MyView extends View, HasUiHandlers<TacticUiHandlers> {
+		//FormPanel getFormPanelTactic();
 	}
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.TACTIC)
 	interface MyProxy extends ProxyPlace<TacticPresenter> {
 	}
-	
+
 	private final PlaceManager placeManager;
 	private final DispatchAsync dispatcher;
 	private final ResourceDelegate<UserResource> userResource;
@@ -43,14 +47,15 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements Tacti
 	@Inject
 	TacticPresenter(EventBus eventBus, MyView view, MyProxy proxy,
 			PlaceManager placeManager, DispatchAsync dispatcher,
-			ResourceDelegate<UserResource> userResource,
-			CurrentUser currentUser) {
+			ResourceDelegate<UserResource> userResource, CurrentUser currentUser) {
 		super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
 		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
 		this.userResource = userResource;
 		this.currentUser = currentUser;
-		
+
+		//getView().getFormPanelTactic().setMethod(FormPanel.METHOD_POST);
+		//getView().getFormPanelTactic().setEncoding(FormPanel.ENCODING_MULTIPART);
 		getView().setUiHandlers(this);
 	}
 }

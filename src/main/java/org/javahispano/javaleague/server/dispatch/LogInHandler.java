@@ -32,73 +32,76 @@ import com.gwtplatform.dispatch.rpc.server.ExecutionContext;
 import com.gwtplatform.dispatch.rpc.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class LogInHandler extends AbstractActionHandler<LogInAction, LogInResult> {
-    private final Authenticator authenticator;
-    private final UserSessionDao loginCookieDao;
-    private final Logger logger;
+public class LogInHandler extends
+		AbstractActionHandler<LogInAction, LogInResult> {
+	private final Authenticator authenticator;
+	private final UserSessionDao loginCookieDao;
+	private final Logger logger;
 
-    private boolean isLoggedIn;
+	private boolean isLoggedIn;
 
-    @Inject
-    LogInHandler(
-            Logger logger,
-            Authenticator authenticator,
-            UserSessionDao loginCookieDao) {
-        super(LogInAction.class);
+	@Inject
+	LogInHandler(Logger logger, Authenticator authenticator,
+			UserSessionDao loginCookieDao) {
+		super(LogInAction.class);
 
-        this.logger = logger;
-        this.authenticator = authenticator;
-        this.loginCookieDao = loginCookieDao;
-    }
+		this.logger = logger;
+		this.authenticator = authenticator;
+		this.loginCookieDao = loginCookieDao;
+	}
 
-    @Override
-    public LogInResult execute(LogInAction action, ExecutionContext context) throws ActionException {
-        UserDto userDto;
-        isLoggedIn = true;
+	@Override
+	public LogInResult execute(LogInAction action, ExecutionContext context)
+			throws ActionException {
+		UserDto userDto;
+		isLoggedIn = true;
 
-        if (action.getActionType() == ActionType.VIA_COOKIE) {
-            userDto = getUserFromCookie(action.getLoggedInCookie());
-        } else {
-            userDto = getUserFromCredentials(action.getUsername(), action.getPassword());
-        }
+		if (action.getActionType() == ActionType.VIA_COOKIE) {
+			userDto = getUserFromCookie(action.getLoggedInCookie());
+		} else {
+			userDto = getUserFromCredentials(action.getEmail(),
+					action.getPassword());
+		}
 
-        CurrentUserDto currentUserDto = new CurrentUserDto(isLoggedIn, userDto);
+		CurrentUserDto currentUserDto = new CurrentUserDto(isLoggedIn, userDto);
 
-        String loggedInCookie = "";
-        if (isLoggedIn) {
-            loggedInCookie = loginCookieDao.createSessionCookie(userDto);
-        }
+		String loggedInCookie = "";
+		if (isLoggedIn) {
+			loggedInCookie = loginCookieDao.createSessionCookie(userDto);
+		}
 
-        logger.info("LogInHandlerexecut(): actiontype=" + getActionType());
-        logger.info("LogInHandlerexecut(): currentUserDto=" + currentUserDto);
-        logger.info("LogInHandlerexecut(): loggedInCookie=" + loggedInCookie);
+		logger.info("LogInHandlerexecut(): actiontype=" + getActionType());
+		logger.info("LogInHandlerexecut(): currentUserDto=" + currentUserDto);
+		logger.info("LogInHandlerexecut(): loggedInCookie=" + loggedInCookie);
 
-        return new LogInResult(action.getActionType(), currentUserDto, loggedInCookie);
-    }
+		return new LogInResult(action.getActionType(), currentUserDto,
+				loggedInCookie);
+	}
 
-    @Override
-    public void undo(LogInAction action, LogInResult result, ExecutionContext context) throws ActionException {
-    }
+	@Override
+	public void undo(LogInAction action, LogInResult result,
+			ExecutionContext context) throws ActionException {
+	}
 
-    private UserDto getUserFromCookie(String loggedInCookie) {
-        UserDto userDto = null;
-        try {
-            userDto = authenticator.authenticatCookie(loggedInCookie);
-        } catch (AuthenticationException e) {
-            isLoggedIn = false;
-        }
+	private UserDto getUserFromCookie(String loggedInCookie) {
+		UserDto userDto = null;
+		try {
+			userDto = authenticator.authenticatCookie(loggedInCookie);
+		} catch (AuthenticationException e) {
+			isLoggedIn = false;
+		}
 
-        return userDto;
-    }
+		return userDto;
+	}
 
-    private UserDto getUserFromCredentials(String username, String password) {
-        UserDto userDto = null;
-        try {
-            userDto = authenticator.authenticateCredentials(username, password);
-        } catch (AuthenticationException e) {
-            isLoggedIn = false;
-        }
+	private UserDto getUserFromCredentials(String username, String password) {
+		UserDto userDto = null;
+		try {
+			userDto = authenticator.authenticateCredentials(username, password);
+		} catch (AuthenticationException e) {
+			isLoggedIn = false;
+		}
 
-        return userDto;
-    }
+		return userDto;
+	}
 }

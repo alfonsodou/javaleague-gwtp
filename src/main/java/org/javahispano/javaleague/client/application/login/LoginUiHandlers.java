@@ -19,6 +19,6 @@ package org.javahispano.javaleague.client.application.login;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface LoginUiHandlers extends UiHandlers {
-    void login(String username, String password);
+    void login(String email, String password);
     void registerUser(String username, String password, String email);
 }
