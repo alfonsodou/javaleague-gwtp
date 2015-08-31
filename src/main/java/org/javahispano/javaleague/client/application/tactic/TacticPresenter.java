@@ -3,6 +3,9 @@
  */
 package org.javahispano.javaleague.client.application.tactic;
 
+import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader;
+import gwtupload.client.SingleUploader;
 
 import org.javahispano.javaleague.client.application.ApplicationPresenter;
 import org.javahispano.javaleague.client.application.tactic.TacticPresenter.MyProxy;
@@ -11,7 +14,7 @@ import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.api.UserResource;
 
-import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.delegates.client.ResourceDelegate;
@@ -32,6 +35,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		TacticUiHandlers {
 	interface MyView extends View, HasUiHandlers<TacticUiHandlers> {
 		//FormPanel getFormPanelTactic();
+
+		SingleUploader getSingleUploader();
 	}
 
 	@ProxyCodeSplit
@@ -54,8 +59,16 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		this.userResource = userResource;
 		this.currentUser = currentUser;
 
-		//getView().getFormPanelTactic().setMethod(FormPanel.METHOD_POST);
-		//getView().getFormPanelTactic().setEncoding(FormPanel.ENCODING_MULTIPART);
 		getView().setUiHandlers(this);
+		getView().getSingleUploader().addOnFinishUploadHandler(
+				onFinishUploaderHandler);
 	}
+
+	private IUploader.OnFinishUploaderHandler onFinishUploaderHandler = new IUploader.OnFinishUploaderHandler() {
+		public void onFinish(IUploader uploader) {
+			if (uploader.getStatus() == Status.SUCCESS) {
+				Window.alert(uploader.getInputName());
+			}
+		}
+	};
 }

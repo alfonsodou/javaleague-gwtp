@@ -17,7 +17,8 @@
 		<gin.version>2.1.2</gin.version>
 		<gwtquery.version>1.4.2</gwtquery.version>
 		<objectify-gwt.version>1.2.1</objectify-gwt.version>
-		<gwtbootstrap.version>1.0-SNAPSHOT</gwtbootstrap.version>
+		<gwtbootstrap.version>0.9.1</gwtbootstrap.version>
+		<gwtupload.version>1.0.4-SNAPSHOT</gwtupload.version>
 
 		<!-- Server -->
 		<gae.version>1.9.25</gae.version>
@@ -318,10 +319,25 @@
 
 		<!-- Other -->
 		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3.1</version>
+			<groupId>com.googlecode.gwtupload</groupId>
+			<artifactId>gwtupload</artifactId>
+			<version>${gwtupload.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.gwtupload</groupId>
+			<artifactId>gwtupload-gae</artifactId>
+			<version>${gwtupload.version}</version>
+			<exclusions>
+				<!-- This exclusion got rid of the super hard to track down IllegalArgumentException 
+					on startup related to SdkInfo -->
+				<exclusion>
+					<artifactId>appengine-tools-sdk</artifactId>
+					<groupId>com.google.appengine</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- <dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
+			<version>1.3.1</version> </dependency> -->
 		<dependency>
 			<groupId>com.googlecode.gwtquery</groupId>
 			<artifactId>gwtquery</artifactId>
