@@ -135,7 +135,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
         if (currentUserDto.isLoggedIn()) {
             currentUser.fromCurrentUserDto(currentUserDto);
 
-            redirectToLoggedOnPage();
+            //redirectToLoggedOnPage();
 
             UserLoginEvent.fire(this);
             //DisplayMessageEvent.fire(this, new Message(messages.onSuccessfulLogin(), MessageStyle.SUCCESS));

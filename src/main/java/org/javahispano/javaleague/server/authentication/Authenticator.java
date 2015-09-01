@@ -27,80 +27,88 @@ import org.javahispano.javaleague.shared.dto.CurrentUserDto;
 import org.javahispano.javaleague.shared.dto.UserDto;
 
 public class Authenticator {
-    private final UserDao userDao;
-    private final Provider<HttpSession> sessionProvider;
-    private final PasswordSecurity passwordSecurity;
-    private final CurrentUserDtoProvider currentUserDtoProvider;
-    private final UserSessionDao userSessionDao;
+	private final UserDao userDao;
+	private final Provider<HttpSession> sessionProvider;
+	private final PasswordSecurity passwordSecurity;
+	private final CurrentUserDtoProvider currentUserDtoProvider;
+	private final UserSessionDao userSessionDao;
 
-    @Inject
-    Authenticator(
-            UserDao userDao,
-            Provider<HttpSession> sessionProvider,
-            PasswordSecurity passwordSecurity,
-            CurrentUserDtoProvider currentUserDtoProvider,
-            UserSessionDao userSessionDao) {
-        this.userDao = userDao;
-        this.sessionProvider = sessionProvider;
-        this.passwordSecurity = passwordSecurity;
-        this.currentUserDtoProvider = currentUserDtoProvider;
-        this.userSessionDao = userSessionDao;
-    }
+	@Inject
+	Authenticator(UserDao userDao, Provider<HttpSession> sessionProvider,
+			PasswordSecurity passwordSecurity,
+			CurrentUserDtoProvider currentUserDtoProvider,
+			UserSessionDao userSessionDao) {
+		this.userDao = userDao;
+		this.sessionProvider = sessionProvider;
+		this.passwordSecurity = passwordSecurity;
+		this.currentUserDtoProvider = currentUserDtoProvider;
+		this.userSessionDao = userSessionDao;
+	}
 
-    public UserDto authenticateCredentials(String email, String password) {
-        try {
-            User user = userDao.findByEmail(email);
+	public UserDto authenticateCredentials(String email, String password) {
+		try {
+			User user = userDao.findByEmail(email);
 
-            if (passwordSecurity.check(password, user.getHashPassword())) {
-                UserDto userDto = User.createDto(user);
-                persistHttpSessionCookie(userDto);
+			if (passwordSecurity.check(password, user.getHashPassword())) {
+				UserDto userDto = User.createDto(user);
+				persistHttpSessionCookie(userDto);
 
-                return userDto;
-            } else {
-                throw new AuthenticationException();
-            }
-        } catch (Exception e) {
-            throw new AuthenticationException();
-        }
-    }
+				return userDto;
+			} else {
+				throw new AuthenticationException();
+			}
+		} catch (Exception e) {
+			throw new AuthenticationException();
+		}
+	}
 
-    public UserDto authenticatCookie(String loggedInCookie) throws AuthenticationException {
-        UserDto userDto = userSessionDao.getUserFromCookie(loggedInCookie);
+	public UserDto authenticatCookie(String loggedInCookie)
+			throws AuthenticationException {
+		UserDto userDto = userSessionDao.getUserFromCookie(loggedInCookie);
 
-        if (userDto == null) {
-            throw new AuthenticationException();
-        } else {
-            persistHttpSessionCookie(userDto);
-        }
+		if (userDto == null) {
+			throw new AuthenticationException();
+		} else {
+			persistHttpSessionCookie(userDto);
+		}
 
-        return userDto;
-    }
+		return userDto;
+	}
 
-    public void logout() {
-        removeCurrentUserLoginCookie();
+	public void logout() {
+		removeCurrentUserLoginCookie();
 
-        HttpSession httpSession = sessionProvider.get();
-        httpSession.invalidate();
-    }
+		HttpSession httpSession = sessionProvider.get();
+		httpSession.invalidate();
+	}
 
-    /**
-     * Session support has to be enabled in the appengine-web.xml.
-     */
-    private void persistHttpSessionCookie(UserDto user) {
-        HttpSession session = sessionProvider.get();
-        session.setAttribute(SecurityParameters.getUserSessionKey(), user.getId());
-    }
+	/**
+	 * Session support has to be enabled in the appengine-web.xml.
+	 */
+	private void persistHttpSessionCookie(UserDto user) {
+		HttpSession session = sessionProvider.get();
+		session.setAttribute(SecurityParameters.getUserSessionKey(),
+				user.getId());
+	}
 
-    public Boolean isUserLoggedIn() {
-        HttpSession session = sessionProvider.get();
-        Long userId = (Long) session.getAttribute(SecurityParameters.getUserSessionKey());
+	public Boolean isUserLoggedIn() {
+		HttpSession session = sessionProvider.get();
+		Long userId = (Long) session.getAttribute(SecurityParameters
+				.getUserSessionKey());
 
-        return userId != null;
-    }
+		return userId != null;
+	}
 
-    private void removeCurrentUserLoginCookie() {
-        CurrentUserDto currentUserDto = currentUserDtoProvider.get();
-        UserDto userDto = currentUserDto.getUser();
-        userSessionDao.removeLoggedInCookie(userDto);
-    }
+	public Long getUserSessionKey() {
+		HttpSession session = sessionProvider.get();
+
+		return (Long) session.getAttribute(SecurityParameters
+				.getUserSessionKey());
+	}
+
+	private void removeCurrentUserLoginCookie() {
+		CurrentUserDto currentUserDto = currentUserDtoProvider.get();
+		UserDto userDto = currentUserDto.getUser();
+		userSessionDao.removeLoggedInCookie(userDto);
+	}
 }
