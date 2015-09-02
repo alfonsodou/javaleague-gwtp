@@ -23,14 +23,10 @@ import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.authentication.Authenticator;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.dao.UserSessionDao;
-import org.javahispano.javaleague.server.servlets.GcsInputChannel;
-import org.javahispano.javaleague.server.utils.Utils;
-import org.javahispano.javaleague.shared.AppLib;
-import org.javahispano.javaleague.shared.domain.FrameWork;
 
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
+import com.google.appengine.tools.cloudstorage.GcsInputChannel;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
@@ -76,6 +72,8 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 							"javaleague.appspot.com/usuarios/" + userSessionKey,
 							"tactica.jar");
 					writeToFile(fileName, tacticBytes);
+					
+					int result = validateTactic(tacticBytes, userSessionKey);
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -111,7 +109,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		return result.array();
 	}
 	
-	private int validateTactic(byte[] tactic, String tacticId) {
+	private int validateTactic(byte[] tactic, Long userSessionKey) {
 		int result = 0;
 		Map<String, byte[]> byteStream;
 
@@ -132,7 +130,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 
 			Agent a = cz.newInstance();
 
-			result = loadClass(tactic, a, AppLib.PATH_PACKAGE + tacticId);
+			result = loadClass(tactic, a, "org.javahispano.javaleague.tactic.ID_" + userSessionKey);
 
 			// Realizamos la última comprobación
 			// Ejecutar las primeras iteraciones de un partido
@@ -145,7 +143,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 
 		} catch (Exception e) {
 			result = 1;
-			log.warning(Utils.stackTraceToString(e));
+			logger.warning(e.toString());
 		}
 
 		return result;
@@ -179,7 +177,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 				}
 
 			} catch (Exception e) {
-				log.warning(Utils.stackTraceToString(e));
+				logger.warning(e.toString());
 			}
 
 		}
@@ -196,11 +194,11 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 				cz = myDataStoreClassLoader.loadClass(name);
 
 				if (a.isTactic(cz)) {
-					objectTactic = cz.newInstance();
+					Object objectTactic = cz.newInstance();
 					existInterfaceTactic = true;
 				}
 			} catch (Exception e) {
-				log.warning(Utils.stackTraceToString(e));
+				logger.warning(e.toString());
 			}
 
 		}
