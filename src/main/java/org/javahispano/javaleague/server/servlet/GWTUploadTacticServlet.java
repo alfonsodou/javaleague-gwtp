@@ -8,7 +8,9 @@ import gwtupload.server.gae.AppEngineUploadAction;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -17,9 +19,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.IOUtils;
+import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.authentication.Authenticator;
+import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.dao.UserSessionDao;
+import org.javahispano.javaleague.server.servlets.GcsInputChannel;
+import org.javahispano.javaleague.server.utils.Utils;
+import org.javahispano.javaleague.shared.AppLib;
+import org.javahispano.javaleague.shared.domain.FrameWork;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
@@ -40,6 +49,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 	private static final long serialVersionUID = -8341308719085191264L;
 	private final GcsService gcsService = GcsServiceFactory
 			.createGcsService(RetryParams.getDefaultInstance());
+	private MyDataStoreClassLoader myDataStoreClassLoader;
 	private final Authenticator authenticator;
 	private final UserSessionDao loginCookieDao;
 	private final Logger logger;
@@ -82,5 +92,126 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 				GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
+	}
+	
+	private byte[] readFile(GcsFilename fileName) {
+		int fileSize;
+		ByteBuffer result = null;
+		try {
+			fileSize = (int) gcsService.getMetadata(fileName).getLength();
+			result = ByteBuffer.allocate(fileSize);
+			try (GcsInputChannel readChannel = gcsService.openReadChannel(
+					fileName, 0)) {
+				readChannel.read(result);
+			}
+		} catch (Exception e) {
+			logger.warning(e.toString());
+		}
+
+		return result.array();
+	}
+	
+	private int validateTactic(byte[] tactic, String tacticId) {
+		int result = 0;
+		Map<String, byte[]> byteStream;
+
+		try {
+			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
+					.getClassLoader());
+
+			// Cargamos el framework
+			GcsFilename fileNameFramework = new GcsFilename(
+					"javaleague.appspot.com/framework/",
+					"framework_20150901.jar");
+
+			byteStream = myDataStoreClassLoader.addClassJar(readFile(fileNameFramework));
+
+			Class<? extends Agent> cz = Class.forName(
+					"org.javahispano.javacup.model.engine.AgentPartido", true,
+					myDataStoreClassLoader).asSubclass(Agent.class);
+
+			Agent a = cz.newInstance();
+
+			result = loadClass(tactic, a, AppLib.PATH_PACKAGE + tacticId);
+
+			// Realizamos la última comprobación
+			// Ejecutar las primeras iteraciones de un partido
+			/*if (result == 0) {
+				stackTrace = a.testTactic(objectTactic, objectTactic);
+				if (stackTrace != null) {
+					result = 3;
+				}
+			}*/
+
+		} catch (Exception e) {
+			result = 1;
+			log.warning(Utils.stackTraceToString(e));
+		}
+
+		return result;
+	}
+
+	private int loadClass(byte[] tactic, Agent a, String packagePath)
+			throws IOException, ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		Class<?> cz = null;
+		Class<?> result = null;
+		Map<String, byte[]> byteStream;
+		boolean errorPackageName, existInterfaceTactic;
+		int errorValidate = 0;
+
+		byteStream = myDataStoreClassLoader.addClassJar(tactic);
+
+		Iterator it = byteStream.entrySet().iterator();
+		errorPackageName = false;
+		while (it.hasNext() && !errorPackageName) {
+
+			try {
+				Map.Entry e = (Map.Entry) it.next();
+
+				String name = new String((String) e.getKey());
+
+				if (!name.contains(packagePath)) {
+					errorPackageName = true;
+				} else {
+					myDataStoreClassLoader
+							.addClass(name, (byte[]) e.getValue());
+				}
+
+			} catch (Exception e) {
+				log.warning(Utils.stackTraceToString(e));
+			}
+
+		}
+
+		Iterator it1 = byteStream.entrySet().iterator();
+		existInterfaceTactic = false;
+		while (!errorPackageName && it1.hasNext() && !existInterfaceTactic) {
+
+			try {
+				Map.Entry e = (Map.Entry) it1.next();
+
+				String name = new String((String) e.getKey());
+
+				cz = myDataStoreClassLoader.loadClass(name);
+
+				if (a.isTactic(cz)) {
+					objectTactic = cz.newInstance();
+					existInterfaceTactic = true;
+				}
+			} catch (Exception e) {
+				log.warning(Utils.stackTraceToString(e));
+			}
+
+		}
+
+		if (errorPackageName == true) {
+			errorValidate = 1;
+		} else if (existInterfaceTactic == false) {
+			errorValidate = 2;
+		}
+
+		return errorValidate;
+
 	}
 }
