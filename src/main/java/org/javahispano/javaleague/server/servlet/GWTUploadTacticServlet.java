@@ -72,7 +72,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 							"javaleague.appspot.com/usuarios/" + userSessionKey,
 							"tactica.jar");
 					writeToFile(fileName, tacticBytes);
-					
+
 					int result = validateTactic(tacticBytes, userSessionKey);
 				}
 			} catch (IOException e) {
@@ -91,24 +91,28 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
 	}
-	
+
 	private byte[] readFile(GcsFilename fileName) {
 		int fileSize;
 		ByteBuffer result = null;
+
+		logger.warning(fileName.toString());
+
 		try {
 			fileSize = (int) gcsService.getMetadata(fileName).getLength();
 			result = ByteBuffer.allocate(fileSize);
-			try (GcsInputChannel readChannel = gcsService.openReadChannel(
-					fileName, 0)) {
-				readChannel.read(result);
-			}
+
+			GcsInputChannel readChannel = gcsService.openReadChannel(fileName,
+					0);
+			readChannel.read(result);
+
 		} catch (Exception e) {
 			logger.warning(e.toString());
 		}
 
 		return result.array();
 	}
-	
+
 	private int validateTactic(byte[] tactic, Long userSessionKey) {
 		int result = 0;
 		Map<String, byte[]> byteStream;
@@ -119,10 +123,11 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 
 			// Cargamos el framework
 			GcsFilename fileNameFramework = new GcsFilename(
-					"javaleague.appspot.com/framework/",
+					"javaleague.appspot.com/framework",
 					"framework_20150901.jar");
 
-			byteStream = myDataStoreClassLoader.addClassJar(readFile(fileNameFramework));
+			myDataStoreClassLoader
+					.addClassJarFramework(readFile(fileNameFramework));
 
 			Class<? extends Agent> cz = Class.forName(
 					"org.javahispano.javacup.model.engine.AgentPartido", true,
@@ -130,16 +135,15 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 
 			Agent a = cz.newInstance();
 
-			result = loadClass(tactic, a, "org.javahispano.javaleague.tactic.ID_" + userSessionKey);
+			result = loadClass(tactic, a,
+					"org.javahispano.javaleague.tactic.ID_" + userSessionKey);
 
 			// Realizamos la última comprobación
 			// Ejecutar las primeras iteraciones de un partido
-			/*if (result == 0) {
-				stackTrace = a.testTactic(objectTactic, objectTactic);
-				if (stackTrace != null) {
-					result = 3;
-				}
-			}*/
+			/*
+			 * if (result == 0) { stackTrace = a.testTactic(objectTactic,
+			 * objectTactic); if (stackTrace != null) { result = 3; } }
+			 */
 
 		} catch (Exception e) {
 			result = 1;

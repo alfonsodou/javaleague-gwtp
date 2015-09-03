@@ -112,7 +112,7 @@ public class MyDataStoreClassLoader extends ClassLoader {
 				if (name.contains(".class")) {
 					name = name.substring(0, name.indexOf(".class"))
 							.replaceAll("/", ".");
-					//logger.warning("addClassJar :: class name: " + name);
+					logger.warning("addClassJar :: class name: " + name);
 					if (tempByteStreams.containsKey(name)) {
 						logger.warning("duplicate defintion of class/resource "
 								+ name + ". It will be ignored");
@@ -141,8 +141,8 @@ public class MyDataStoreClassLoader extends ClassLoader {
 				if (name.contains(".class")) {
 					name = name.substring(0, name.indexOf(".class"))
 							.replaceAll("/", ".");
-					/*logger.warning("addClassJarFramework :: class name: "
-							+ name);*/
+					logger.warning("addClassJarFramework :: class name: "
+							+ name);
 					if (byteStreams.containsKey(name)) {
 						logger.warning("duplicate defintion of class/resource "
 								+ name + ". It will be ignored");
@@ -157,6 +157,34 @@ public class MyDataStoreClassLoader extends ClassLoader {
 		});
 	}
 
+	public void addClassJarFramework(byte[] bytes) throws IOException {
+		InputStream in = new ByteArrayInputStream(bytes);
+		ZipInputStream zin = new ZipInputStream(in);
+		ZipScanner.scan(zin, new ZipEntryHandler() {
+			@Override
+			public void readZipEntry(ZipEntry entry, ZipInputStream in)
+					throws IOException {
+				String name = entry.getName();
+				if (name.contains(".class")) {
+					name = name.substring(0, name.indexOf(".class"))
+							.replaceAll("/", ".");
+					logger.warning("addClassJarFramework :: class name: "
+							+ name);
+					if (byteStreams.containsKey(name)) {
+						logger.warning("duplicate defintion of class/resource "
+								+ name + ". It will be ignored");
+					} else {
+						byteStreams.put(name,
+								ZipScanner.readZipBytes(entry, in));
+						// addClass(name, ZipScanner.readZipBytes(entry, in));
+					}
+				}
+			}
+
+		});
+	}
+	
+	
 	public void addClassBlob(String name, BlobKey key) throws IOException {
 		if (byteStreams.containsKey(name)) {
 			logger.warning("duplicate defintion of class/resource " + name
