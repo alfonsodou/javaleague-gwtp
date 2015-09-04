@@ -66,6 +66,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 	private IUploader.OnFinishUploaderHandler onFinishUploaderHandler = new IUploader.OnFinishUploaderHandler() {
 		public void onFinish(IUploader uploader) {
+			Window.alert(uploader.getServerMessage().getMessage());
 			if (uploader.getStatus() == Status.SUCCESS) {
 				Window.alert(uploader.getInputName());
 			}
