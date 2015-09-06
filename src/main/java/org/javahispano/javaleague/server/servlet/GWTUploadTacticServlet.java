@@ -68,15 +68,15 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 				byte[] tacticBytes = IOUtils.toByteArray(item.getInputStream());
 				if (tacticBytes != null) {
 					Long userSessionKey = authenticator.getUserSessionKey();
-					int result = validateTactic(tacticBytes, userSessionKey);
-					if (result == 0) {
+					String result = validateTactic(tacticBytes, userSessionKey);
+					if (result.equals("OK")) {
 						out = "OK";
 						GcsFilename fileName = new GcsFilename(
 								"javaleague.appspot.com/usuarios/"
 										+ userSessionKey, "tactica.jar");
 						writeToFile(fileName, tacticBytes);
 					} else {
-						out = "KO";
+						out = result;
 					}
 				}
 			} catch (Exception e) {
@@ -116,47 +116,43 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		return result.array();
 	}
 
-	private int validateTactic(byte[] tactic, Long userSessionKey)
-			throws Exception {
-		int result = 0;
+	private String validateTactic(byte[] tactic, Long userSessionKey) {
+		String result = "OK";
 		Map<String, byte[]> byteStream;
 
-		myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
-				.getClassLoader());
+		try {
+			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
+					.getClassLoader());
 
-		// Cargamos el framework
-		GcsFilename fileNameFramework = new GcsFilename(
-				"javaleague.appspot.com/framework", "framework_20150901.jar");
+			// Cargamos el framework
+			GcsFilename fileNameFramework = new GcsFilename(
+					"javaleague.appspot.com/framework",
+					"framework_20150901.jar");
 
-		myDataStoreClassLoader
-				.addClassJarFramework(readFile(fileNameFramework));
+			myDataStoreClassLoader
+					.addClassJarFramework(readFile(fileNameFramework));
 
-		Class<? extends Agent> cz = Class.forName(
-				"org.javahispano.javacup.model.engine.AgentPartido", true,
-				myDataStoreClassLoader).asSubclass(Agent.class);
+			Class<? extends Agent> cz = Class.forName(
+					"org.javahispano.javacup.model.engine.AgentPartido", true,
+					myDataStoreClassLoader).asSubclass(Agent.class);
 
-		Agent a = cz.newInstance();
+			Agent a = cz.newInstance();
 
-		result = loadClass(tactic, a, "org.javahispano.javaleague.tactic.ID_"
-				+ userSessionKey);
-
-		// Realizamos la última comprobación
-		// Ejecutar las primeras iteraciones de un partido
-		/*
-		 * if (result == 0) { stackTrace = a.testTactic(objectTactic,
-		 * objectTactic); if (stackTrace != null) { result = 3; } }
-		 */
-
+			result = loadClass(tactic, a,
+					"org.javahispano.javaleague.tactic.ID_" + userSessionKey);
+		} catch (Exception e) {
+			result = e.toString();
+		}
 		return result;
 	}
 
-	private int loadClass(byte[] tactic, Agent a, String packagePath)
+	private String loadClass(byte[] tactic, Agent a, String packagePath)
 			throws Exception {
 		Class<?> cz = null;
 		Class<?> result = null;
 		Map<String, byte[]> byteStream;
 		boolean errorPackageName, existInterfaceTactic;
-		int errorValidate = 0;
+		String errorValidate = "OK";
 		Object objectTactic = null;
 
 		byteStream = myDataStoreClassLoader.addClassJar(tactic);
@@ -171,8 +167,8 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 
 			if (!name.contains(packagePath)) {
 				errorPackageName = true;
-				
-				return 1;
+
+				return "KO";
 			} else {
 				myDataStoreClassLoader.addClass(name, (byte[]) e.getValue());
 			}
@@ -197,9 +193,9 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		}
 
 		if (existInterfaceTactic == false) {
-			return 2;
+			return "KO";
 		} else {
-			a.testTactic(objectTactic, objectTactic);
+			a.testTactic(objectTactic, objectTactic, 3600);
 		}
 
 		return errorValidate;
