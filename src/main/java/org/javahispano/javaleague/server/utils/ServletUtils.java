@@ -21,6 +21,9 @@ package org.javahispano.javaleague.server.utils;
  */
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -94,10 +97,29 @@ public class ServletUtils {
 		} else {
 			hostUrl = "http://localhost:8888";
 		}
-		
+
 		return hostUrl;
 	}
-	
 
+	public static String stackTraceToString(Throwable e) {
+		String retValue = null;
+		StringWriter sw = null;
+		PrintWriter pw = null;
+		try {
+			sw = new StringWriter();
+			pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			retValue = sw.toString();
+		} finally {
+			try {
+				if (pw != null)
+					pw.close();
+				if (sw != null)
+					sw.close();
+			} catch (IOException ignore) {
+			}
+		}
+		return retValue;
+	}
 
 }

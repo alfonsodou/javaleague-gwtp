@@ -17,11 +17,12 @@
 package org.javahispano.javaleague.shared.dto;
 
 public class UserDto extends BaseEntity {
-    private String username;
+    private String userName;
     private String hashPassword;
     private String email;
     private boolean active;
     private String token;
+    private String teamName;
 
     public UserDto() {
     }
@@ -31,20 +32,22 @@ public class UserDto extends BaseEntity {
             String hashPassword,
             String email,
             boolean active,
-            String token) {
-        this.username = username;
+            String token,
+            String teamName) {
+        this.userName = username;
         this.hashPassword = hashPassword;
         this.email = email;
         this.active = active;
         this.token = token;
+        this.teamName = teamName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getHashPassword() {
@@ -96,16 +99,25 @@ public class UserDto extends BaseEntity {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
 
 	@Override
     public String toString() {
         String s = " { User ";
         s += "id=" + id + " ";
-        s += "username=" + username + " ";
+        s += "username=" + userName + " ";
         s += "hasPassword=" + hashPassword + " ";
         s += "email=" + email + " ";
         s += "active=" + active + " ";
         s += "token=" + token + " ";
+        s += "teamName=" + teamName + " ";
         s += " User } ";
         return s;
     }

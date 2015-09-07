@@ -25,21 +25,22 @@ import com.googlecode.objectify.annotation.Index;
 @Index
 @Entity
 public class User extends BaseEntity {
-    private String username;
+    private String userName;
     private String hashPassword;
     private String email;
     private boolean active;
     private String token;
+    private String teamName;
 
     public User() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getHashPassword() {
@@ -91,16 +92,25 @@ public class User extends BaseEntity {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
 
 	@Override
     public String toString() {
         String s = "{ User ";
         s += "id=" + id + " ";
-        s += "username=" + username + " ";
+        s += "username=" + userName + " ";
         s += "hasPassword=" + hashPassword + " ";
         s += "email=" + email + " ";
         s += "active=" + active + " ";
         s += "token= " + token + " ";
+        s += "teamName=" + teamName + " ";
         s += "}";
         return s;
     }
@@ -111,10 +121,11 @@ public class User extends BaseEntity {
         }
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setUsername(user.getUsername());
+        userDto.setUserName(user.getUserName());
         userDto.setEmail(user.getEmail());
         userDto.setActive(user.isActive());
         userDto.setToken(user.getToken());
+        userDto.setTeamName(user.getTeamName());
 
         return userDto;
     }
@@ -127,10 +138,11 @@ public class User extends BaseEntity {
         User user = new User();
         user.setHashPassword(userDto.getHashPassword());
         user.setId(userDto.getId());
-        user.setUsername(userDto.getUsername());
+        user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
         user.setActive(userDto.isActive());
         user.setToken(userDto.getToken());
+        user.setTeamName(userDto.getTeamName());
 
         return user;
     }

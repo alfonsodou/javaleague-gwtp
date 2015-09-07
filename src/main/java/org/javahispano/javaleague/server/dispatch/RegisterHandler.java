@@ -62,7 +62,7 @@ public class RegisterHandler extends
 		if (user == null) {
 			user = new User();
 			SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
-			user.setUsername(action.getUserName());
+			user.setUserName(action.getUserName());
 			user.setHashPassword(passwordSecurity.hashPassword(action
 					.getPassword()));
 			user.setEmail(action.getEmail());
@@ -71,7 +71,7 @@ public class RegisterHandler extends
 			userDao.put(user);
 
 			VelocityContext velocityContext = new VelocityContext();
-			velocityContext.put("username", user.getUsername());
+			velocityContext.put("username", user.getUserName());
 			velocityContext.put("url", ServletUtils.getBaseUrl()
 					+ "authenticate?token=" + user.getToken() + "&email="
 					+ user.getEmail());
@@ -92,7 +92,7 @@ public class RegisterHandler extends
 				msg.setFrom(new InternetAddress("javaleague@gmail.com",
 						"Administrador javaleague"));
 				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
-						user.getEmail(), user.getUsername()));
+						user.getEmail(), user.getUserName()));
 				msg.setSubject("Bienvenido a javaleague!");
 
 				msg.setContent(writer.toString(), "text/html; charset=utf-8");

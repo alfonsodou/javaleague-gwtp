@@ -23,6 +23,7 @@ import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.authentication.Authenticator;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.dao.UserSessionDao;
+import org.javahispano.javaleague.server.utils.ServletUtils;
 
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
@@ -77,10 +78,17 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 						writeToFile(fileName, tacticBytes);
 					} else {
 						out = result;
+						logger.warning("Exception: " + out);
 					}
 				}
-			} catch (Exception e) {
-				out = e.toString();
+			} catch (Throwable e) {
+				if (e instanceof UploadActionException) {
+					throw (UploadActionException) e;
+				} else {
+					out = ServletUtils.stackTraceToString(e);
+					logger.warning("Exception: " + out);
+					return out;
+				}
 			}
 		}
 
@@ -116,33 +124,30 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		return result.array();
 	}
 
-	private String validateTactic(byte[] tactic, Long userSessionKey) {
+	private String validateTactic(byte[] tactic, Long userSessionKey)
+			throws Exception {
 		String result = "OK";
 		Map<String, byte[]> byteStream;
 
-		try {
-			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
-					.getClassLoader());
+		myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
+				.getClassLoader());
 
-			// Cargamos el framework
-			GcsFilename fileNameFramework = new GcsFilename(
-					"javaleague.appspot.com/framework",
-					"framework_20150901.jar");
+		// Cargamos el framework
+		GcsFilename fileNameFramework = new GcsFilename(
+				"javaleague.appspot.com/framework", "framework_20150901.jar");
 
-			myDataStoreClassLoader
-					.addClassJarFramework(readFile(fileNameFramework));
+		myDataStoreClassLoader
+				.addClassJarFramework(readFile(fileNameFramework));
 
-			Class<? extends Agent> cz = Class.forName(
-					"org.javahispano.javacup.model.engine.AgentPartido", true,
-					myDataStoreClassLoader).asSubclass(Agent.class);
+		Class<? extends Agent> cz = Class.forName(
+				"org.javahispano.javacup.model.engine.AgentPartido", true,
+				myDataStoreClassLoader).asSubclass(Agent.class);
 
-			Agent a = cz.newInstance();
+		Agent a = cz.newInstance();
 
-			result = loadClass(tactic, a,
-					"org.javahispano.javaleague.tactic.ID_" + userSessionKey);
-		} catch (Exception e) {
-			result = e.toString();
-		}
+		result = loadClass(tactic, a, "org.javahispano.javaleague.tactic.ID_"
+				+ userSessionKey);
+
 		return result;
 	}
 

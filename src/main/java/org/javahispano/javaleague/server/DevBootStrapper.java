@@ -88,7 +88,7 @@ public class DevBootStrapper {
 	private void createBasicUser() {
 		UserDto userDto = new UserDto("admin",
 				passwordSecurity.hashPassword("qwerty"), "admin@admin.com",
-				true, "qwerty");
+				true, "qwerty", "teamName");
 		userDao.put(User.create(userDto));
 	}
 

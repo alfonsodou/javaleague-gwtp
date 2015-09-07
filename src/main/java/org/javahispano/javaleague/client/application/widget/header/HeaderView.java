@@ -60,7 +60,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements
 		login.setVisible(false);
 		tactic.setVisible(true);
 		userLogin.setVisible(true);
-		userName.setText(userDto.getUsername());
+		userName.setText(userDto.getUserName());
 	}
 
 	@Override
