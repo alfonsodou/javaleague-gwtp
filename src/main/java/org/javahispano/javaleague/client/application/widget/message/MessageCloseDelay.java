@@ -18,7 +18,9 @@ package org.javahispano.javaleague.client.application.widget.message;
 
 public enum MessageCloseDelay {
     NEVER(0),
-    DEFAULT(5000);
+    DEFAULT(5000),
+    INTERMEDIATE(10000),
+    HIGH(15000);
 
     private int delay;
 

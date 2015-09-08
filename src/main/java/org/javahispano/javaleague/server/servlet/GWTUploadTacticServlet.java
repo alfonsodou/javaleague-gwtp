@@ -107,8 +107,6 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		int fileSize;
 		ByteBuffer result = null;
 
-		logger.warning(fileName.toString());
-
 		try {
 			fileSize = (int) gcsService.getMetadata(fileName).getLength();
 			result = ByteBuffer.allocate(fileSize);
@@ -173,7 +171,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 			if (!name.contains(packagePath)) {
 				errorPackageName = true;
 
-				return "KO";
+				return "errorPackageName";
 			} else {
 				myDataStoreClassLoader.addClass(name, (byte[]) e.getValue());
 			}
@@ -198,7 +196,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		}
 
 		if (existInterfaceTactic == false) {
-			return "KO";
+			return "errorExistInterfaceTactic";
 		} else {
 			a.testTactic(objectTactic, objectTactic, 3600);
 		}

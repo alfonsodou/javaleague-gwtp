@@ -11,16 +11,25 @@
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
 
 	<!-- Other module inherits -->
+	<!-- Internationalization i18n -->
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.i18n.I18N" />
+	<!-- English language, independent of country -->
+	<extend-property name="locale" values="en" />
+	<!-- Spanish language, independent of country -->
+	<extend-property name="locale" values="es" />
+	<set-property-fallback name="locale" value="es"/>
 	<!-- Include GWTUpload library -->
-  	<inherits name="gwtupload.GWTUpload"/>
+	<inherits name="gwtupload.GWTUpload" />
 	<inherits name="com.google.gwt.query.Query" />
 	<inherits name="com.google.common.collect.Collect" />
 	<inherits name="com.googlecode.objectify.Objectify" />
 	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
+	<inherits name="org.gwtbootstrap3.extras.notify.Notify"/>
 	<inherits name="org.gwtbootstrap3.extras.cachemanifest.Offline" />
 	<add-linker name="offline" />
 	<extend-configuration-property name="cachemanifest_static_files"
-		value="/javaleague/javaleague.html" />	
+		value="/javaleague/javaleague.html" />
 
 	<generate-with
 		class="org.javahispano.javaleague.rebind.ColumnsInitializerGenerator">
