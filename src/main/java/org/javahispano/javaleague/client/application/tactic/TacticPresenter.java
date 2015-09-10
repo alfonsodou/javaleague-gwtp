@@ -11,6 +11,7 @@ import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Modal;
 import org.gwtbootstrap3.client.ui.ModalBody;
 import org.gwtbootstrap3.client.ui.ModalFooter;
+import org.gwtbootstrap3.client.ui.constants.ButtonType;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.html.Span;
 import org.gwtbootstrap3.extras.notify.client.constants.NotifyPlacement;
@@ -18,15 +19,13 @@ import org.gwtbootstrap3.extras.notify.client.constants.NotifyType;
 import org.gwtbootstrap3.extras.notify.client.ui.Notify;
 import org.gwtbootstrap3.extras.notify.client.ui.NotifySettings;
 import org.javahispano.javaleague.client.application.ApplicationPresenter;
-import org.javahispano.javaleague.client.application.event.DisplayMessageEvent;
 import org.javahispano.javaleague.client.application.tactic.TacticPresenter.MyProxy;
 import org.javahispano.javaleague.client.application.tactic.TacticPresenter.MyView;
-import org.javahispano.javaleague.client.application.widget.message.Message;
-import org.javahispano.javaleague.client.application.widget.message.MessageStyle;
 import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.resources.TacticMessages;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.api.UserResource;
+import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -97,13 +96,14 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		@Override
 		public void onFinish(IUploader uploader) {
 			if ((uploader.getStatus() == Status.SUCCESS)
-					&& (uploader.getServerMessage().getMessage().equals("OK"))) {
+					&& (uploader.getServerMessage().getMessage()
+							.equals(UploadParameters.getVALIDATETACTICOK()))) {
 				OnSuccessfulUploadTactic();
 			} else if (uploader.getServerMessage().getMessage()
-					.equals("errorPackageName")) {
+					.equals(UploadParameters.getERRORPACKAGENAME())) {
 				OnErrorUploadTactic(messages.onErrorPackageNameUploadTactic());
 			} else if (uploader.getServerMessage().getMessage()
-					.equals("errorExistInterfaceTactic")) {
+					.equals(UploadParameters.getERRORINTERFACETACTIC())) {
 				OnErrorUploadTactic(messages
 						.onErrorExistsInterfaceTacticUploadTactic());
 			} else
@@ -129,12 +129,14 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		modalBody.add(new Span(error));
 
 		final ModalFooter modalFooter = new ModalFooter();
-		modalFooter.add(new Button(messages.closeModal(), new ClickHandler() {
+		Button closeButton = new Button(messages.closeModal(), new ClickHandler() {
 			@Override
 			public void onClick(final ClickEvent event) {
 				modal.hide();
 			}
-		}));
+		}); 
+		closeButton.setType(ButtonType.DANGER);
+		modalFooter.add(closeButton);
 
 		modal.add(modalBody);
 		modal.add(modalFooter);
@@ -147,12 +149,14 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		settings.setType(NotifyType.INFO);
 		settings.setPlacement(NotifyPlacement.TOP_CENTER);
 		settings.setAllowDismiss(false);
-		Notify.notify(messages.title(), messages.onStartUploadTactic(), IconType.FILE_CODE_O, settings);
-		
-		/*DisplayMessageEvent.fire(this,
-				new Message(messages.onStartUploadTactic(),
-						MessageStyle.SUCCESS, MessageCloseDelay.HIGH));
-						*/
+		Notify.notify(messages.title(), messages.onStartUploadTactic(),
+				IconType.FILE_CODE_O, settings);
+
+		/*
+		 * DisplayMessageEvent.fire(this, new
+		 * Message(messages.onStartUploadTactic(), MessageStyle.SUCCESS,
+		 * MessageCloseDelay.HIGH));
+		 */
 	}
 
 	private void OnSuccessfulUploadTactic() {
@@ -160,12 +164,13 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		settings.setType(NotifyType.SUCCESS);
 		settings.setPlacement(NotifyPlacement.TOP_CENTER);
 		settings.setAllowDismiss(false);
-		Notify.notify(messages.title(), messages.onSuccessfulUploadTactic(), IconType.FILE_CODE_O, settings);
-		
-		/*DisplayMessageEvent.fire(this,
-				new Message(messages.onSuccessfulUploadTactic(),
-						MessageStyle.SUCCESS));
-						*/
+		Notify.notify(messages.title(), messages.onSuccessfulUploadTactic(),
+				IconType.FILE_CODE_O, settings);
+
+		/*
+		 * DisplayMessageEvent.fire(this, new
+		 * Message(messages.onSuccessfulUploadTactic(), MessageStyle.SUCCESS));
+		 */
 	}
 
 	private void OnCancelUploadTactic() {
@@ -173,11 +178,12 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		settings.setType(NotifyType.DANGER);
 		settings.setPlacement(NotifyPlacement.TOP_CENTER);
 		settings.setAllowDismiss(false);
-		Notify.notify(messages.title(), messages.onCancelUploadTactic(), IconType.FILE_CODE_O, settings);
-		
-		/*DisplayMessageEvent
-				.fire(this, new Message(messages.onCancelUploadTactic(),
-						MessageStyle.ERROR));
-						*/
+		Notify.notify(messages.title(), messages.onCancelUploadTactic(),
+				IconType.FILE_CODE_O, settings);
+
+		/*
+		 * DisplayMessageEvent .fire(this, new
+		 * Message(messages.onCancelUploadTactic(), MessageStyle.ERROR));
+		 */
 	}
 }
