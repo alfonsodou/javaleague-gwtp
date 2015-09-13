@@ -10,7 +10,7 @@ package org.javahispano.javaleague.shared.parameters;
 public class UploadParameters {
 	private static String GCS_BUCKET = "javaleague.appspot.com";
 	private static String GCS_USERS = "/usuarios/";
-	private static String GCS_FRAMEWORK = "/framework/";
+	private static String GCS_FRAMEWORK = "/framework";
 	private static String PACKAGENAME = "org.javahispano.javaleague.tactic.ID_";
 	private static String AGENTCLASS = "org.javahispano.javacup.model.engine.AgentPartido";
 	private static String FILENAMETACTIC = "tactica.jar";

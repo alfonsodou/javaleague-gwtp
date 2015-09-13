@@ -186,4 +186,9 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		 * Message(messages.onCancelUploadTactic(), MessageStyle.ERROR));
 		 */
 	}
+
+	@Override
+	public void updateTactic(String teamName) {
+		
+	}
 }

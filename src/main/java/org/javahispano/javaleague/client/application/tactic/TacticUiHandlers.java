@@ -10,5 +10,5 @@ import com.gwtplatform.mvp.client.UiHandlers;
  *
  */
 public interface TacticUiHandlers extends UiHandlers {
-
+	void updateTactic(String teamName);
 }

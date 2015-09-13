@@ -71,8 +71,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 				if (tacticBytes != null) {
 					Long userSessionKey = authenticator.getUserSessionKey();
 					String result = validateTactic(tacticBytes, userSessionKey);
-					if (result.equals("OK")) {
-						out = "OK";
+					if (result.equals(UploadParameters.getVALIDATETACTICOK())) {
 						GcsFilename fileName = new GcsFilename(
 								UploadParameters.getGCS_BUCKET()
 										+ UploadParameters.getGCS_USERS()
@@ -80,9 +79,9 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 								UploadParameters.getFILENAMETACTIC());
 						writeToFile(fileName, tacticBytes);
 					} else {
-						out = result;
 						logger.warning("Exception: " + out);
 					}
+					out = result;
 				}
 			} catch (Throwable e) {
 				if (e instanceof UploadActionException) {
@@ -127,8 +126,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 
 	private String validateTactic(byte[] tactic, Long userSessionKey)
 			throws Exception {
-		String result = "OK";
-		Map<String, byte[]> byteStream;
+		String result = UploadParameters.getVALIDATETACTICOK();
 
 		myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
 				.getClassLoader());
@@ -201,7 +199,8 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		if (existInterfaceTactic == false) {
 			return UploadParameters.getERRORINTERFACETACTIC();
 		} else {
-			a.testTactic(objectTactic, objectTactic, 3600);
+			a.testTactic(objectTactic, objectTactic,
+					UploadParameters.getNUMITER());
 		}
 
 		return UploadParameters.getVALIDATETACTICOK();

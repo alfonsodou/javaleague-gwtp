@@ -39,20 +39,23 @@
 					<b:Form ui:field="formTactic">
 						<b:FieldSet>
 							<b:FormGroup>
-								<b:FormLabel for="teamName" showRequiredIndicator="true">teamName</b:FormLabel>
+								<b:FormLabel for="teamName" showRequiredIndicator="true">Nombre
+									Equipo:</b:FormLabel>
 								<b:InlineHelpBlock iconType="EXCLAMATION_TRIANGLE" />
 								<b:TextBox allowBlank="false" validateOnBlur="true"
 									b:id="teamName" ui:field="teamName" />
 							</b:FormGroup>
 						</b:FieldSet>
+						<b:FieldSet>
+							<b:Button type="PRIMARY" ui:field="updateTactic">Actualizar</b:Button>
+						</b:FieldSet>
 					</b:Form>
 				</b:PanelBody>
 				<b:PanelFooter addStyleNames="{style.footer}">
-					<b:Button type="PRIMARY" ui:field="login">Actualizar</b:Button>
+					<up:SingleUploader ui:field="singleUploader"
+						type="ANCHOR" enabled="true"></up:SingleUploader>
 				</b:PanelFooter>
 			</b:Panel>
-			<up:SingleUploader ui:field="singleUploader" type="ANCHOR"
-				enabled="true"></up:SingleUploader>
 		</b:Column>
 	</b:Row>
 
