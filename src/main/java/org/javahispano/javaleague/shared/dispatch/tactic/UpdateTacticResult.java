@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.shared.dispatch.tactic;
 
-import org.javahispano.javaleague.shared.dto.CurrentUserDto;
+import org.javahispano.javaleague.shared.dto.UserDto;
 
 import com.gwtplatform.dispatch.rpc.shared.Result;
 
@@ -17,28 +17,29 @@ public class UpdateTacticResult implements Result {
 	 * 
 	 */
 	private static final long serialVersionUID = -8457840932729350020L;
-	private CurrentUserDto currentUserDto;
+	private UserDto userDto;
 	
 	protected UpdateTacticResult() {
 		
 	}
 
-	public UpdateTacticResult(CurrentUserDto currentUserDto) {
-		this.currentUserDto = currentUserDto;
+	public UpdateTacticResult(UserDto userDto) {
+		this.userDto = userDto;
 	}
 
 	/**
-	 * @return the currentUserDto
+	 * @return the userDto
 	 */
-	public CurrentUserDto getCurrentUserDto() {
-		return currentUserDto;
+	public UserDto getUserDto() {
+		return userDto;
 	}
 
 	/**
-	 * @param currentUserDto the currentUserDto to set
+	 * @param userDto the userDto to set
 	 */
-	public void setCurrentUserDto(CurrentUserDto currentUserDto) {
-		this.currentUserDto = currentUserDto;
+	public void setUserDto(UserDto userDto) {
+		this.userDto = userDto;
 	}
-	
+
+
 }

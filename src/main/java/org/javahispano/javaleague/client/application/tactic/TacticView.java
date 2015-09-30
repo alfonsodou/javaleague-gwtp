@@ -3,11 +3,14 @@
  */
 package org.javahispano.javaleague.client.application.tactic;
 
-import gwtupload.client.MultiUploader;
 import gwtupload.client.SingleUploader;
 
+import org.gwtbootstrap3.client.ui.TextBox;
+
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -22,25 +25,34 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	interface Binder extends UiBinder<Widget, TacticView> {
 	}
 
-	/*@UiField
-	FormPanel formPanelTactic;*/
 	@UiField
 	SingleUploader singleUploader;
+	@UiField
+	TextBox teamName;
 
 	@Inject
 	TacticView(Binder uiBinder) {
 		initWidget(uiBinder.createAndBindUi(this));
 
+		teamName.getElement().setAttribute("placeholder", "Nombre Equipo");
 	}
-
-	/*@Override
-	public FormPanel getFormPanelTactic() {
-		return formPanelTactic;
-	}*/
 
 	@Override
 	public SingleUploader getSingleUploader() {
 		return singleUploader;
 	}
 
+	@Override
+	public TextBox getTeamName() {
+		return teamName;
+	}
+
+	@UiHandler("updateTactic")
+	void onClickUpdteTactic(ClickEvent e) {
+		doUpdateTactic();
+	}
+
+	private void doUpdateTactic() {
+		getUiHandlers().updateTeamNameTactic(teamName.getValue());
+	}
 }

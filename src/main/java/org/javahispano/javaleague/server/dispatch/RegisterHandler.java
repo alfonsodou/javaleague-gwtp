@@ -106,7 +106,7 @@ public class RegisterHandler extends
 
 			return new RegisterResult(User.createDto(user), true);
 		} else {
-			return new RegisterResult(User.createDto(user), false);
+			return new RegisterResult(null, false);
 		}
 	}
 

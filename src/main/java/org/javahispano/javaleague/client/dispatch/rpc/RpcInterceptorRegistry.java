@@ -24,8 +24,10 @@ public class RpcInterceptorRegistry extends DefaultRpcInterceptorRegistry {
     @Inject
     RpcInterceptorRegistry(
             LogInInterceptor logInInterceptor,
-            RegisterInterceptor registerInterceptor) {
+            RegisterInterceptor registerInterceptor,
+            UpdateTacticInterceptor updateTacticInterceptor) {
         register(logInInterceptor);
         register(registerInterceptor);
+        register(updateTacticInterceptor);
     }
 }

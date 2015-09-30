@@ -19,4 +19,6 @@ public interface TacticMessages extends Messages {
 	String onErrorExistsInterfaceTacticUploadTactic();
 	String onErrorValidateUploadTactic();
 	String title();
+	String onUpdateTactic();
+	String onErrorUpdateTactic();
 }
