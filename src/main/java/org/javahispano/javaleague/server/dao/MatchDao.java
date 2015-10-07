@@ -1,0 +1,31 @@
+/**
+ * 
+ */
+package org.javahispano.javaleague.server.dao;
+
+import java.util.List;
+
+import org.javahispano.javaleague.server.dao.domain.Match;
+
+/**
+ * @author alfonso
+ *
+ */
+public class MatchDao extends BaseDao<Match> {
+
+	public MatchDao() {
+		super(Match.class);
+	}
+
+	public List<Match> findByUserIdHome(Long userId) {
+		return ofy().load().type(Match.class).filter("userIdHome", userId).list();
+	}
+	
+	public List<Match> findByUserIdAway(Long userId) {
+		return ofy().load().type(Match.class).filter("userIdAway", userId).list();
+	}
+
+	public List<Match> findByRound(int round) {
+		return ofy().load().type(Match.class).filter("round", round).list();
+	}
+}

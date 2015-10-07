@@ -25,9 +25,122 @@ public class Match extends BaseEntity {
 	private int goalsHome;
 	private int goalsAway;
 	private double posessionHome;
+	private int round;
 	
 	public Match() {
 		
+	}
+
+	/**
+	 * @return the userIdHome
+	 */
+	public Long getUserIdHome() {
+		return userIdHome;
+	}
+
+	/**
+	 * @param userIdHome the userIdHome to set
+	 */
+	public void setUserIdHome(Long userIdHome) {
+		this.userIdHome = userIdHome;
+	}
+
+	/**
+	 * @return the userIdAway
+	 */
+	public Long getUserIdAway() {
+		return userIdAway;
+	}
+
+	/**
+	 * @param userIdAway the userIdAway to set
+	 */
+	public void setUserIdAway(Long userIdAway) {
+		this.userIdAway = userIdAway;
+	}
+
+	/**
+	 * @return the isFriendly
+	 */
+	public boolean isFriendly() {
+		return isFriendly;
+	}
+
+	/**
+	 * @param isFriendly the isFriendly to set
+	 */
+	public void setFriendly(boolean isFriendly) {
+		this.isFriendly = isFriendly;
+	}
+
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	/**
+	 * @return the goalsHome
+	 */
+	public int getGoalsHome() {
+		return goalsHome;
+	}
+
+	/**
+	 * @param goalsHome the goalsHome to set
+	 */
+	public void setGoalsHome(int goalsHome) {
+		this.goalsHome = goalsHome;
+	}
+
+	/**
+	 * @return the goalsAway
+	 */
+	public int getGoalsAway() {
+		return goalsAway;
+	}
+
+	/**
+	 * @param goalsAway the goalsAway to set
+	 */
+	public void setGoalsAway(int goalsAway) {
+		this.goalsAway = goalsAway;
+	}
+
+	/**
+	 * @return the posessionHome
+	 */
+	public double getPosessionHome() {
+		return posessionHome;
+	}
+
+	/**
+	 * @param posessionHome the posessionHome to set
+	 */
+	public void setPosessionHome(double posessionHome) {
+		this.posessionHome = posessionHome;
+	}
+
+	/**
+	 * @return the round
+	 */
+	public int getRound() {
+		return round;
+	}
+
+	/**
+	 * @param round the round to set
+	 */
+	public void setRound(int round) {
+		this.round = round;
 	}
 
 }
