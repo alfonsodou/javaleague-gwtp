@@ -26,6 +26,10 @@ public class Match extends BaseEntity {
 	private int goalsAway;
 	private double posessionHome;
 	private int round;
+	private String teamNameHome;
+	private String teamNameAway;
+	private String userNameHome;
+	private String userNameAway;
 	
 	public Match() {
 		
@@ -141,6 +145,38 @@ public class Match extends BaseEntity {
 	 */
 	public void setRound(int round) {
 		this.round = round;
+	}
+
+	public String getTeamNameHome() {
+		return teamNameHome;
+	}
+
+	public void setTeamNameHome(String teamNameHome) {
+		this.teamNameHome = teamNameHome;
+	}
+
+	public String getTeamNameAway() {
+		return teamNameAway;
+	}
+
+	public void setTeamNameAway(String teamNameAway) {
+		this.teamNameAway = teamNameAway;
+	}
+
+	public String getUserNameHome() {
+		return userNameHome;
+	}
+
+	public void setUserNameHome(String userNameHome) {
+		this.userNameHome = userNameHome;
+	}
+
+	public String getUserNameAway() {
+		return userNameAway;
+	}
+
+	public void setUserNameAway(String userNameAway) {
+		this.userNameAway = userNameAway;
 	}
 
 }
