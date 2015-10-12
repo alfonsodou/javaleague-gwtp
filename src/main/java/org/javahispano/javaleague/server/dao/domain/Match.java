@@ -18,6 +18,7 @@ import com.googlecode.objectify.annotation.Index;
 @Index
 @Entity
 public class Match extends BaseEntity {
+	private Long leagueId;
 	private Long userIdHome;
 	private Long userIdAway;
 	private boolean isFriendly;
@@ -34,6 +35,24 @@ public class Match extends BaseEntity {
 	public Match() {
 		
 	}
+	
+	/**
+	 * @return the leagueId
+	 */
+	public Long getLeagueId() {
+		return leagueId;
+	}
+
+
+
+	/**
+	 * @param leagueId the leagueId to set
+	 */
+	public void setLeagueId(Long leagueId) {
+		this.leagueId = leagueId;
+	}
+
+
 
 	/**
 	 * @return the userIdHome
