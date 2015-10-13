@@ -5,10 +5,13 @@ package org.javahispano.javaleague.server.dao.domain;
 
 import java.util.Date;
 
+import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
 
 /**
  * @author alfonso
@@ -18,184 +21,76 @@ import com.googlecode.objectify.annotation.Index;
 @Index
 @Entity
 public class Match extends BaseEntity {
-	private Long leagueId;
-	private Long userIdHome;
-	private Long userIdAway;
+	@Load
+	private Ref<League> league;
+	@Load
+	private Ref<User> userHome;
+	@Load
+	private Ref<User> userAway;
 	private boolean isFriendly;
 	private Date date;
-	private int goalsHome;
-	private int goalsAway;
-	private double posessionHome;
-	private int round;
-	private String teamNameHome;
-	private String teamNameAway;
-	private String userNameHome;
-	private String userNameAway;
-	
+
 	public Match() {
-		
-	}
-	
-	/**
-	 * @return the leagueId
-	 */
-	public Long getLeagueId() {
-		return leagueId;
+		this.isFriendly = false;
+		this.date = new Date();
+
 	}
 
-
-
-	/**
-	 * @param leagueId the leagueId to set
-	 */
-	public void setLeagueId(Long leagueId) {
-		this.leagueId = leagueId;
+	public Match(boolean isFriendly, Date date) {
+		this.isFriendly = isFriendly;
+		this.date = date;
 	}
 
-
-
-	/**
-	 * @return the userIdHome
-	 */
-	public Long getUserIdHome() {
-		return userIdHome;
+	public League getLeague() {
+		return Deref.deref(league);
 	}
 
-	/**
-	 * @param userIdHome the userIdHome to set
-	 */
-	public void setUserIdHome(Long userIdHome) {
-		this.userIdHome = userIdHome;
+	public void setLeague(League league) {
+		if (league != null) {
+			this.league = Ref.create(league);
+		} else {
+			this.league = null;
+		}
 	}
 
-	/**
-	 * @return the userIdAway
-	 */
-	public Long getUserIdAway() {
-		return userIdAway;
+	public User getUserHome() {
+		return Deref.deref(userHome);
 	}
 
-	/**
-	 * @param userIdAway the userIdAway to set
-	 */
-	public void setUserIdAway(Long userIdAway) {
-		this.userIdAway = userIdAway;
+	public void setUserHome(User userHome) {
+		if (userHome != null) {
+			this.userHome = Ref.create(userHome);
+		} else {
+			this.userHome = null;
+		}
 	}
 
-	/**
-	 * @return the isFriendly
-	 */
+	public User getUserAway() {
+		return Deref.deref(userAway);
+	}
+
+	public void setUserAway(User userAway) {
+		if (userAway != null) {
+			this.userAway = Ref.create(userAway);
+		} else {
+			this.userAway = null;
+		}
+	}
+
 	public boolean isFriendly() {
 		return isFriendly;
 	}
 
-	/**
-	 * @param isFriendly the isFriendly to set
-	 */
 	public void setFriendly(boolean isFriendly) {
 		this.isFriendly = isFriendly;
 	}
 
-	/**
-	 * @return the date
-	 */
 	public Date getDate() {
 		return date;
 	}
 
-	/**
-	 * @param date the date to set
-	 */
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	/**
-	 * @return the goalsHome
-	 */
-	public int getGoalsHome() {
-		return goalsHome;
-	}
-
-	/**
-	 * @param goalsHome the goalsHome to set
-	 */
-	public void setGoalsHome(int goalsHome) {
-		this.goalsHome = goalsHome;
-	}
-
-	/**
-	 * @return the goalsAway
-	 */
-	public int getGoalsAway() {
-		return goalsAway;
-	}
-
-	/**
-	 * @param goalsAway the goalsAway to set
-	 */
-	public void setGoalsAway(int goalsAway) {
-		this.goalsAway = goalsAway;
-	}
-
-	/**
-	 * @return the posessionHome
-	 */
-	public double getPosessionHome() {
-		return posessionHome;
-	}
-
-	/**
-	 * @param posessionHome the posessionHome to set
-	 */
-	public void setPosessionHome(double posessionHome) {
-		this.posessionHome = posessionHome;
-	}
-
-	/**
-	 * @return the round
-	 */
-	public int getRound() {
-		return round;
-	}
-
-	/**
-	 * @param round the round to set
-	 */
-	public void setRound(int round) {
-		this.round = round;
-	}
-
-	public String getTeamNameHome() {
-		return teamNameHome;
-	}
-
-	public void setTeamNameHome(String teamNameHome) {
-		this.teamNameHome = teamNameHome;
-	}
-
-	public String getTeamNameAway() {
-		return teamNameAway;
-	}
-
-	public void setTeamNameAway(String teamNameAway) {
-		this.teamNameAway = teamNameAway;
-	}
-
-	public String getUserNameHome() {
-		return userNameHome;
-	}
-
-	public void setUserNameHome(String userNameHome) {
-		this.userNameHome = userNameHome;
-	}
-
-	public String getUserNameAway() {
-		return userNameAway;
-	}
-
-	public void setUserNameAway(String userNameAway) {
-		this.userNameAway = userNameAway;
 	}
 
 }
