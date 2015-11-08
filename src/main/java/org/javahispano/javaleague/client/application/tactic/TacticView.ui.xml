@@ -54,6 +54,7 @@
 				<b:PanelFooter addStyleNames="{style.footer}">
 					<up:SingleUploader ui:field="singleUploader"
 						type="ANCHOR" enabled="true"></up:SingleUploader>
+					<b:Label type="INFO" ui:field="packageName"></b:Label>
 				</b:PanelFooter>
 			</b:Panel>
 		</b:Column>

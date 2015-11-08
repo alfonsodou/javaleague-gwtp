@@ -13,7 +13,7 @@
 	<properties>
 		<!-- Client -->
 		<gwt.version>2.7.0</gwt.version>
-		<gwtp.version>1.5</gwtp.version>
+		<gwtp.version>1.5.1</gwtp.version>
 		<gin.version>2.1.2</gin.version>
 		<gwtquery.version>1.4.2</gwtquery.version>
 		<objectify-gwt.version>1.2.1</objectify-gwt.version>
@@ -21,7 +21,7 @@
 		<gwtupload.version>1.0.4-SNAPSHOT</gwtupload.version>
 
 		<!-- Server -->
-		<gae.version>1.9.26</gae.version>
+		<gae.version>1.9.28</gae.version>
 		<guice.version>3.0</guice.version>
 		<resteasy.version>3.0.9.Final</resteasy.version>
 		<guava.version>18.0</guava.version>

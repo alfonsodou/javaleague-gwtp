@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.application.tactic;
 
 import gwtupload.client.SingleUploader;
 
+import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -29,6 +30,8 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	SingleUploader singleUploader;
 	@UiField
 	TextBox teamName;
+	@UiField
+	Label packageName;
 
 	@Inject
 	TacticView(Binder uiBinder) {
@@ -54,5 +57,10 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 	private void doUpdateTactic() {
 		getUiHandlers().updateTeamNameTactic(teamName.getValue());
+	}
+
+	@Override
+	public Label getPackageName() {
+		return packageName;
 	}
 }

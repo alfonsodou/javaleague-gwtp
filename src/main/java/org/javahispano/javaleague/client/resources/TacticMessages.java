@@ -21,4 +21,5 @@ public interface TacticMessages extends Messages {
 	String title();
 	String onUpdateTactic();
 	String onErrorUpdateTactic();
+	String packageName(String id);
 }

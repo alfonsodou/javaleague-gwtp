@@ -10,6 +10,7 @@ import gwtupload.client.SingleUploader;
 import java.util.logging.Logger;
 
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Modal;
 import org.gwtbootstrap3.client.ui.ModalBody;
 import org.gwtbootstrap3.client.ui.ModalFooter;
@@ -57,6 +58,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		SingleUploader getSingleUploader();
 
 		TextBox getTeamName();
+
+		Label getPackageName();
 	}
 
 	@ProxyCodeSplit
@@ -92,6 +95,11 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 				onFinishUploaderHandler);
 		getView().getSingleUploader().addOnCancelUploadHandler(
 				onCancelUploaderHandler);
+
+		getView().getTeamName().setText(currentUser.getUser().getTeamName());
+		getView().getPackageName().setText(
+				messages.packageName(UploadParameters.getPACKAGENAME()
+						+ currentUser.getUser().getId().toString()));
 	}
 
 	private IUploader.OnStartUploaderHandler onStartUploaderHandler = new IUploader.OnStartUploaderHandler() {
@@ -118,7 +126,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 			} else
 				OnErrorUploadTactic(messages.onErrorValidateUploadTactic()
 						+ uploader.getServerMessage().getMessage());
-
 		}
 	};
 
