@@ -27,6 +27,10 @@
 	.footer button {
 		margin-right: 5px;
 	}
+	
+	.column {
+		text-align: center;
+	}
 	</ui:style>
 
 	<b:Row>
@@ -54,7 +58,16 @@
 				<b:PanelFooter addStyleNames="{style.footer}">
 					<up:SingleUploader ui:field="singleUploader"
 						type="ANCHOR" enabled="true"></up:SingleUploader>
-					<b:Label type="INFO" ui:field="packageName"></b:Label>
+					<b:Row>
+						<b:Column size="MD_12" addStyleNames="{style.column}">
+							<b:Label type="INFO" ui:field="packageName"></b:Label>
+						</b:Column>
+					</b:Row>
+					<b:Row>
+						<b:Column size="MD_12" addStyleNames="{style.column}">
+							<b:Label type="INFO" ui:field="packageNameUser"></b:Label>
+						</b:Column>
+					</b:Row>
 				</b:PanelFooter>
 			</b:Panel>
 		</b:Column>

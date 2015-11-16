@@ -32,6 +32,8 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	TextBox teamName;
 	@UiField
 	Label packageName;
+	@UiField
+	Label packageNameUser;
 
 	@Inject
 	TacticView(Binder uiBinder) {
@@ -62,5 +64,10 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	@Override
 	public Label getPackageName() {
 		return packageName;
+	}
+
+	@Override
+	public Label getPackageNameUser() {
+		return packageNameUser;
 	}
 }

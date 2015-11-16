@@ -60,6 +60,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		TextBox getTeamName();
 
 		Label getPackageName();
+
+		Label getPackageNameUser();
 	}
 
 	@ProxyCodeSplit
@@ -97,9 +99,10 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 				onCancelUploaderHandler);
 
 		getView().getTeamName().setText(currentUser.getUser().getTeamName());
-		getView().getPackageName().setText(
-				messages.packageName(UploadParameters.getPACKAGENAME()
-						+ currentUser.getUser().getId().toString()));
+		getView().getPackageName().setText(messages.packageName());
+		getView().getPackageNameUser().setText(
+				UploadParameters.getPACKAGENAME()
+						+ currentUser.getUser().getId().toString());
 	}
 
 	private IUploader.OnStartUploaderHandler onStartUploaderHandler = new IUploader.OnStartUploaderHandler() {
