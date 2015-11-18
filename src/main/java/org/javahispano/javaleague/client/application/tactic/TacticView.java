@@ -56,7 +56,16 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	void onClickUpdteTactic(ClickEvent e) {
 		doUpdateTactic();
 	}
+	
+	@UiHandler("playGame")
+	void onClickPlayGame(ClickEvent e) {
+		doPlayGame();
+	}
 
+	private void doPlayGame() {
+		getUiHandlers().playGame();
+	}
+	
 	private void doUpdateTactic() {
 		getUiHandlers().updateTeamNameTactic(teamName.getValue());
 	}

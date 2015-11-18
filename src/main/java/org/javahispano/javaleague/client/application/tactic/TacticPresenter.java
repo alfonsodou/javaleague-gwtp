@@ -140,7 +140,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	};
 
 	private void OnErrorUploadTactic(String error) {
-
 		final Modal modal = new Modal();
 		modal.setTitle(messages.onErrorUploadTactic());
 		modal.setClosable(true);
@@ -246,5 +245,10 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 					}
 
 				});
+	}
+
+	@Override
+	public void playGame() {
+
 	}
 }
