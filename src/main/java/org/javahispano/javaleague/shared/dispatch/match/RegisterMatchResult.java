@@ -26,4 +26,14 @@ public class RegisterMatchResult implements Result {
 	public RegisterMatchResult(MatchDto matchDto) {
 		this.mathDto = matchDto;
 	}
+
+	public MatchDto getMathDto() {
+		return mathDto;
+	}
+
+	public void setMathDto(MatchDto mathDto) {
+		this.mathDto = mathDto;
+	}
+	
+	
 }

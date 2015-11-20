@@ -17,6 +17,7 @@
 package org.javahispano.javaleague.server.dispatch;
 
 import org.javahispano.javaleague.shared.dispatch.login.LogInAction;
+import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
 import org.javahispano.javaleague.shared.dispatch.register.RegisterAction;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticAction;
 
@@ -30,5 +31,6 @@ public class DispatchModule extends HandlerModule {
         bindHandler(LogInAction.class, LogInHandler.class);
         bindHandler(RegisterAction.class, RegisterHandler.class);
         bindHandler(UpdateTacticAction.class, UpdateTacticHandler.class);
+        bindHandler(RegisterMatchAction.class, RegisterMatchHandler.class);
     }
 }
