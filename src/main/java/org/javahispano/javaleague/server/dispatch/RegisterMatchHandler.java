@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 import org.javahispano.javaleague.server.dao.MatchDao;
+import org.javahispano.javaleague.server.dao.RegisterMatchDao;
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchResult;
