@@ -32,6 +32,7 @@ public class User extends BaseEntity {
 	private String hashPassword;
 	private String email;
 	private boolean active;
+	private boolean tacticOK;
 	private String token;
 	private String teamName;
 
@@ -129,6 +130,20 @@ public class User extends BaseEntity {
 		}
 	}
 
+	/**
+	 * @return the tacticOK
+	 */
+	public boolean isTacticOK() {
+		return tacticOK;
+	}
+
+	/**
+	 * @param tacticOK the tacticOK to set
+	 */
+	public void setTacticOK(boolean tacticOK) {
+		this.tacticOK = tacticOK;
+	}
+
 	@Override
 	public String toString() {
 		String s = "{ User ";
@@ -137,6 +152,7 @@ public class User extends BaseEntity {
 		s += "hasPassword=" + hashPassword + " ";
 		s += "email=" + email + " ";
 		s += "active=" + active + " ";
+		s += "tacticOK=" + tacticOK + " ";
 		s += "token= " + token + " ";
 		s += "teamName=" + teamName + " ";
 		s += "}";
@@ -152,6 +168,7 @@ public class User extends BaseEntity {
 		userDto.setUserName(user.getUserName());
 		userDto.setEmail(user.getEmail());
 		userDto.setActive(user.isActive());
+		userDto.setTacticOK(user.isTacticOK());
 		userDto.setToken(user.getToken());
 		userDto.setTeamName(user.getTeamName());
 
@@ -169,6 +186,7 @@ public class User extends BaseEntity {
 		user.setUserName(userDto.getUserName());
 		user.setEmail(userDto.getEmail());
 		user.setActive(userDto.isActive());
+		user.setTacticOK(userDto.isTacticOK());
 		user.setToken(userDto.getToken());
 		user.setTeamName(userDto.getTeamName());
 

@@ -25,12 +25,14 @@ public class RegisterMatchHandler extends
 	
 	private final Logger logger;
 	private final MatchDao matchDao;
+	private final RegisterMatchDao registerMatchDao;
 
 	@Inject
-	RegisterMatchHandler(Logger logger, MatchDao matchDao) {
+	RegisterMatchHandler(Logger logger, MatchDao matchDao, RegisterMatchDao registerMatchDao) {
 		super(RegisterMatchAction.class);
 		this.logger = logger;
 		this.matchDao = matchDao;
+		this.registerMatchDao = registerMatchDao;
 	}
 	
 	@Override

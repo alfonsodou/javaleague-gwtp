@@ -21,6 +21,7 @@ public class UserDto extends BaseEntity {
     private String hashPassword;
     private String email;
     private boolean active;
+    private boolean tacticOK;
     private String token;
     private String teamName;
 
@@ -32,12 +33,14 @@ public class UserDto extends BaseEntity {
             String hashPassword,
             String email,
             boolean active,
+            boolean tacticOK,
             String token,
             String teamName) {
         this.userName = username;
         this.hashPassword = hashPassword;
         this.email = email;
         this.active = active;
+        this.tacticOK = tacticOK;
         this.token = token;
         this.teamName = teamName;
     }
@@ -106,6 +109,20 @@ public class UserDto extends BaseEntity {
 
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
+	}	
+	
+	/**
+	 * @return the tacticOK
+	 */
+	public boolean isTacticOK() {
+		return tacticOK;
+	}
+
+	/**
+	 * @param tacticOK the tacticOK to set
+	 */
+	public void setTacticOK(boolean tacticOK) {
+		this.tacticOK = tacticOK;
 	}
 
 	@Override
@@ -116,6 +133,7 @@ public class UserDto extends BaseEntity {
         s += "hasPassword=" + hashPassword + " ";
         s += "email=" + email + " ";
         s += "active=" + active + " ";
+        s += "tacticOK=" + tacticOK + " ";
         s += "token=" + token + " ";
         s += "teamName=" + teamName + " ";
         s += " User } ";

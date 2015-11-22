@@ -22,7 +22,8 @@ import org.apache.commons.io.IOUtils;
 import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.authentication.Authenticator;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
-import org.javahispano.javaleague.server.dao.UserSessionDao;
+import org.javahispano.javaleague.server.dao.UserDao;
+import org.javahispano.javaleague.server.dao.domain.User;
 import org.javahispano.javaleague.server.utils.ServletUtils;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
@@ -49,15 +50,15 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 			.createGcsService(RetryParams.getDefaultInstance());
 	private MyDataStoreClassLoader myDataStoreClassLoader;
 	private final Authenticator authenticator;
-	private final UserSessionDao loginCookieDao;
+	private final UserDao userDao;
 	private final Logger logger;
 
 	@Inject
 	GWTUploadTacticServlet(Logger logger, Authenticator authenticator,
-			UserSessionDao loginCookieDao) {
+			UserDao userDao) {
 		this.logger = logger;
 		this.authenticator = authenticator;
-		this.loginCookieDao = loginCookieDao;
+		this.userDao = userDao;
 	}
 
 	@Override
@@ -78,6 +79,10 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 										+ userSessionKey,
 								UploadParameters.getFILENAMETACTIC());
 						writeToFile(fileName, tacticBytes);
+						
+						User user = userDao.get(userSessionKey);
+						user.setTacticOK(true);
+						userDao.put(user);
 					} else {
 						logger.warning("Exception: " + out);
 					}
