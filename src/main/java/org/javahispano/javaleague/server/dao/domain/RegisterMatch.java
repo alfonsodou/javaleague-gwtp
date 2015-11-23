@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
+import org.javahispano.javaleague.shared.dto.MatchDto;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -80,5 +81,18 @@ public class RegisterMatch extends BaseEntity {
 		} else {
 			this.match = null;
 		}
+	}
+	
+	public static MatchDto createDto(Match match) {
+		if (match == null) {
+			return null;
+		}
+		
+		MatchDto matchDto = new MatchDto();
+		matchDto.setDate(match.getDate());
+		matchDto.setId(match.getId());
+		matchDto.setFriendly(match.isFriendly());
+		
+		return matchDto;
 	}
 }
