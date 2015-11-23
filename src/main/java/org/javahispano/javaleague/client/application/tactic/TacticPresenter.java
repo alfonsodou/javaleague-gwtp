@@ -29,6 +29,8 @@ import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.resources.TacticMessages;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.api.UserResource;
+import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
+import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchResult;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticAction;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticResult;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
@@ -249,6 +251,42 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 	@Override
 	public void playGame() {
+		RegisterMatchAction registerMatchAction = new RegisterMatchAction(
+				currentUser.getUser());
+		callRegisterMatchAction(registerMatchAction);
+	}
 
+	private void callRegisterMatchAction(RegisterMatchAction registerMatchAction) {
+		dispatcher.execute(registerMatchAction,
+				new AsyncCallback<RegisterMatchResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						NotifySettings settings = NotifySettings.newSettings();
+						settings.setType(NotifyType.DANGER);
+						settings.setPlacement(NotifyPlacement.TOP_CENTER);
+						settings.setAllowDismiss(false);
+						Notify.notify(messages.title(),
+								messages.onErrorUpdateTactic(),
+								IconType.FILE_CODE_O, settings);
+
+						LOGGER.warning("Error on callRegisterMatchAction: "
+								+ caught.toString());
+					}
+
+					@Override
+					public void onSuccess(RegisterMatchResult result) {
+						NotifySettings settings = NotifySettings.newSettings();
+						settings.setType(NotifyType.INFO);
+						settings.setPlacement(NotifyPlacement.TOP_CENTER);
+						settings.setAllowDismiss(false);
+						Notify.notify(messages.title(),
+								messages.onUpdateTactic(),
+								IconType.FILE_CODE_O, settings);
+
+						LOGGER.info("callRegisterMatchAction: Solicitud partido amistoso registrada correctamente");
+					}
+
+				});
 	}
 }
