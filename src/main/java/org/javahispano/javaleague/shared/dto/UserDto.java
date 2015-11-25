@@ -22,6 +22,7 @@ public class UserDto extends BaseEntity {
     private String email;
     private boolean active;
     private boolean tacticOK;
+    private boolean awaitingMatch;
     private String token;
     private String teamName;
 
@@ -34,6 +35,7 @@ public class UserDto extends BaseEntity {
             String email,
             boolean active,
             boolean tacticOK,
+            boolean awaitingMatch,
             String token,
             String teamName) {
         this.userName = username;
@@ -41,6 +43,7 @@ public class UserDto extends BaseEntity {
         this.email = email;
         this.active = active;
         this.tacticOK = tacticOK;
+        this.awaitingMatch = awaitingMatch;
         this.token = token;
         this.teamName = teamName;
     }
@@ -124,6 +127,20 @@ public class UserDto extends BaseEntity {
 	public void setTacticOK(boolean tacticOK) {
 		this.tacticOK = tacticOK;
 	}
+	
+	/**
+	 * @return the awaitingMatch
+	 */
+	public boolean isAwaitingMatch() {
+		return awaitingMatch;
+	}
+
+	/**
+	 * @param awaitingMatch the awaitingMatch to set
+	 */
+	public void setAwaitingMatch(boolean awaitingMatch) {
+		this.awaitingMatch = awaitingMatch;
+	}
 
 	@Override
     public String toString() {
@@ -134,6 +151,7 @@ public class UserDto extends BaseEntity {
         s += "email=" + email + " ";
         s += "active=" + active + " ";
         s += "tacticOK=" + tacticOK + " ";
+        s += "awaitingMatch=" + awaitingMatch + " ";
         s += "token=" + token + " ";
         s += "teamName=" + teamName + " ";
         s += " User } ";

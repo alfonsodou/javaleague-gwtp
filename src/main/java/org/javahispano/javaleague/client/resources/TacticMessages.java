@@ -22,4 +22,6 @@ public interface TacticMessages extends Messages {
 	String onUpdateTactic();
 	String onErrorUpdateTactic();
 	String packageName();
+	String onRegisterMatch();
+	String onErrorRegisterMatch();
 }

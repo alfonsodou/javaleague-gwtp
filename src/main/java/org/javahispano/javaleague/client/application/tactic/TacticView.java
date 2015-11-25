@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.application.tactic;
 
 import gwtupload.client.SingleUploader;
 
+import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 
@@ -34,6 +35,8 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	Label packageName;
 	@UiField
 	Label packageNameUser;
+	@UiField
+	Button playGame;
 
 	@Inject
 	TacticView(Binder uiBinder) {
@@ -56,7 +59,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	void onClickUpdteTactic(ClickEvent e) {
 		doUpdateTactic();
 	}
-	
+
 	@UiHandler("playGame")
 	void onClickPlayGame(ClickEvent e) {
 		doPlayGame();
@@ -65,7 +68,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	private void doPlayGame() {
 		getUiHandlers().playGame();
 	}
-	
+
 	private void doUpdateTactic() {
 		getUiHandlers().updateTeamNameTactic(teamName.getValue());
 	}
@@ -78,5 +81,10 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	@Override
 	public Label getPackageNameUser() {
 		return packageNameUser;
+	}
+
+	@Override
+	public Button getPlayGame() {
+		return playGame;
 	}
 }

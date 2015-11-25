@@ -64,6 +64,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		Label getPackageName();
 
 		Label getPackageNameUser();
+
+		Button getPlayGame();
 	}
 
 	@ProxyCodeSplit
@@ -105,6 +107,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		getView().getPackageNameUser().setText(
 				UploadParameters.getPACKAGENAME()
 						+ currentUser.getUser().getId().toString());
+		getView().getPlayGame().setActive(
+				currentUser.getUser().isAwaitingMatch());
 	}
 
 	private IUploader.OnStartUploaderHandler onStartUploaderHandler = new IUploader.OnStartUploaderHandler() {
@@ -245,7 +249,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 						LOGGER.info("callUpdateTacticAction: Nombre equipo actualizado correctamente");
 					}
-
 				});
 	}
 
@@ -267,7 +270,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						settings.setPlacement(NotifyPlacement.TOP_CENTER);
 						settings.setAllowDismiss(false);
 						Notify.notify(messages.title(),
-								messages.onErrorUpdateTactic(),
+								messages.onErrorRegisterMatch(),
 								IconType.FILE_CODE_O, settings);
 
 						LOGGER.warning("Error on callRegisterMatchAction: "
@@ -281,12 +284,11 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						settings.setPlacement(NotifyPlacement.TOP_CENTER);
 						settings.setAllowDismiss(false);
 						Notify.notify(messages.title(),
-								messages.onUpdateTactic(),
+								messages.onRegisterMatch(),
 								IconType.FILE_CODE_O, settings);
 
 						LOGGER.info("callRegisterMatchAction: Solicitud partido amistoso registrada correctamente");
 					}
-
 				});
 	}
 }

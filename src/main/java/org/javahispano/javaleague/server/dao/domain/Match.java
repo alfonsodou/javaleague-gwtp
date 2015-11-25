@@ -29,16 +29,24 @@ public class Match extends BaseEntity {
 	private Ref<User> userAway;
 	private boolean isFriendly;
 	private Date date;
+	@Load
+	private Ref<MatchProperties> properties;
 
 	public Match() {
 		this.isFriendly = false;
 		this.date = new Date();
-
+		this.league = null;
+		this.userAway = null;
+		this.userHome = null;
+		this.properties = null;
 	}
 
 	public Match(boolean isFriendly, Date date) {
 		this.isFriendly = isFriendly;
 		this.date = date;
+		this.userAway = null;
+		this.userHome = null;
+		this.properties = null;
 	}
 
 	public League getLeague() {
@@ -52,7 +60,19 @@ public class Match extends BaseEntity {
 			this.league = null;
 		}
 	}
+	
+	public MatchProperties getProperties() {
+		return Deref.deref(properties);
+	}
 
+	public void setProperties(MatchProperties matchProperties) {
+		if (matchProperties != null) {
+			this.properties = Ref.create(matchProperties);
+		} else {
+			this.properties = null;
+		}
+	}
+	
 	public User getUserHome() {
 		return Deref.deref(userHome);
 	}

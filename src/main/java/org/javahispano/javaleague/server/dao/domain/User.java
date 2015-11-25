@@ -33,6 +33,7 @@ public class User extends BaseEntity {
 	private String email;
 	private boolean active;
 	private boolean tacticOK;
+	private boolean awaitingMatch;
 	private String token;
 	private String teamName;
 
@@ -138,10 +139,26 @@ public class User extends BaseEntity {
 	}
 
 	/**
-	 * @param tacticOK the tacticOK to set
+	 * @param tacticOK
+	 *            the tacticOK to set
 	 */
 	public void setTacticOK(boolean tacticOK) {
 		this.tacticOK = tacticOK;
+	}
+
+	/**
+	 * @return the awaitingMatch
+	 */
+	public boolean isAwaitingMatch() {
+		return awaitingMatch;
+	}
+
+	/**
+	 * @param awaitingMatch
+	 *            the awaitingMatch to set
+	 */
+	public void setAwaitingMatch(boolean awaitingMatch) {
+		this.awaitingMatch = awaitingMatch;
 	}
 
 	@Override
@@ -153,6 +170,7 @@ public class User extends BaseEntity {
 		s += "email=" + email + " ";
 		s += "active=" + active + " ";
 		s += "tacticOK=" + tacticOK + " ";
+		s += "awaitingMatch" + awaitingMatch + " ";
 		s += "token= " + token + " ";
 		s += "teamName=" + teamName + " ";
 		s += "}";
@@ -169,6 +187,7 @@ public class User extends BaseEntity {
 		userDto.setEmail(user.getEmail());
 		userDto.setActive(user.isActive());
 		userDto.setTacticOK(user.isTacticOK());
+		userDto.setAwaitingMatch(user.isAwaitingMatch());
 		userDto.setToken(user.getToken());
 		userDto.setTeamName(user.getTeamName());
 
@@ -187,6 +206,7 @@ public class User extends BaseEntity {
 		user.setEmail(userDto.getEmail());
 		user.setActive(userDto.isActive());
 		user.setTacticOK(userDto.isTacticOK());
+		user.setAwaitingMatch(userDto.isAwaitingMatch());
 		user.setToken(userDto.getToken());
 		user.setTeamName(userDto.getTeamName());
 

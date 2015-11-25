@@ -51,9 +51,15 @@ public class RegisterMatchHandler extends
 			Match match = new Match();
 			match.setDate(new Date());
 			match.setFriendly(true);
-			match.setUserAway(registerMatch.getUser());
-			match.setUserHome(userDao.get(arg0.getUserDto().getId()));
+			User userAway = registerMatch.getUser();
+			userAway.setAwaitingMatch(false);
+			match.setUserAway(userAway);
+			User userHome = userDao.get(arg0.getUserDto().getId());
+			userHome.setAwaitingMatch(false);
+			match.setUserHome(userHome);
 			matchDao.put(match);
+			userDao.put(userHome);
+			userDao.put(userAway);
 			registerMatch.setMatch(match);
 			registerMatchDao.put(registerMatch);
 			
@@ -61,12 +67,13 @@ public class RegisterMatchHandler extends
 		} else {
 			registerMatch = new RegisterMatch();
 			registerMatch.setDate(new Date());
-			registerMatch.setUser(userDao.get(arg0.getUserDto().getId()));
+			User user = userDao.get(arg0.getUserDto().getId());
+			registerMatch.setUser(user);
+			userDao.put(user);
 			registerMatchDao.put(registerMatch);
 			
 			return new RegisterMatchResult(null);
 		}
-
 	}
 
 	@Override
