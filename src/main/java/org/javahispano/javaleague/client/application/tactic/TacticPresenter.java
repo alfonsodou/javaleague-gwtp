@@ -107,8 +107,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		getView().getPackageNameUser().setText(
 				UploadParameters.getPACKAGENAME()
 						+ currentUser.getUser().getId().toString());
-		getView().getPlayGame().setActive(
-				currentUser.getUser().isAwaitingMatch());
+		getView().getPlayGame().setEnabled(
+				!currentUser.getUser().isAwaitingMatch());
 	}
 
 	private IUploader.OnStartUploaderHandler onStartUploaderHandler = new IUploader.OnStartUploaderHandler() {
@@ -286,6 +286,10 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						Notify.notify(messages.title(),
 								messages.onRegisterMatch(),
 								IconType.FILE_CODE_O, settings);
+
+						if (result.getMathDto() == null) {
+							getView().getPlayGame().setEnabled(false);
+						}
 
 						LOGGER.info("callRegisterMatchAction: Solicitud partido amistoso registrada correctamente");
 					}

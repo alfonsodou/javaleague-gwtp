@@ -68,6 +68,7 @@ public class RegisterMatchHandler extends
 			registerMatch = new RegisterMatch();
 			registerMatch.setDate(new Date());
 			User user = userDao.get(arg0.getUserDto().getId());
+			user.setAwaitingMatch(true);
 			registerMatch.setUser(user);
 			userDao.put(user);
 			registerMatchDao.put(registerMatch);
