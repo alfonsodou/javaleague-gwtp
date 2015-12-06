@@ -12,10 +12,12 @@ import java.util.Date;
 public class MatchDto extends BaseEntity {
 	private boolean isFriendly;
 	private Date date;
+	private Integer state;
 	
 	public MatchDto() {
 		this.isFriendly = false;
 		this.date = new Date();
+		this.state = 0;
 	}
 	
 	public MatchDto(boolean isFriendly, Date date) {
@@ -49,6 +51,20 @@ public class MatchDto extends BaseEntity {
 	 */
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public Integer getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	

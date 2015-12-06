@@ -18,14 +18,21 @@ public class MatchDao extends BaseDao<Match> {
 	}
 
 	public List<Match> findByUserIdHome(Long userId) {
-		return ofy().load().type(Match.class).filter("userIdHome", userId).list();
+		return ofy().load().type(Match.class).filter("userIdHome", userId)
+				.list();
 	}
-	
+
 	public List<Match> findByUserIdAway(Long userId) {
-		return ofy().load().type(Match.class).filter("userIdAway", userId).list();
+		return ofy().load().type(Match.class).filter("userIdAway", userId)
+				.list();
 	}
 
 	public List<Match> findByRound(int round) {
 		return ofy().load().type(Match.class).filter("round", round).list();
+	}
+
+	public List<Match> getMatchsForPlay() {
+		return ofy().load().type(Match.class).filter("properties.result", "")
+				.filter("isFriendly", true).list();
 	}
 }
