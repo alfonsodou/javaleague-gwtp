@@ -79,7 +79,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 										+ userSessionKey,
 								UploadParameters.getFILENAMETACTIC());
 						writeToFile(fileName, tacticBytes);
-						
+
 						User user = userDao.get(userSessionKey);
 						user.setTacticOK(true);
 						userDao.put(user);
