@@ -25,6 +25,7 @@ import org.javahispano.javaleague.server.dao.UserDao;
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.server.dao.domain.MatchProperties;
 import org.javahispano.javaleague.server.dao.domain.MatchState;
+import org.javahispano.javaleague.shared.parameters.MatchParameters;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
@@ -119,7 +120,7 @@ public class PlayMatchServlet extends HttpServlet {
 							match.getId().toString() + ".bin");
 					writeToFile(fileName, matchShared.getMatchBin());
 				}
-				match.setState(MatchState.FINISH);
+				match.setState(MatchParameters.getMATCHSTATE_FINISH());
 				MatchProperties matchProperties = match.getProperties();
 				matchProperties.setGoalsAway(matchShared.getGoalsVisiting());
 				matchProperties.setGoalsHome(matchShared.getGoalsLocal());

@@ -28,7 +28,6 @@ import org.javahispano.javaleague.client.application.tactic.TacticPresenter.MyVi
 import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.resources.TacticMessages;
 import org.javahispano.javaleague.client.security.CurrentUser;
-import org.javahispano.javaleague.shared.api.UserResource;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchResult;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticAction;
@@ -40,14 +39,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.delegates.client.ResourceDelegate;
 import com.gwtplatform.dispatch.rpc.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
@@ -68,7 +65,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		Button getPlayGame();
 	}
 
-	@ProxyCodeSplit
+	@ProxyStandard
 	@NameToken(NameTokens.TACTIC)
 	interface MyProxy extends ProxyPlace<TacticPresenter> {
 	}
@@ -76,21 +73,16 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	private static final Logger LOGGER = Logger.getLogger(TacticPresenter.class
 			.getName());
 
-	private final PlaceManager placeManager;
 	private final DispatchAsync dispatcher;
-	private final ResourceDelegate<UserResource> userResource;
 	private final CurrentUser currentUser;
 	private final TacticMessages messages;
 
 	@Inject
 	TacticPresenter(EventBus eventBus, MyView view, MyProxy proxy,
-			PlaceManager placeManager, DispatchAsync dispatcher,
-			ResourceDelegate<UserResource> userResource,
-			CurrentUser currentUser, TacticMessages messages) {
+			DispatchAsync dispatcher, CurrentUser currentUser,
+			TacticMessages messages) {
 		super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
-		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
-		this.userResource = userResource;
 		this.currentUser = currentUser;
 		this.messages = messages;
 

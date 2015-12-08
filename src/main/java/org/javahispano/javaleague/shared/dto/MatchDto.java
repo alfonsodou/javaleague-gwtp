@@ -5,7 +5,7 @@ package org.javahispano.javaleague.shared.dto;
 
 import java.util.Date;
 
-import org.javahispano.javaleague.server.dao.domain.MatchState;
+import org.javahispano.javaleague.shared.parameters.MatchParameters;
 
 /**
  * @author alfonso
@@ -14,12 +14,12 @@ import org.javahispano.javaleague.server.dao.domain.MatchState;
 public class MatchDto extends BaseEntity {
 	private boolean isFriendly;
 	private Date date;
-	private MatchState state;
+	private Integer state;
 	
 	public MatchDto() {
 		this.isFriendly = false;
 		this.date = new Date();
-		this.state = MatchState.WAIT;
+		this.state = MatchParameters.getMATCHSTATE_WAIT();
 	}
 	
 	public MatchDto(boolean isFriendly, Date date) {
@@ -58,14 +58,14 @@ public class MatchDto extends BaseEntity {
 	/**
 	 * @return the state
 	 */
-	public MatchState getState() {
+	public Integer getState() {
 		return state;
 	}
 
 	/**
 	 * @param state the state to set
 	 */
-	public void setState(MatchState state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

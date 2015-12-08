@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.javahispano.javaleague.server.dao.MatchDao;
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.server.dao.domain.MatchState;
+import org.javahispano.javaleague.shared.parameters.MatchParameters;
 
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
@@ -51,7 +52,7 @@ public class DispatchMatchServlet extends HttpServlet {
 			queue.add(TaskOptions.Builder.withUrl("/playMatchServlet").param(
 					"matchID", m.getId().toString()));
 			
-			m.setState(MatchState.QUEUE);
+			m.setState(MatchParameters.getMATCHSTATE_QUEUE());
 			matchDao.put(m);
 			
 			logger.info("Match: " + m.getId() + " on queue");

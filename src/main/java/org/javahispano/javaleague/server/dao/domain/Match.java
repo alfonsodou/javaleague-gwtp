@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
+import org.javahispano.javaleague.shared.parameters.MatchParameters;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -31,7 +32,7 @@ public class Match extends BaseEntity {
 	private Date date;
 	@Load
 	private Ref<MatchProperties> properties;
-	private MatchState state;
+	private Integer state;
 
 	public Match() {
 		this.isFriendly = false;
@@ -40,7 +41,7 @@ public class Match extends BaseEntity {
 		this.userAway = null;
 		this.userHome = null;
 		this.properties = null;
-		this.state = MatchState.WAIT;
+		this.state = MatchParameters.getMATCHSTATE_WAIT();
 	}
 
 	public Match(boolean isFriendly, Date date) {
@@ -118,14 +119,14 @@ public class Match extends BaseEntity {
 	/**
 	 * @return the state
 	 */
-	public MatchState getState() {
+	public Integer getState() {
 		return state;
 	}
 
 	/**
 	 * @param state the state to set
 	 */
-	public void setState(MatchState state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 
