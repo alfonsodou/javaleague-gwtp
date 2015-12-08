@@ -20,6 +20,7 @@ import org.javahispano.javaleague.server.dao.domain.Car;
 import org.javahispano.javaleague.server.dao.domain.CarProperties;
 import org.javahispano.javaleague.server.dao.domain.Manufacturer;
 import org.javahispano.javaleague.server.dao.domain.Match;
+import org.javahispano.javaleague.server.dao.domain.MatchProperties;
 import org.javahispano.javaleague.server.dao.domain.Rating;
 import org.javahispano.javaleague.server.dao.domain.RegisterMatch;
 import org.javahispano.javaleague.server.dao.domain.User;
@@ -39,6 +40,7 @@ public class OfyService {
         factory().register(UserSession.class);
         factory().register(RegisterMatch.class);
         factory().register(Match.class);;
+        factory().register(MatchProperties.class);
     }
 
     public static ObjectifyFactory factory() {

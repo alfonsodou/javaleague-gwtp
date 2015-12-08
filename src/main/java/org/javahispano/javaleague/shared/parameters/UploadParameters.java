@@ -11,6 +11,9 @@ public class UploadParameters {
 	private static String GCS_BUCKET = "javaleague.appspot.com";
 	private static String GCS_USERS = "/usuarios/";
 	private static String GCS_FRAMEWORK = "/framework";
+	private static String GCS_MATCHS = "/partidos/";
+	private static String GCS_LEAGUE = "/liga/";
+	private static String GCS_FRIENDLY = "/amistosos/";
 	private static String PACKAGENAME = "org.javahispano.javaleague.tactic.ID_";
 	private static String AGENTCLASS = "org.javahispano.javacup.model.engine.AgentPartido";
 	private static String FILENAMETACTIC = "tactica.jar";
@@ -58,6 +61,23 @@ public class UploadParameters {
 	public static String getERRORINTERFACETACTIC() {
 		return ERRORINTERFACETACTIC;
 	}
-	
+	/**
+	 * @return the gCS_MATCHS
+	 */
+	public static String getGCS_MATCHS() {
+		return GCS_MATCHS;
+	}
+	/**
+	 * @return the gCS_LEAGUE
+	 */
+	public static String getGCS_LEAGUE() {
+		return GCS_LEAGUE;
+	}
+	/**
+	 * @return the gCS_FRIENDLY
+	 */
+	public static String getGCS_FRIENDLY() {
+		return GCS_FRIENDLY;
+	}	
 	
 }

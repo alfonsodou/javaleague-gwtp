@@ -31,7 +31,7 @@ public class Match extends BaseEntity {
 	private Date date;
 	@Load
 	private Ref<MatchProperties> properties;
-	private Integer state;
+	private MatchState state;
 
 	public Match() {
 		this.isFriendly = false;
@@ -40,7 +40,7 @@ public class Match extends BaseEntity {
 		this.userAway = null;
 		this.userHome = null;
 		this.properties = null;
-		this.state = 0;
+		this.state = MatchState.WAIT;
 	}
 
 	public Match(boolean isFriendly, Date date) {
@@ -118,14 +118,14 @@ public class Match extends BaseEntity {
 	/**
 	 * @return the state
 	 */
-	public Integer getState() {
+	public MatchState getState() {
 		return state;
 	}
 
 	/**
 	 * @param state the state to set
 	 */
-	public void setState(Integer state) {
+	public void setState(MatchState state) {
 		this.state = state;
 	}
 

@@ -16,9 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.dao.MatchDao;
 import org.javahispano.javaleague.server.dao.domain.Match;
+import org.javahispano.javaleague.server.dao.domain.MatchState;
 
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 
 /**
  * @author alfonso
@@ -45,5 +47,14 @@ public class DispatchMatchServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		List<Match> matchs = matchDao.getMatchsForPlay();
+		for(Match m : matchs) {
+			queue.add(TaskOptions.Builder.withUrl("/playMatchServlet").param(
+					"matchID", m.getId().toString()));
+			
+			m.setState(MatchState.QUEUE);
+			matchDao.put(m);
+			
+			logger.info("Match: " + m.getId() + " on queue");
+		}
 	}
 }

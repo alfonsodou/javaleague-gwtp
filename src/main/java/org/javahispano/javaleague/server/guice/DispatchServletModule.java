@@ -19,8 +19,10 @@ package org.javahispano.javaleague.server.guice;
 import javax.inject.Singleton;
 
 import org.javahispano.javaleague.server.servlet.AuthenticateUserServlet;
+import org.javahispano.javaleague.server.servlet.DispatchMatchServlet;
 import org.javahispano.javaleague.server.servlet.FrameworkServlet;
 import org.javahispano.javaleague.server.servlet.GWTUploadTacticServlet;
+import org.javahispano.javaleague.server.servlet.PlayMatchServlet;
 import org.javahispano.javaleague.shared.api.ApiPaths;
 
 import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
@@ -43,7 +45,13 @@ public class DispatchServletModule extends ServletModule {
 
 		serve("/frameworkServlet").with(FrameworkServlet.class);
 		bind(FrameworkServlet.class).in(Singleton.class);
+		
+		serve("/cron/dispatchMatchServlet").with(DispatchMatchServlet.class);
+		bind(DispatchMatchServlet.class).in(Singleton.class);
 
+		serve("/playMatchServlet").with(PlayMatchServlet.class);
+		bind(PlayMatchServlet.class).in(Singleton.class);
+		
 		bind(GWTUploadTacticServlet.class).in(Singleton.class);
 		serve("*.gupld").with(GWTUploadTacticServlet.class);
 	}
