@@ -44,7 +44,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 		teamName.getElement().setAttribute("placeholder", "Nombre Equipo");
 	}
-
+	
 	@Override
 	public SingleUploader getSingleUploader() {
 		return singleUploader;

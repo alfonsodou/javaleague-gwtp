@@ -24,7 +24,6 @@ import org.javahispano.javaleague.server.dao.MatchPropertiesDao;
 import org.javahispano.javaleague.server.dao.UserDao;
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.server.dao.domain.MatchProperties;
-import org.javahispano.javaleague.server.dao.domain.MatchState;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
@@ -81,11 +80,13 @@ public class PlayMatchServlet extends HttpServlet {
 					UploadParameters.getGCS_BUCKET()
 							+ UploadParameters.getGCS_FRAMEWORK(),
 					UploadParameters.getFILENAMEFRAMEWORK());
-
-			myDataStoreClassLoader.addClassJarFramework(readFile(fileName));
-
-			Class<? extends Agent> cz;
 			try {
+				myDataStoreClassLoader = new MyDataStoreClassLoader(this
+						.getClass().getClassLoader());
+				myDataStoreClassLoader.addClassJarFramework(readFile(fileName));
+
+				Class<? extends Agent> cz;
+
 				cz = Class.forName(UploadParameters.getAGENTCLASS(), true,
 						myDataStoreClassLoader).asSubclass(Agent.class);
 
@@ -163,89 +164,6 @@ public class PlayMatchServlet extends HttpServlet {
 		}
 
 		return result.array();
-	}
-
-	private String validateTactic(byte[] tactic, Long userSessionKey)
-			throws Exception {
-		String result = UploadParameters.getVALIDATETACTICOK();
-
-		myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
-				.getClassLoader());
-
-		// Cargamos el framework
-		GcsFilename fileNameFramework = new GcsFilename(
-				UploadParameters.getGCS_BUCKET()
-						+ UploadParameters.getGCS_FRAMEWORK(),
-				UploadParameters.getFILENAMEFRAMEWORK());
-
-		myDataStoreClassLoader
-				.addClassJarFramework(readFile(fileNameFramework));
-
-		Class<? extends Agent> cz = Class.forName(
-				UploadParameters.getAGENTCLASS(), true, myDataStoreClassLoader)
-				.asSubclass(Agent.class);
-
-		Agent a = cz.newInstance();
-
-		result = loadClass(tactic, a, UploadParameters.getPACKAGENAME()
-				+ userSessionKey);
-
-		return result;
-	}
-
-	private String loadClass(byte[] tactic, Agent a, String packagePath)
-			throws Exception {
-		Class<?> cz = null;
-		Map<String, byte[]> byteStream;
-		boolean errorPackageName, existInterfaceTactic;
-		Object objectTactic = null;
-
-		byteStream = myDataStoreClassLoader.addClassJar(tactic);
-
-		Iterator it = byteStream.entrySet().iterator();
-		errorPackageName = false;
-		while (it.hasNext() && !errorPackageName) {
-
-			Map.Entry e = (Map.Entry) it.next();
-
-			String name = new String((String) e.getKey());
-
-			if (!name.contains(packagePath)) {
-				errorPackageName = true;
-
-				return UploadParameters.getERRORPACKAGENAME();
-			} else {
-				myDataStoreClassLoader.addClass(name, (byte[]) e.getValue());
-			}
-
-		}
-
-		Iterator it1 = byteStream.entrySet().iterator();
-		existInterfaceTactic = false;
-		while (!errorPackageName && it1.hasNext() && !existInterfaceTactic) {
-			Map.Entry e = (Map.Entry) it1.next();
-
-			String name = new String((String) e.getKey());
-
-			cz = myDataStoreClassLoader.loadClass(name);
-
-			if (a.isTactic(cz)) {
-				objectTactic = cz.newInstance();
-				existInterfaceTactic = true;
-				break;
-			}
-
-		}
-
-		if (existInterfaceTactic == false) {
-			return UploadParameters.getERRORINTERFACETACTIC();
-		} else {
-			a.testTactic(objectTactic, objectTactic,
-					UploadParameters.getNUMITER());
-		}
-
-		return UploadParameters.getVALIDATETACTICOK();
-
 	}
 
 	private Object loadClass(Long userId, Agent a) throws IOException,

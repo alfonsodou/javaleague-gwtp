@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.dao.MatchDao;
 import org.javahispano.javaleague.server.dao.domain.Match;
-import org.javahispano.javaleague.server.dao.domain.MatchState;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
 
 import com.google.appengine.api.taskqueue.Queue;

@@ -6,7 +6,7 @@ package org.javahispano.javaleague.server.dao;
 import java.util.List;
 
 import org.javahispano.javaleague.server.dao.domain.Match;
-import org.javahispano.javaleague.server.dao.domain.MatchState;
+import org.javahispano.javaleague.shared.parameters.MatchParameters;
 
 /**
  * @author alfonso
@@ -33,7 +33,8 @@ public class MatchDao extends BaseDao<Match> {
 	}
 
 	public List<Match> getMatchsForPlay() {
-		return ofy().load().type(Match.class).filter("state", MatchState.WAIT)
+		return ofy().load().type(Match.class)
+				.filter("state", MatchParameters.getMATCHSTATE_WAIT())
 				.filter("isFriendly", true).list();
 	}
 }

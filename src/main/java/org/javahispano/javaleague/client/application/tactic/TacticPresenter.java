@@ -63,6 +63,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		Label getPackageNameUser();
 
 		Button getPlayGame();
+		
 	}
 
 	@ProxyStandard
@@ -93,7 +94,10 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 				onFinishUploaderHandler);
 		getView().getSingleUploader().addOnCancelUploadHandler(
 				onCancelUploaderHandler);
-
+	}
+	
+	@Override
+	protected void onReveal() {
 		getView().getTeamName().setText(currentUser.getUser().getTeamName());
 		getView().getPackageName().setText(messages.packageName());
 		getView().getPackageNameUser().setText(
@@ -102,7 +106,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		getView().getPlayGame().setEnabled(
 				!currentUser.getUser().isAwaitingMatch());
 	}
-
+	
 	private IUploader.OnStartUploaderHandler onStartUploaderHandler = new IUploader.OnStartUploaderHandler() {
 		@Override
 		public void onStart(IUploader uploader) {
