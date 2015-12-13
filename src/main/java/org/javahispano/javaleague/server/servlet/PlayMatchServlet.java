@@ -72,7 +72,7 @@ public class PlayMatchServlet extends HttpServlet {
 		Long matchID = Long.parseLong(req.getParameter("matchID").replace("_",
 				""));
 		Match match = matchDao.get(matchID);
-		logger.info("/***** Comenzando ejecución partido " + matchID
+		logger.warning("/***** Comenzando ejecución partido " + matchID
 				+ " *****/");
 		if (match != null) {
 			// Cargamos el framework
@@ -97,24 +97,40 @@ public class PlayMatchServlet extends HttpServlet {
 				vo = loadClass(match.getUserAway().getId(), a);
 
 				MatchShared matchShared = a.execute(lo, vo, Long.MAX_VALUE);
+				logger.warning("/***** Partido ejecutado " + matchID
+						+ " *****/");
 
 				if (match.isFriendly()) {
+					logger.warning("/***** Grabando partido .jvc " + matchID
+							+ " *****/");
+
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
 							+ UploadParameters.getGCS_MATCHS()
 							+ UploadParameters.getGCS_FRIENDLY()
 							+ match.getId(), match.getId().toString() + ".jvc");
 					writeToFile(fileName, matchShared.getMatch());
+					
+					logger.warning("/***** Grabando partido .bin " + matchID
+							+ " *****/");
+
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
 							+ UploadParameters.getGCS_MATCHS()
 							+ UploadParameters.getGCS_FRIENDLY()
 							+ match.getId(), match.getId().toString() + ".bin");
 					writeToFile(fileName, matchShared.getMatchBin());
 				} else {
+					logger.warning("/***** Grabando partido .jvc " + matchID
+							+ " *****/");
+
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
 							+ UploadParameters.getGCS_MATCHS()
 							+ UploadParameters.getGCS_LEAGUE() + match.getId(),
 							match.getId().toString() + ".jvc");
 					writeToFile(fileName, matchShared.getMatch());
+					
+					logger.warning("/***** Grabando partido .bin " + matchID
+							+ " *****/");
+
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
 							+ UploadParameters.getGCS_MATCHS()
 							+ UploadParameters.getGCS_LEAGUE() + match.getId(),
@@ -122,15 +138,17 @@ public class PlayMatchServlet extends HttpServlet {
 					writeToFile(fileName, matchShared.getMatchBin());
 				}
 				match.setState(MatchParameters.getMATCHSTATE_FINISH());
-				MatchProperties matchProperties = match.getProperties();
+				MatchProperties matchProperties = new MatchProperties();
 				matchProperties.setGoalsAway(matchShared.getGoalsVisiting());
 				matchProperties.setGoalsHome(matchShared.getGoalsLocal());
 				matchProperties.setPosessionHome(matchShared
 						.getPosessionLocal());
+				matchProperties.setMatch(match);
 				matchPropertiesDao.put(matchProperties);
+				match.setProperties(matchProperties);
 				matchDao.put(match);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.warning(e.getMessage());
 			}
 
 		} else {

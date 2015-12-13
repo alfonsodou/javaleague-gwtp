@@ -12,8 +12,8 @@ public class UploadParameters {
 	private static String GCS_USERS = "/usuarios/";
 	private static String GCS_FRAMEWORK = "/framework";
 	private static String GCS_MATCHS = "/partidos/";
-	private static String GCS_LEAGUE = "/liga/";
-	private static String GCS_FRIENDLY = "/amistosos/";
+	private static String GCS_LEAGUE = "liga/";
+	private static String GCS_FRIENDLY = "amistosos/";
 	private static String PACKAGENAME = "org.javahispano.javaleague.tactic.ID_";
 	private static String AGENTCLASS = "org.javahispano.javacup.model.engine.AgentPartido";
 	private static String FILENAMETACTIC = "tactica.jar";
