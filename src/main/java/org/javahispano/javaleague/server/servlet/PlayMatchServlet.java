@@ -72,7 +72,7 @@ public class PlayMatchServlet extends HttpServlet {
 		Long matchID = Long.parseLong(req.getParameter("matchID").replace("_",
 				""));
 		Match match = matchDao.get(matchID);
-		logger.warning("/***** Comenzando ejecución partido " + matchID
+		logger.info("/***** Comenzando ejecución partido " + matchID
 				+ " *****/");
 		if (match != null) {
 			// Cargamos el framework
@@ -97,11 +97,11 @@ public class PlayMatchServlet extends HttpServlet {
 				vo = loadClass(match.getUserAway().getId(), a);
 
 				MatchShared matchShared = a.execute(lo, vo, Long.MAX_VALUE);
-				logger.warning("/***** Partido ejecutado " + matchID
+				logger.info("/***** Partido ejecutado " + matchID
 						+ " *****/");
 
 				if (match.isFriendly()) {
-					logger.warning("/***** Grabando partido .jvc " + matchID
+					logger.info("/***** Grabando partido .jvc " + matchID
 							+ " *****/");
 
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
@@ -110,7 +110,7 @@ public class PlayMatchServlet extends HttpServlet {
 							+ match.getId(), match.getId().toString() + ".jvc");
 					writeToFile(fileName, matchShared.getMatch());
 					
-					logger.warning("/***** Grabando partido .bin " + matchID
+					logger.info("/***** Grabando partido .bin " + matchID
 							+ " *****/");
 
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
@@ -119,7 +119,7 @@ public class PlayMatchServlet extends HttpServlet {
 							+ match.getId(), match.getId().toString() + ".bin");
 					writeToFile(fileName, matchShared.getMatchBin());
 				} else {
-					logger.warning("/***** Grabando partido .jvc " + matchID
+					logger.info("/***** Grabando partido .jvc " + matchID
 							+ " *****/");
 
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
@@ -128,7 +128,7 @@ public class PlayMatchServlet extends HttpServlet {
 							match.getId().toString() + ".jvc");
 					writeToFile(fileName, matchShared.getMatch());
 					
-					logger.warning("/***** Grabando partido .bin " + matchID
+					logger.info("/***** Grabando partido .bin " + matchID
 							+ " *****/");
 
 					fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()

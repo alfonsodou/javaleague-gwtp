@@ -17,7 +17,7 @@
 		<gin.version>2.1.2</gin.version>
 		<gwtquery.version>1.4.2</gwtquery.version>
 		<objectify-gwt.version>1.2.1</objectify-gwt.version>
-		<gwtbootstrap.version>0.9.1</gwtbootstrap.version>
+		<gwtbootstrap.version>0.9.2</gwtbootstrap.version>
 		<gwtupload.version>1.0.3</gwtupload.version>
 
 		<!-- Server -->
