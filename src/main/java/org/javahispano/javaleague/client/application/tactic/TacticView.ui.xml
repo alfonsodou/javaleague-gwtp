@@ -90,7 +90,9 @@
 			</b:Row>
 			<b:Row>
 				<b:Column size="XS_12">
-					<b:Label type="INFO">Funciona!!"</b:Label>
+					<b.gwt:CellTable bordered="true" condensed="true"
+						striped="true" hover="true" height="300px" width="100%" ui:field="cellTable" />
+					<b:Pagination ui:field="cellTablePagination" />
 				</b:Column>
 			</b:Row>
 		</b:PanelBody>
