@@ -33,55 +33,67 @@
 	}
 	</ui:style>
 
-	<b:Row>
-		<b:Column size="XS_6">
-			<b:Panel>
-				<b:PanelHeader>
-					<b:Heading size="H3" text="Mi Táctica" />
-				</b:PanelHeader>
-				<b:PanelBody ui:field="body">
-					<b:Form ui:field="formTactic">
-						<b:FieldSet>
-							<b:FormGroup>
-								<b:FormLabel for="teamName" showRequiredIndicator="true">Nombre
-									Equipo:</b:FormLabel>
-								<b:InlineHelpBlock iconType="EXCLAMATION_TRIANGLE" />
-								<b:TextBox allowBlank="false" validateOnBlur="true"
-									b:id="teamName" ui:field="teamName" />
-							</b:FormGroup>
-						</b:FieldSet>
-						<b:FieldSet>
-							<b:Button type="PRIMARY" ui:field="updateTactic">Actualizar</b:Button>
-						</b:FieldSet>
-					</b:Form>
-				</b:PanelBody>
-				<b:PanelFooter addStyleNames="{style.footer}">
-					<up:SingleUploader ui:field="singleUploader"
-						type="ANCHOR" enabled="true"></up:SingleUploader>
-					<b:Row>
-						<b:Column size="MD_12" addStyleNames="{style.column}">
-							<b:Label type="INFO" ui:field="packageName"></b:Label>
-						</b:Column>
-					</b:Row>
-					<b:Row>
-						<b:Column size="MD_12" addStyleNames="{style.column}">
-							<b:Label type="INFO" ui:field="packageNameUser"></b:Label>
-						</b:Column>
-					</b:Row>
-				</b:PanelFooter>
-			</b:Panel>
-		</b:Column>
-		<b:Column size="XS_6">
-			<b:Panel>
-				<b:PanelHeader>
-					<b:Heading size="H3" text="Estadísticas"></b:Heading>
-				</b:PanelHeader>
-				<b:PanelBody></b:PanelBody>
-				<b:PanelFooter>
-					<b:Button type="PRIMARY" ui:field="playGame">Jugar partido amistoso</b:Button>
-				</b:PanelFooter>
-			</b:Panel>
-		</b:Column>
-	</b:Row>
+	<b:Panel>
+		<b:PanelHeader>
+			<b:Heading size="H3" text="Mi Táctica" />
+		</b:PanelHeader>
+		<b:PanelBody>
+			<b:Row>
+				<b:Column size="XS_6">
+					<b:Panel>
+						<b:PanelHeader>
+							<b:Heading size="H3" text="Datos" />
+						</b:PanelHeader>
+						<b:PanelBody ui:field="body">
+							<b:Form ui:field="formTactic">
+								<b:FieldSet>
+									<b:FormGroup>
+										<b:FormLabel for="teamName" showRequiredIndicator="true">Nombre
+											Equipo:</b:FormLabel>
+										<b:InlineHelpBlock iconType="EXCLAMATION_TRIANGLE" />
+										<b:TextBox allowBlank="false" validateOnBlur="true"
+											b:id="teamName" ui:field="teamName" />
+									</b:FormGroup>
+								</b:FieldSet>
+								<b:FieldSet>
+									<b:Button type="PRIMARY" ui:field="updateTactic">Actualizar</b:Button>
+								</b:FieldSet>
+							</b:Form>
+						</b:PanelBody>
+						<b:PanelFooter addStyleNames="{style.footer}">
+							<up:SingleUploader ui:field="singleUploader"
+								type="ANCHOR" enabled="true"></up:SingleUploader>
+							<b:Row>
+								<b:Column size="MD_12" addStyleNames="{style.column}">
+									<b:Label type="INFO" ui:field="packageName"></b:Label>
+								</b:Column>
+							</b:Row>
+							<b:Row>
+								<b:Column size="MD_12" addStyleNames="{style.column}">
+									<b:Label type="INFO" ui:field="packageNameUser"></b:Label>
+								</b:Column>
+							</b:Row>
+						</b:PanelFooter>
+					</b:Panel>
+				</b:Column>
+				<b:Column size="XS_6">
+					<b:Panel>
+						<b:PanelHeader>
+							<b:Heading size="H3" text="Estadísticas"></b:Heading>
+						</b:PanelHeader>
+						<b:PanelBody></b:PanelBody>
+						<b:PanelFooter>
+							<b:Button type="PRIMARY" ui:field="playGame">Jugar partido amistoso</b:Button>
+						</b:PanelFooter>
+					</b:Panel>
+				</b:Column>
+			</b:Row>
+			<b:Row>
+				<b:Column size="XS_12">
+					<b:Label type="INFO">Funciona!!"</b:Label>
+				</b:Column>
+			</b:Row>
+		</b:PanelBody>
+	</b:Panel>
 
 </ui:UiBinder>
