@@ -79,7 +79,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 				return String.valueOf(object.getId());
 			}
 		};
-		grid.addColumn(col1, "Field 1");
+		grid.addColumn(col1, "Fecha");
 
 		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
 
@@ -88,7 +88,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 				return String.valueOf(object.getId());
 			}
 		};
-		grid.addColumn(col2, "Field 2");
+		grid.addColumn(col2, "Partido");
 
 		final TextColumn<MatchDto> col3 = new TextColumn<MatchDto>() {
 
@@ -97,13 +97,13 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 				return String.valueOf(object.getId());
 			}
 		};
-		grid.addColumn(col3, "Field 3");
+		grid.addColumn(col3, "Resultado");
 
 		final Column<MatchDto, String> col4 = new Column<MatchDto, String>(
-				new ButtonCell(ButtonType.PRIMARY, IconType.GITHUB)) {
+				new ButtonCell(ButtonType.PRIMARY, IconType.DOWNLOAD)) {
 			@Override
 			public String getValue(MatchDto object) {
-				return "Click Me";
+				return "Descargar";
 			}
 		};
 		col4.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
@@ -112,7 +112,22 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 				Window.alert("Clicked!");
 			}
 		});
-		grid.addColumn(col4, "Buttons");
+		grid.addColumn(col4, "Descargar");
+
+		final Column<MatchDto, String> col5 = new Column<MatchDto, String>(
+				new ButtonCell(ButtonType.PRIMARY, IconType.VIDEO_CAMERA)) {
+			@Override
+			public String getValue(MatchDto object) {
+				return "Verr";
+			}
+		};
+		col5.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
+			@Override
+			public void update(int index, MatchDto object, String value) {
+				Window.alert("Clicked!");
+			}
+		});
+		grid.addColumn(col5, "Ver");
 
 		grid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
 
