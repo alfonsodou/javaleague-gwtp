@@ -32,11 +32,13 @@ import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchResult;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticAction;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticResult;
+import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rpc.shared.DispatchAsync;
@@ -63,6 +65,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		Label getPackageNameUser();
 
 		Button getPlayGame();
+		
+		ListDataProvider<MatchDto> getListMatchs();
 		
 	}
 

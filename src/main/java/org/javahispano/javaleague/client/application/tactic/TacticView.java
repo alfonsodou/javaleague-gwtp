@@ -184,4 +184,9 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	public Button getPlayGame() {
 		return playGame;
 	}
+
+	@Override
+	public ListDataProvider<MatchDto> getListMatchs() {
+		return cellTableProvider;
+	}
 }

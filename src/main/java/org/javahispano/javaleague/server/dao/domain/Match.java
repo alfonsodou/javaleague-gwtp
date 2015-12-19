@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.server.dao.domain;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
@@ -21,7 +22,7 @@ import com.googlecode.objectify.annotation.Load;
 
 @Index
 @Entity
-public class Match extends BaseEntity {
+public class Match extends BaseEntity implements Comparable<Match> {
 	@Load
 	private Ref<League> league;
 	@Load
@@ -128,6 +129,20 @@ public class Match extends BaseEntity {
 	 */
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	@Override
+	public int compareTo(Match o) {
+		return Comparators.DATE.compare(this, o);
+	}
+	
+	public static class Comparators {
+		public static Comparator<Match> DATE = new Comparator<Match>() {
+			@Override
+			public int compare(Match m1, Match m2) {
+				return m1.getDate().compareTo(m2.getDate());
+			}
+		};
 	}
 
 }
