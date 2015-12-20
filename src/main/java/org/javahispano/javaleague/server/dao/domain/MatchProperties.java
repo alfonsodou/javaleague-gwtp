@@ -5,6 +5,7 @@ package org.javahispano.javaleague.server.dao.domain;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
+import org.javahispano.javaleague.shared.dto.MatchPropertiesDto;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -96,4 +97,19 @@ public class MatchProperties extends BaseEntity {
 		}
 	}
 
+	public static MatchPropertiesDto createDto(MatchProperties matchProperties) {
+		if (matchProperties == null) {
+			return null;
+		}
+		
+		MatchPropertiesDto matchPropertiesDto = new MatchPropertiesDto();
+		matchPropertiesDto.setId(matchProperties.getId());
+		matchPropertiesDto.setGoalsAway(matchProperties.getGoalsAway());
+		matchPropertiesDto.setGoalsHome(matchProperties.getGoalsHome());
+		matchPropertiesDto.setPosessionHome(matchProperties.getPosessionHome());
+		matchPropertiesDto.setResult(matchProperties.getResult());
+		matchPropertiesDto.setRound(matchProperties.getRound());
+		
+		return matchPropertiesDto;
+	}
 }

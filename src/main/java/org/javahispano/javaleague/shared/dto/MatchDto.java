@@ -15,6 +15,10 @@ public class MatchDto extends BaseEntity {
 	private boolean isFriendly;
 	private Date date;
 	private Integer state;
+	private UserDto userHome;
+	private UserDto userAway;
+	private MatchPropertiesDto matchPropertiesDto;
+	private LeagueDto leagueDto;
 	
 	public MatchDto() {
 		this.isFriendly = false;
@@ -67,6 +71,38 @@ public class MatchDto extends BaseEntity {
 	 */
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public UserDto getUserHome() {
+		return userHome;
+	}
+
+	public void setUserHome(UserDto userHome) {
+		this.userHome = userHome;
+	}
+
+	public UserDto getUserAway() {
+		return userAway;
+	}
+
+	public void setUserAway(UserDto userAway) {
+		this.userAway = userAway;
+	}
+
+	public MatchPropertiesDto getMatchPropertiesDto() {
+		return matchPropertiesDto;
+	}
+
+	public void setMatchPropertiesDto(MatchPropertiesDto matchPropertiesDto) {
+		this.matchPropertiesDto = matchPropertiesDto;
+	}
+
+	public LeagueDto getLeagueDto() {
+		return leagueDto;
+	}
+
+	public void setLeagueDto(LeagueDto leagueDto) {
+		this.leagueDto = leagueDto;
 	}
 
 	

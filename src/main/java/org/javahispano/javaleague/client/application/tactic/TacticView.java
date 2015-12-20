@@ -76,7 +76,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 			@Override
 			public String getValue(final MatchDto object) {
-				return String.valueOf(object.getId());
+				return String.valueOf(object.getDate().toString());
 			}
 		};
 		grid.addColumn(col1, "Fecha");
@@ -85,7 +85,8 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 			@Override
 			public String getValue(final MatchDto object) {
-				return String.valueOf(object.getId());
+				return String.valueOf(object.getUserHome().getTeamName()
+						+ " vs. " + object.getUserAway().getTeamName());
 			}
 		};
 		grid.addColumn(col2, "Partido");
@@ -94,7 +95,10 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 			@Override
 			public String getValue(final MatchDto object) {
-				return String.valueOf(object.getId());
+				return String.valueOf(object.getMatchPropertiesDto()
+						.getGoalsHome()
+						+ " - "
+						+ object.getMatchPropertiesDto().getGoalsAway());
 			}
 		};
 		grid.addColumn(col3, "Resultado");
@@ -118,7 +122,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 				new ButtonCell(ButtonType.PRIMARY, IconType.VIDEO_CAMERA)) {
 			@Override
 			public String getValue(MatchDto object) {
-				return "Verr";
+				return "Ver";
 			}
 		};
 		col5.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
@@ -188,5 +192,15 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	@Override
 	public ListDataProvider<MatchDto> getListMatchs() {
 		return cellTableProvider;
+	}
+
+	@Override
+	public SimplePager getPager() {
+		return cellTablePager;
+	}
+
+	@Override
+	public Pagination getPagination() {
+		return cellTablePagination;
 	}
 }

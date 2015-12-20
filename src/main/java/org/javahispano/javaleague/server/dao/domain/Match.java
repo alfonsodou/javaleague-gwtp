@@ -5,9 +5,12 @@ package org.javahispano.javaleague.server.dao.domain;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
+import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
 
 import com.googlecode.objectify.Ref;
@@ -64,7 +67,7 @@ public class Match extends BaseEntity implements Comparable<Match> {
 			this.league = null;
 		}
 	}
-	
+
 	public MatchProperties getProperties() {
 		return Deref.deref(properties);
 	}
@@ -76,7 +79,7 @@ public class Match extends BaseEntity implements Comparable<Match> {
 			this.properties = null;
 		}
 	}
-	
+
 	public User getUserHome() {
 		return Deref.deref(userHome);
 	}
@@ -125,17 +128,51 @@ public class Match extends BaseEntity implements Comparable<Match> {
 	}
 
 	/**
-	 * @param state the state to set
+	 * @param state
+	 *            the state to set
 	 */
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public static MatchDto createDto(Match match) {
+		if (match == null) {
+			return null;
+		}
+
+		MatchDto matchDto = new MatchDto();
+		matchDto.setId(match.getId());
+		matchDto.setDate(match.getDate());
+		matchDto.setFriendly(match.isFriendly());
+		matchDto.setLeagueDto(League.createDto(match.getLeague()));
+		matchDto.setMatchPropertiesDto(MatchProperties.createDto(match
+				.getProperties()));
+		matchDto.setState(match.getState());
+		matchDto.setUserAway(User.createDto(match.getUserAway()));
+		matchDto.setUserHome(User.createDto(match.getUserHome()));
+
+		return matchDto;
+	}
+
+	public static List<MatchDto> createList(List<Match> listMatch) {
+		if (listMatch == null) {
+			return null;
+		}
+		
+		List<MatchDto> listMatchDto = new LinkedList<MatchDto>();
+
+		for (Match match : listMatch) {
+			listMatchDto.add(Match.createDto(match));
+		}
+
+		return listMatchDto;
 	}
 
 	@Override
 	public int compareTo(Match o) {
 		return Comparators.DATE.compare(this, o);
 	}
-	
+
 	public static class Comparators {
 		public static Comparator<Match> DATE = new Comparator<Match>() {
 			@Override

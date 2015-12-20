@@ -7,6 +7,7 @@ import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
 import gwtupload.client.SingleUploader;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.gwtbootstrap3.client.ui.Button;
@@ -14,6 +15,7 @@ import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Modal;
 import org.gwtbootstrap3.client.ui.ModalBody;
 import org.gwtbootstrap3.client.ui.ModalFooter;
+import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.client.ui.constants.ButtonType;
 import org.gwtbootstrap3.client.ui.constants.IconType;
@@ -28,6 +30,8 @@ import org.javahispano.javaleague.client.application.tactic.TacticPresenter.MyVi
 import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.resources.TacticMessages;
 import org.javahispano.javaleague.client.security.CurrentUser;
+import org.javahispano.javaleague.shared.dispatch.match.ListMatchAction;
+import org.javahispano.javaleague.shared.dispatch.match.ListMatchResult;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchResult;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticAction;
@@ -37,6 +41,7 @@ import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
@@ -65,9 +70,13 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		Label getPackageNameUser();
 
 		Button getPlayGame();
-		
+
 		ListDataProvider<MatchDto> getListMatchs();
-		
+
+		SimplePager getPager();
+
+		Pagination getPagination();
+
 	}
 
 	@ProxyStandard
@@ -81,6 +90,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	private final DispatchAsync dispatcher;
 	private final CurrentUser currentUser;
 	private final TacticMessages messages;
+
+	private List<MatchDto> listMatchDto;
 
 	@Inject
 	TacticPresenter(EventBus eventBus, MyView view, MyProxy proxy,
@@ -99,7 +110,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		getView().getSingleUploader().addOnCancelUploadHandler(
 				onCancelUploaderHandler);
 	}
-	
+
 	@Override
 	protected void onReveal() {
 		getView().getTeamName().setText(currentUser.getUser().getTeamName());
@@ -109,8 +120,9 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						+ currentUser.getUser().getId().toString());
 		getView().getPlayGame().setEnabled(
 				!currentUser.getUser().isAwaitingMatch());
+		getListMatch();
 	}
-	
+
 	private IUploader.OnStartUploaderHandler onStartUploaderHandler = new IUploader.OnStartUploaderHandler() {
 		@Override
 		public void onStart(IUploader uploader) {
@@ -293,6 +305,43 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 						LOGGER.info("callRegisterMatchAction: Solicitud partido amistoso registrada correctamente");
 					}
+				});
+	}
+
+	private void getListMatch() {
+		ListMatchAction listMatchAction = new ListMatchAction(
+				currentUser.getUser());
+		callListMatchAction(listMatchAction);
+		getView().getListMatchs().getList().addAll(listMatchDto);
+		getView().getListMatchs().flush();
+		getView().getPagination().rebuild(getView().getPager());
+	}
+
+	private void callListMatchAction(ListMatchAction listMatchAction) {
+		dispatcher.execute(listMatchAction,
+				new AsyncCallback<ListMatchResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						LOGGER.warning("Error on callListMatchAction: "
+								+ caught.toString());
+
+					}
+
+					@Override
+					public void onSuccess(ListMatchResult result) {
+						if (result.getMatchs() == null) {
+							listMatchDto = null;
+						} else {
+							listMatchDto = result.getMatchs();
+
+							for (MatchDto matchDto : listMatchDto) {
+								LOGGER.warning("*** Match ID: "
+										+ matchDto.getId());
+							}
+						}
+					}
+
 				});
 	}
 }
