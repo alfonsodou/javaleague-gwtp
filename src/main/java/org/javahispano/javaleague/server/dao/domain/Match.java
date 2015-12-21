@@ -3,9 +3,9 @@
  */
 package org.javahispano.javaleague.server.dao.domain;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
@@ -159,7 +159,7 @@ public class Match extends BaseEntity implements Comparable<Match> {
 			return null;
 		}
 		
-		List<MatchDto> listMatchDto = new LinkedList<MatchDto>();
+		List<MatchDto> listMatchDto = new ArrayList<MatchDto>();
 
 		for (Match match : listMatch) {
 			listMatchDto.add(Match.createDto(match));

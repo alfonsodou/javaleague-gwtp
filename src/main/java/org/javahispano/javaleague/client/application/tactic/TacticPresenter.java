@@ -332,6 +332,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 					public void onSuccess(ListMatchResult result) {
 						if (result.getMatchs() == null) {
 							listMatchDto = null;
+							
+							LOGGER.warning("*** No hay partidos");
 						} else {
 							listMatchDto = result.getMatchs();
 
