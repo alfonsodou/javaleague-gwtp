@@ -42,6 +42,7 @@ import org.javahispano.javaleague.shared.parameters.UploadParameters;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
@@ -312,9 +313,9 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		ListMatchAction listMatchAction = new ListMatchAction(
 				currentUser.getUser());
 		callListMatchAction(listMatchAction);
-		getView().getListMatchs().getList().addAll(listMatchDto);
+/*		getView().getListMatchs().getList().addAll(listMatchDto);
 		getView().getListMatchs().flush();
-		getView().getPagination().rebuild(getView().getPager());
+		getView().getPagination().rebuild(getView().getPager());*/
 	}
 
 	private void callListMatchAction(ListMatchAction listMatchAction) {
@@ -332,15 +333,11 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 					public void onSuccess(ListMatchResult result) {
 						if (result.getMatchs() == null) {
 							listMatchDto = null;
-							
-							LOGGER.warning("*** No hay partidos");
 						} else {
 							listMatchDto = result.getMatchs();
-
-							for (MatchDto matchDto : listMatchDto) {
-								LOGGER.warning("*** Match ID: "
-										+ matchDto.getId());
-							}
+							getView().getListMatchs().getList().addAll(listMatchDto);
+							getView().getListMatchs().flush();
+							getView().getPagination().rebuild(getView().getPager());
 						}
 					}
 

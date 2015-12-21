@@ -13,6 +13,7 @@ import org.javahispano.javaleague.server.dao.UserDao;
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchResult;
+import org.javahispano.javaleague.shared.dto.MatchDto;
 
 import com.gwtplatform.dispatch.rpc.server.ExecutionContext;
 import com.gwtplatform.dispatch.rpc.server.actionhandler.AbstractActionHandler;
@@ -42,7 +43,9 @@ public class ListMatchHandler extends
 		List<Match> listMatch = matchDao.findByUser(userDao.get(arg0
 				.getUserDto().getId()));
 		logger.warning("**** Número de partidos encontrados: " + listMatch.size());
-		return new ListMatchResult(Match.createList(listMatch));
+		List<MatchDto> listMatchDto = Match.createList(listMatch);
+		logger.warning("**** Número de partidos encontrados: " + listMatchDto.size());
+		return new ListMatchResult(listMatchDto);
 	}
 
 	@Override
