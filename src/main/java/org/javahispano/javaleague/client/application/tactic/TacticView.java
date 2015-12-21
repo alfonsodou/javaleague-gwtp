@@ -72,6 +72,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	private void initTable(final AbstractCellTable<MatchDto> grid,
 			final SimplePager pager, final Pagination pagination,
 			final ListDataProvider<MatchDto> dataProvider) {
+		//grid.setStyleName("text-center", true);
 		final TextColumn<MatchDto> col1 = new TextColumn<MatchDto>() {
 
 			@Override

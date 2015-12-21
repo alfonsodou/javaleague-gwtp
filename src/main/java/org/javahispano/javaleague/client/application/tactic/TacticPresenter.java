@@ -313,9 +313,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		ListMatchAction listMatchAction = new ListMatchAction(
 				currentUser.getUser());
 		callListMatchAction(listMatchAction);
-/*		getView().getListMatchs().getList().addAll(listMatchDto);
-		getView().getListMatchs().flush();
-		getView().getPagination().rebuild(getView().getPager());*/
 	}
 
 	private void callListMatchAction(ListMatchAction listMatchAction) {
@@ -335,6 +332,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 							listMatchDto = null;
 						} else {
 							listMatchDto = result.getMatchs();
+							getView().getListMatchs().getList().clear();
 							getView().getListMatchs().getList().addAll(listMatchDto);
 							getView().getListMatchs().flush();
 							getView().getPagination().rebuild(getView().getPager());
