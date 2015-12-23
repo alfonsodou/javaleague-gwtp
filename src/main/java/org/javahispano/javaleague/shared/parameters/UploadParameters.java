@@ -8,6 +8,7 @@ package org.javahispano.javaleague.shared.parameters;
  *
  */
 public class UploadParameters {
+	private static String BASE_URL = "http://javaleague.appspot.com";
 	private static String GCS_BUCKET = "javaleague.appspot.com";
 	private static String GCS_USERS = "/usuarios/";
 	private static String GCS_FRAMEWORK = "/framework";
@@ -78,6 +79,10 @@ public class UploadParameters {
 	 */
 	public static String getGCS_FRIENDLY() {
 		return GCS_FRIENDLY;
+	}
+	public static String getBASE_URL() {
+		return BASE_URL;
 	}	
+	
 	
 }

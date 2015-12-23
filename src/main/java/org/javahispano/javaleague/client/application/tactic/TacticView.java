@@ -14,9 +14,12 @@ import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.gwt.ButtonCell;
 import org.gwtbootstrap3.client.ui.gwt.CellTable;
 import org.javahispano.javaleague.shared.dto.MatchDto;
+import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -72,12 +75,13 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	private void initTable(final AbstractCellTable<MatchDto> grid,
 			final SimplePager pager, final Pagination pagination,
 			final ListDataProvider<MatchDto> dataProvider) {
-		//grid.setStyleName("text-center", true);
 		final TextColumn<MatchDto> col1 = new TextColumn<MatchDto>() {
 
 			@Override
 			public String getValue(final MatchDto object) {
-				return String.valueOf(object.getDate().toString());
+				return String.valueOf(DateTimeFormat.getFormat(
+						PredefinedFormat.DATE_TIME_MEDIUM).format(
+						object.getDate()));
 			}
 		};
 		grid.addColumn(col1, "Fecha");
@@ -87,7 +91,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 			@Override
 			public String getValue(final MatchDto object) {
 				return String.valueOf(object.getUserHome().getTeamName()
-						+ " vs. " + object.getUserAway().getTeamName());
+						+ " vs " + object.getUserAway().getTeamName());
 			}
 		};
 		grid.addColumn(col2, "Partido");
@@ -96,10 +100,14 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 			@Override
 			public String getValue(final MatchDto object) {
-				return String.valueOf(object.getMatchPropertiesDto()
-						.getGoalsHome()
-						+ " - "
-						+ object.getMatchPropertiesDto().getGoalsAway());
+				if (object.getMatchPropertiesDto() != null) {
+					return String.valueOf(object.getMatchPropertiesDto()
+							.getGoalsHome()
+							+ " - "
+							+ object.getMatchPropertiesDto().getGoalsAway());
+				} else {
+					return "En juego";
+				}
 			}
 		};
 		grid.addColumn(col3, "Resultado");
@@ -126,10 +134,14 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 				return "Ver";
 			}
 		};
+
 		col5.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
 			@Override
 			public void update(int index, MatchDto object, String value) {
-				Window.alert("Clicked!");
+				Window.open(
+						UploadParameters.getBASE_URL()
+								+ "/visorwebgl/play.html?"
+								+ Long.toString(object.getId()), "_blank", "");
 			}
 		});
 		grid.addColumn(col5, "Ver");
