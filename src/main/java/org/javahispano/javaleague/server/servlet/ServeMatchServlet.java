@@ -62,12 +62,13 @@ public class ServeMatchServlet extends HttpServlet {
 					+ UploadParameters.getGCS_LEAGUE() + p.getId().toString();
 		}
 
-		GcsFilename filename = new GcsFilename(pathName, p.getUserHome()
-				.getTeamName() + "-" + p.getUserAway().getTeamName() + ".jvc");
+		GcsFilename filename = new GcsFilename(pathName, p.getId().toString()
+				+ ".jvc");
 
 		resp.setHeader("ETag", p.getId().toString());// Establece header ETag
 		resp.setHeader("Content-disposition", "attachment; filename="
-				+ p.getId().toString() + ".jvc");
+				+ p.getUserHome().getTeamName() + "-"
+				+ p.getUserAway().getTeamName() + ".jvc");
 
 		resp.getOutputStream().write(readFile(filename));
 		resp.flushBuffer();
