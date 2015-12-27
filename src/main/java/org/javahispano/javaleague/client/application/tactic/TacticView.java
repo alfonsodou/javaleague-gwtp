@@ -122,7 +122,10 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 		col4.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
 			@Override
 			public void update(int index, MatchDto object, String value) {
-				Window.alert("Clicked!");
+				Window.open(
+						UploadParameters.getBASE_URL()
+								+ "/serveMatchServlet?id="
+								+ Long.toString(object.getId()), "_blank", "");
 			}
 		});
 		grid.addColumn(col4, "Descargar");

@@ -32,6 +32,7 @@
 		<arcbees.version>1.2</arcbees.version>
 		<slf4j-api.version>1.7.7</slf4j-api.version>
 		<velocity.version>1.7</velocity.version>
+		<pngj.version>2.1.0</pngj.version>
 
 		<!-- Tests -->
 		<junit.version>4.11</junit.version>
@@ -389,6 +390,11 @@
 			<artifactId>gwtbootstrap3-extras</artifactId>
 			<version>${gwtbootstrap.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>ar.com.hjg</groupId>
+			<artifactId>pngj</artifactId>
+			<version>${pngj.version}</version>
 		</dependency>
 
 		<!-- REST -->

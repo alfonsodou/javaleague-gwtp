@@ -24,15 +24,15 @@ import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
 
 /**
- * @author adou
+ * @author alfonso
  *
  */
-public class ServeMatchBinServlet extends HttpServlet {
-
+public class ServeMatchServlet extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3232027129708096405L;
+	private static final long serialVersionUID = 1L;
+
 	private final GcsService gcsService = GcsServiceFactory
 			.createGcsService(RetryParams.getDefaultInstance());
 
@@ -40,7 +40,7 @@ public class ServeMatchBinServlet extends HttpServlet {
 	private final Logger logger;
 
 	@Inject
-	ServeMatchBinServlet(Logger logger, MatchDao matchDao) {
+	ServeMatchServlet(Logger logger, MatchDao matchDao) {
 		this.logger = logger;
 		this.matchDao = matchDao;
 	}
@@ -51,7 +51,7 @@ public class ServeMatchBinServlet extends HttpServlet {
 		long id = Long.parseLong(req.getParameter("id").replace("_", ""));
 		Match p = matchDao.get(id);
 		String pathName;
-		
+
 		if (p.isFriendly()) {
 			pathName = UploadParameters.getGCS_BUCKET()
 					+ UploadParameters.getGCS_MATCHS()
@@ -61,13 +61,13 @@ public class ServeMatchBinServlet extends HttpServlet {
 					+ UploadParameters.getGCS_MATCHS()
 					+ UploadParameters.getGCS_LEAGUE() + p.getId().toString();
 		}
-		
-		GcsFilename filename = new GcsFilename(pathName, p
-				.getId().toString() + ".bin");
+
+		GcsFilename filename = new GcsFilename(pathName, p.getUserHome()
+				.getTeamName() + "-" + p.getUserAway().getTeamName() + ".jvc");
 
 		resp.setHeader("ETag", p.getId().toString());// Establece header ETag
-		resp.setHeader("Content-disposition", "inline; filename="
-				+ p.getId().toString() + ".bin");
+		resp.setHeader("Content-disposition", "attachment; filename="
+				+ p.getId().toString() + ".jvc");
 
 		resp.getOutputStream().write(readFile(filename));
 		resp.flushBuffer();
