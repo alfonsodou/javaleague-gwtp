@@ -177,7 +177,7 @@ public class Match extends BaseEntity implements Comparable<Match> {
 		public static Comparator<Match> DATE = new Comparator<Match>() {
 			@Override
 			public int compare(Match m1, Match m2) {
-				return m1.getDate().compareTo(m2.getDate());
+				return -m1.getDate().compareTo(m2.getDate());
 			}
 		};
 	}
