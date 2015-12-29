@@ -1,0 +1,87 @@
+/**
+ * 
+ */
+package org.javahispano.javaleague.server.dao.domain;
+
+import org.javahispano.javaleague.shared.dto.BaseEntity;
+
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
+
+/**
+ * @author adou
+ *
+ */
+@Index
+@Entity
+public class Clasification extends BaseEntity {
+	private int points;
+	private int myGoals;
+	private int goalsAgainst;
+	private int round;
+	
+	@Load
+	private Ref<User> team;
+	
+	
+	public Clasification() {
+		this.points = 0;
+		this.myGoals = 0;
+		this.goalsAgainst = 0;
+		this.round = 0;
+	}
+
+
+	public int getPoints() {
+		return points;
+	}
+
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+
+	public int getMyGoals() {
+		return myGoals;
+	}
+
+
+	public void setMyGoals(int myGoals) {
+		this.myGoals = myGoals;
+	}
+
+
+	public int getGoalsAgainst() {
+		return goalsAgainst;
+	}
+
+
+	public void setGoalsAgainst(int goalsAgainst) {
+		this.goalsAgainst = goalsAgainst;
+	}
+
+
+	public int getRound() {
+		return round;
+	}
+
+
+	public void setRound(int round) {
+		this.round = round;
+	}
+
+
+	public Ref<User> getTeam() {
+		return team;
+	}
+
+
+	public void setTeam(Ref<User> team) {
+		this.team = team;
+	}
+	
+	
+}

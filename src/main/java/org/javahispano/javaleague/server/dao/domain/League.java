@@ -30,6 +30,9 @@ public class League extends BaseEntity {
 
 	@Load
 	private List<List<Ref<Match>>> matchs;
+	
+	@Load
+	private List<Clasification> clasification;
 
 	public League() {
 		this.description = "";
@@ -113,14 +116,14 @@ public class League extends BaseEntity {
 
 	private static List<List<MatchDto>> createListMatchs(League league) {
 		List<List<MatchDto>> matchs = Lists.newArrayList();
-		List<MatchDto> matchsDto = new ArrayList<MatchDto>();
+		List<MatchDto> matchsDto = null; 
 
 		for (List<Ref<Match>> refMatch : league.getMatchs()) {
+			matchsDto = new ArrayList<MatchDto>();
 			for (Ref<Match> match : refMatch) {
 				matchsDto.add(Match.createDto(Deref.deref(match)));
 			}
 			matchs.add(matchsDto);
-			matchsDto = new ArrayList<MatchDto>();
 		}
 
 		return matchs;
