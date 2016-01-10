@@ -14,7 +14,7 @@ public class LeagueDto extends BaseEntity {
 	private int roundMax;
 	private int round;
 	
-	private List<List<MatchDto>> matchs;
+	private List<JourneyDto> journeys;
 	
 	public LeagueDto() {
 		this.description = "";
@@ -61,18 +61,20 @@ public class LeagueDto extends BaseEntity {
 	}
 
 	/**
-	 * @return the matchs
+	 * @return the journeys
 	 */
-	public List<List<MatchDto>> getMatchs() {
-		return matchs;
+	public List<JourneyDto> getJourneys() {
+		return journeys;
 	}
 
 	/**
-	 * @param matchs the matchs to set
+	 * @param journeys the journeys to set
 	 */
-	public void setMatchs(List<List<MatchDto>> matchs) {
-		this.matchs = matchs;
+	public void setJourneys(List<JourneyDto> journeys) {
+		this.journeys = journeys;
 	}
+
+
 	
 	
 }

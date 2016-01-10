@@ -5,7 +5,9 @@ package org.javahispano.javaleague.server.dao.domain;
 
 import java.util.Comparator;
 
+import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
+import org.javahispano.javaleague.shared.dto.ClasificationDto;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -75,6 +77,22 @@ public class Clasification extends BaseEntity implements
 		this.team = team;
 	}
 
+	public static ClasificationDto createDto(Clasification clasification) {
+		if (clasification == null) {
+			return null;
+		}
+		
+		ClasificationDto clasificationDto = new ClasificationDto();
+		clasificationDto.setGoalsAgainst(clasification.getGoalsAgainst());
+		clasificationDto.setMyGoals(clasification.getMyGoals());
+		clasificationDto.setPoints(clasification.getPoints());
+		clasificationDto.setRound(clasification.getRound());
+		clasificationDto.setTeam(User.createDto(Deref.deref(clasification
+				.getTeam())));
+
+		return clasificationDto;
+	}
+
 	@Override
 	public int compareTo(Clasification c) {
 		return Comparators.ROUND.compare(this, c);
@@ -87,7 +105,7 @@ public class Clasification extends BaseEntity implements
 				return c1.getRound() - c2.getRound();
 			}
 		};
-		
+
 		public static Comparator<Clasification> POINTS = new Comparator<Clasification>() {
 			@Override
 			public int compare(Clasification c1, Clasification c2) {

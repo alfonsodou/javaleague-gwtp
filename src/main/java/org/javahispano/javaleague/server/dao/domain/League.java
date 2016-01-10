@@ -4,11 +4,11 @@
 package org.javahispano.javaleague.server.dao.domain;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
+import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.dto.LeagueDto;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 
@@ -28,18 +28,13 @@ public class League extends BaseEntity {
 	private String description;
 	private int roundMax;
 	private int round;
-
 	@Load
-	private List<List<Ref<Match>>> matchs;
-	
-	@Load
-	private List<Clasification> clasification;
+	private List<Ref<Journey>> journeys;
 
 	public League() {
 		this.description = "";
 		this.roundMax = 0;
 		this.round = 0;
-		this.matchs = Lists.newArrayList();
 	}
 
 	public League(String description, int roundMax, int round) {
@@ -87,18 +82,18 @@ public class League extends BaseEntity {
 	}
 
 	/**
-	 * @return the matchs
+	 * @return the journeys
 	 */
-	public List<List<Ref<Match>>> getMatchs() {
-		return matchs;
+	public List<Ref<Journey>> getJourneys() {
+		return journeys;
 	}
 
 	/**
-	 * @param matchs
-	 *            the matchs to set
+	 * @param journeys
+	 *            the journeys to set
 	 */
-	public void setMatchs(List<List<Ref<Match>>> matchs) {
-		this.matchs = matchs;
+	public void setJourneys(List<Ref<Journey>> journeys) {
+		this.journeys = journeys;
 	}
 
 	public static LeagueDto createDto(League league) {
@@ -110,24 +105,15 @@ public class League extends BaseEntity {
 		leagueDto.setId(league.getId());
 		leagueDto.setRoundMax(league.getRoundMax());
 		leagueDto.setRound(league.getRound());
-		leagueDto.setMatchs(createListMatchs(league));
+		List<Journey> journeys = Deref.deref(league.getJourneys());
+		List<JourneyDto> journeyDtoList = new ArrayList<JourneyDto>();
+		for (Journey journey : journeys) {
+			JourneyDto journeyDto = Journey.createDto(journey);
+			journeyDtoList.add(journeyDto);
+		}
+		leagueDto.setJourneys(journeyDtoList);
 
 		return leagueDto;
 	}
 
-	private static List<List<MatchDto>> createListMatchs(League league) {
-		List<List<MatchDto>> matchs = Lists.newArrayList();
-		List<MatchDto> matchsDto = null; 
-
-		for (List<Ref<Match>> refMatch : league.getMatchs()) {
-			matchsDto = new ArrayList<MatchDto>();
-			for (Ref<Match> match : refMatch) {
-				matchsDto.add(Match.createDto(Deref.deref(match)));
-			}
-			matchs.add(matchsDto);
-		}
-
-		return matchs;
-	}
-	
 }

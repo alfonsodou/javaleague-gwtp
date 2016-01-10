@@ -18,6 +18,8 @@ package org.javahispano.javaleague.server.dao.objectify;
 
 import org.javahispano.javaleague.server.dao.domain.Car;
 import org.javahispano.javaleague.server.dao.domain.CarProperties;
+import org.javahispano.javaleague.server.dao.domain.Clasification;
+import org.javahispano.javaleague.server.dao.domain.Journey;
 import org.javahispano.javaleague.server.dao.domain.Manufacturer;
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.server.dao.domain.MatchProperties;
@@ -41,6 +43,8 @@ public class OfyService {
         factory().register(RegisterMatch.class);
         factory().register(Match.class);;
         factory().register(MatchProperties.class);
+        factory().register(Clasification.class);
+        factory().register(Journey.class);
     }
 
     public static ObjectifyFactory factory() {
