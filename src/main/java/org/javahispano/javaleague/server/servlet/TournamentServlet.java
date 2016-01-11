@@ -65,6 +65,7 @@ public class TournamentServlet extends HttpServlet {
 		if (action.equals("add")) {
 			League league = new League();
 			league.setDescription("javaleague 2016");
+			leagueDao.put(league);
 			List<User> usersTacticOK = userDao.getUsersTacticOk();
 			if (usersTacticOK != null) {
 				createCalendarLeague(league, new Date(), usersTacticOK, 1);
@@ -112,7 +113,7 @@ public class TournamentServlet extends HttpServlet {
 					logger.warning("Fecha: " + round + " :: Partido: " + m);
 
 					match = new Match();
-					match.setLeague(league);
+					match.setFriendly(false);
 					match.setDate(start);
 
 					int found[] = new int[] { temp[round][m][0],

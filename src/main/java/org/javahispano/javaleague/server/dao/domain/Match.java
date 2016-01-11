@@ -27,8 +27,6 @@ import com.googlecode.objectify.annotation.Load;
 @Entity
 public class Match extends BaseEntity implements Comparable<Match> {
 	@Load
-	private Ref<League> league;
-	@Load
 	private Ref<User> userHome;
 	@Load
 	private Ref<User> userAway;
@@ -41,7 +39,6 @@ public class Match extends BaseEntity implements Comparable<Match> {
 	public Match() {
 		this.isFriendly = false;
 		this.date = new Date();
-		this.league = null;
 		this.userAway = null;
 		this.userHome = null;
 		this.properties = null;
@@ -54,18 +51,6 @@ public class Match extends BaseEntity implements Comparable<Match> {
 		this.userAway = null;
 		this.userHome = null;
 		this.properties = null;
-	}
-
-	public League getLeague() {
-		return Deref.deref(league);
-	}
-
-	public void setLeague(League league) {
-		if (league != null) {
-			this.league = Ref.create(league);
-		} else {
-			this.league = null;
-		}
 	}
 
 	public MatchProperties getProperties() {
@@ -144,7 +129,6 @@ public class Match extends BaseEntity implements Comparable<Match> {
 		matchDto.setId(match.getId());
 		matchDto.setDate(match.getDate());
 		matchDto.setFriendly(match.isFriendly());
-		matchDto.setLeagueDto(League.createDto(match.getLeague()));
 		matchDto.setMatchPropertiesDto(MatchProperties.createDto(match
 				.getProperties()));
 		matchDto.setState(match.getState());

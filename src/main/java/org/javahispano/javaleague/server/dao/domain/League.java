@@ -10,9 +10,7 @@ import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.dto.LeagueDto;
-import org.javahispano.javaleague.shared.dto.MatchDto;
 
-import com.google.gwt.thirdparty.guava.common.collect.Lists;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
@@ -36,7 +34,7 @@ public class League extends BaseEntity {
 		this.description = "";
 		this.roundMax = 0;
 		this.round = 0;
-		this.journeys = null;
+		this.journeys = new ArrayList<Ref<Journey>>();
 		this.matchs = 0;
 	}
 
@@ -44,7 +42,7 @@ public class League extends BaseEntity {
 		this.description = description;
 		this.roundMax = roundMax;
 		this.round = round;
-		this.journeys = null;
+		this.journeys = new ArrayList<Ref<Journey>>();
 		this.matchs = 0;
 	}
 

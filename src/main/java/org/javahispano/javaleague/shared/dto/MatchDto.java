@@ -18,7 +18,6 @@ public class MatchDto extends BaseEntity {
 	private UserDto userHome;
 	private UserDto userAway;
 	private MatchPropertiesDto matchPropertiesDto;
-	private LeagueDto leagueDto;
 	
 	public MatchDto() {
 		this.isFriendly = false;
@@ -95,14 +94,6 @@ public class MatchDto extends BaseEntity {
 
 	public void setMatchPropertiesDto(MatchPropertiesDto matchPropertiesDto) {
 		this.matchPropertiesDto = matchPropertiesDto;
-	}
-
-	public LeagueDto getLeagueDto() {
-		return leagueDto;
-	}
-
-	public void setLeagueDto(LeagueDto leagueDto) {
-		this.leagueDto = leagueDto;
 	}
 
 	

@@ -26,6 +26,7 @@ import org.javahispano.javaleague.server.servlet.ImageServlet;
 import org.javahispano.javaleague.server.servlet.PlayMatchServlet;
 import org.javahispano.javaleague.server.servlet.ServeMatchBinServlet;
 import org.javahispano.javaleague.server.servlet.ServeMatchServlet;
+import org.javahispano.javaleague.server.servlet.TournamentServlet;
 import org.javahispano.javaleague.shared.api.ApiPaths;
 
 import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
@@ -61,6 +62,9 @@ public class DispatchServletModule extends ServletModule {
 		serve("/serveMatchServlet").with(ServeMatchServlet.class);
 		bind(ServeMatchServlet.class).in(Singleton.class);
 
+		serve("/tournamentServlet").with(TournamentServlet.class);
+		bind(TournamentServlet.class).in(Singleton.class);
+		
 		serve("/imageTransform").with(ImageServlet.class);
 		bind(ImageServlet.class).in(Singleton.class);
 		
