@@ -16,18 +16,26 @@
 
 package org.javahispano.javaleague.server.dao;
 
+import java.util.List;
+
 import org.javahispano.javaleague.server.dao.domain.User;
 
 public class UserDao extends BaseDao<User> {
-    public UserDao() {
-        super(User.class);
-    }
+	public UserDao() {
+		super(User.class);
+	}
 
-    public User findByUsername(String username) {
-        return ofy().load().type(User.class).filter("username", username).first().now();
-    }
-    
-    public User findByEmail(String email) {
-        return ofy().load().type(User.class).filter("email", email).first().now();
-    }
+	public User findByUsername(String username) {
+		return ofy().load().type(User.class).filter("username", username)
+				.first().now();
+	}
+
+	public User findByEmail(String email) {
+		return ofy().load().type(User.class).filter("email", email).first()
+				.now();
+	}
+
+	public List<User> getUsersTacticOk() {
+		return ofy().load().type(User.class).filter("tacticOK", true).list();
+	}
 }

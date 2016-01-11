@@ -35,8 +35,8 @@ public class Journey extends BaseEntity {
 	public Journey() {
 		this.round = 0;
 		this.date = new Date();
-		this.matchs = null;
-		this.clasifications = null;
+		this.matchs = new ArrayList<Ref<Match>>();
+		this.clasifications = new ArrayList<Ref<Clasification>>();
 	}
 
 	/**
