@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.server.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,7 +47,8 @@ public class DispatchMatchServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		List<Match> matchs = matchDao.getMatchsForPlay();
+		Date now = new Date();
+		List<Match> matchs = matchDao.getMatchsForPlay(now);
 		for(Match m : matchs) {
 			queue.add(TaskOptions.Builder.withUrl("/playMatchServlet").param(
 					"matchID", m.getId().toString()));

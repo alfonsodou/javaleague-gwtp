@@ -4,12 +4,14 @@
 package org.javahispano.javaleague.server.dao;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.server.dao.domain.User;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
 
+import com.google.appengine.repackaged.org.joda.time.DateTime;
 import com.googlecode.objectify.Ref;
 
 /**
@@ -43,9 +45,9 @@ public class MatchDao extends BaseDao<Match> {
 		return ofy().load().type(Match.class).filter("round", round).list();
 	}
 
-	public List<Match> getMatchsForPlay() {
+	public List<Match> getMatchsForPlay(Date date) {
 		return ofy().load().type(Match.class)
 				.filter("state", MatchParameters.getMATCHSTATE_WAIT())
-				.filter("isFriendly", true).list();
+				.filter("date <", date).list();
 	}
 }
