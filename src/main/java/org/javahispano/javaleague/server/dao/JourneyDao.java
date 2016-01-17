@@ -13,4 +13,9 @@ public class JourneyDao extends BaseDao<Journey> {
 	public JourneyDao() {
 		super(Journey.class);
 	}
+
+	public Journey findByRound(int round) {
+		return ofy().load().type(Journey.class).filter("round", round).first()
+				.now();
+	}
 }

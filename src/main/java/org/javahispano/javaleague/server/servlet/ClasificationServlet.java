@@ -4,6 +4,8 @@
 package org.javahispano.javaleague.server.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -12,8 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javahispano.javaleague.server.dao.ClasificationDao;
 import org.javahispano.javaleague.server.dao.JourneyDao;
 import org.javahispano.javaleague.server.dao.LeagueDao;
+import org.javahispano.javaleague.server.dao.domain.Clasification;
+import org.javahispano.javaleague.server.dao.domain.Journey;
+import org.javahispano.javaleague.server.dao.domain.Match;
+import org.javahispano.javaleague.server.dao.domain.User;
+import org.javahispano.javaleague.server.dao.objectify.Deref;
+
+import com.googlecode.objectify.Ref;
 
 /**
  * @author alfonso
@@ -28,18 +38,58 @@ public class ClasificationServlet extends HttpServlet {
 	private final Logger logger;
 	private final LeagueDao leagueDao;
 	private final JourneyDao journeyDao;
+	private final ClasificationDao clasificationDao;
 
 	@Inject
 	ClasificationServlet(Logger logger, LeagueDao leagueDao,
-			JourneyDao journeyDao) {
+			JourneyDao journeyDao, ClasificationDao clasificationDao) {
 		this.logger = logger;
 		this.leagueDao = leagueDao;
 		this.journeyDao = journeyDao;
+		this.clasificationDao = clasificationDao;
 	}
-	
+
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+		int round = Integer
+				.parseInt(req.getParameter("round").replace("_", ""));
+
+		if (round > 1) {
+			Journey journeyAnt = journeyDao.findByRound(round - 1);
+			Journey journey = journeyDao.findByRound(round);
+
+			if (journey.getClasifications().size() > 0) {
+				clasificationDao
+						.delete(Deref.deref(journey.getClasifications()));
+				journey.setClasification(new ArrayList<Ref<Clasification>>());
+			}
+			for (Ref<Clasification> c : journeyAnt.getClasifications()) {
+				Clasification clasificationAnt = Deref.deref(c);
+				Clasification clasification = new Clasification();
+				clasification.setTeam(clasificationAnt.getTeam());
+				Match m = getMatch(journey.getMatchs(), clasification.getTeam());
+				if (m != null) {
+					//clasification.setGoalsAgainst(clasificationAnt.getGoalsAgainst() + m.);
+				}
+			}
+		} else {
+
+		}
+
+	}
+
+	private Match getMatch(List<Ref<Match>> listMatchs, Ref<User> refUser) {
+		User user = Deref.deref(refUser);
+		for (Ref<Match> m : listMatchs) {
+			Match match = Deref.deref(m);
+
+			if ((match.getUserAway().getId() == user.getId())
+					|| (match.getUserHome().getId() == user.getId())) {
+				return match;
+			}
+		}
+
+		return null;
 	}
 }
