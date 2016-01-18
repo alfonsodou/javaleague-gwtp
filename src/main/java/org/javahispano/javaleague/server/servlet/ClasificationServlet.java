@@ -70,11 +70,79 @@ public class ClasificationServlet extends HttpServlet {
 				clasification.setTeam(clasificationAnt.getTeam());
 				Match m = getMatch(journey.getMatchs(), clasification.getTeam());
 				if (m != null) {
-					//clasification.setGoalsAgainst(clasificationAnt.getGoalsAgainst() + m.);
+					if (m.getUserAway().getId() == Deref.deref(
+							clasification.getTeam()).getId()) {
+						clasification.setGoalsAgainst(clasificationAnt
+								.getGoalsAgainst()
+								+ m.getProperties().getGoalsHome());
+						clasification.setMyGoals(clasificationAnt.getMyGoals()
+								+ m.getProperties().getGoalsAway());
+						if (m.getProperties().getGoalsAway() > m
+								.getProperties().getGoalsHome()) {
+							clasification.setPoints(clasificationAnt
+									.getPoints() + 3);
+						} else if (m.getProperties().getGoalsAway() == m
+								.getProperties().getGoalsHome()) {
+							clasification.setPoints(clasificationAnt
+									.getPoints() + 1);
+						} else {
+							clasification.setPoints(clasificationAnt
+									.getPoints());
+						}
+					} else {
+						clasification.setGoalsAgainst(clasificationAnt
+								.getGoalsAgainst()
+								+ m.getProperties().getGoalsAway());
+						clasification.setMyGoals(clasificationAnt.getMyGoals()
+								+ m.getProperties().getGoalsHome());
+						if (m.getProperties().getGoalsHome() > m
+								.getProperties().getGoalsAway()) {
+							clasification.setPoints(clasificationAnt
+									.getPoints() + 3);
+						} else if (m.getProperties().getGoalsAway() == m
+								.getProperties().getGoalsHome()) {
+							clasification.setPoints(clasificationAnt
+									.getPoints() + 1);
+						} else {
+							clasification.setPoints(clasificationAnt
+									.getPoints());
+						}
+					}
 				}
+				clasificationDao.put(clasification);
+				journey.getClasifications().add(Ref.create(clasification));
 			}
+			journeyDao.put(journey);
 		} else {
+			Journey journey = journeyDao.findByRound(round);
 
+			if (journey.getClasifications().size() > 0) {
+				clasificationDao
+						.delete(Deref.deref(journey.getClasifications()));
+				journey.setClasification(new ArrayList<Ref<Clasification>>());
+			}
+
+			for (Ref<Match> m : journey.getMatchs()) {
+				Match match = Deref.deref(m);
+				Clasification c1 = new Clasification();
+				Clasification c2 = new Clasification();
+				c1.setTeam(Ref.create(match.getUserHome()));
+				c2.setTeam(Ref.create(match.getUserAway()));
+				
+				if (match.getProperties().getGoalsHome() > match.getProperties().getGoalsAway()) {
+					
+				} else if (match.getProperties().getGoalsHome() < match.getProperties().getGoalsAway()) {
+					
+				} else {
+					
+				}
+				
+				clasificationDao.put(c1);
+				clasificationDao.put(c2);
+				journey.getClasifications().add(Ref.create(c1));
+				journey.getClasifications().add(Ref.create(c2));
+			}
+			journeyDao.put(journey);
 		}
 
 	}
