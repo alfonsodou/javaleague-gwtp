@@ -128,13 +128,20 @@ public class ClasificationServlet extends HttpServlet {
 				Clasification c2 = new Clasification();
 				c1.setTeam(Ref.create(match.getUserHome()));
 				c2.setTeam(Ref.create(match.getUserAway()));
+				c1.setMyGoals(match.getProperties().getGoalsHome());
+				c1.setGoalsAgainst(match.getProperties().getGoalsAway());
+				c2.setMyGoals(match.getProperties().getGoalsAway());
+				c2.setGoalsAgainst(match.getProperties().getGoalsHome());
 				
 				if (match.getProperties().getGoalsHome() > match.getProperties().getGoalsAway()) {
-					
+					c1.setPoints(3);
+					c2.setPoints(0);					
 				} else if (match.getProperties().getGoalsHome() < match.getProperties().getGoalsAway()) {
-					
+					c1.setPoints(0);
+					c2.setPoints(3);					
 				} else {
-					
+					c1.setPoints(1);
+					c2.setPoints(1);					
 				}
 				
 				clasificationDao.put(c1);

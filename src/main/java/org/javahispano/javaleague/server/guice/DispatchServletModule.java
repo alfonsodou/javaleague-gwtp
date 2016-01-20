@@ -19,6 +19,7 @@ package org.javahispano.javaleague.server.guice;
 import javax.inject.Singleton;
 
 import org.javahispano.javaleague.server.servlet.AuthenticateUserServlet;
+import org.javahispano.javaleague.server.servlet.ClasificationServlet;
 import org.javahispano.javaleague.server.servlet.DispatchMatchServlet;
 import org.javahispano.javaleague.server.servlet.FrameworkServlet;
 import org.javahispano.javaleague.server.servlet.GWTUploadTacticServlet;
@@ -67,6 +68,9 @@ public class DispatchServletModule extends ServletModule {
 		
 		serve("/imageTransform").with(ImageServlet.class);
 		bind(ImageServlet.class).in(Singleton.class);
+		
+		serve("/clasificationServlet").with(ClasificationServlet.class);
+		bind(ClasificationServlet.class).in(Singleton.class);
 		
 		bind(GWTUploadTacticServlet.class).in(Singleton.class);
 		serve("*.gupld").with(GWTUploadTacticServlet.class);
