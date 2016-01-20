@@ -50,7 +50,7 @@ public class DispatchServletModule extends ServletModule {
 
 		serve("/frameworkServlet").with(FrameworkServlet.class);
 		bind(FrameworkServlet.class).in(Singleton.class);
-		
+
 		serve("/cron/dispatchMatchServlet").with(DispatchMatchServlet.class);
 		bind(DispatchMatchServlet.class).in(Singleton.class);
 
@@ -65,13 +65,13 @@ public class DispatchServletModule extends ServletModule {
 
 		serve("/tournamentServlet").with(TournamentServlet.class);
 		bind(TournamentServlet.class).in(Singleton.class);
-		
+
 		serve("/imageTransform").with(ImageServlet.class);
 		bind(ImageServlet.class).in(Singleton.class);
-		
+
 		serve("/clasificationServlet").with(ClasificationServlet.class);
 		bind(ClasificationServlet.class).in(Singleton.class);
-		
+
 		bind(GWTUploadTacticServlet.class).in(Singleton.class);
 		serve("*.gupld").with(GWTUploadTacticServlet.class);
 	}
