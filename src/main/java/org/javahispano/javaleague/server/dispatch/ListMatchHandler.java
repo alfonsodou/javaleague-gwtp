@@ -42,9 +42,8 @@ public class ListMatchHandler extends
 			throws ActionException {
 		List<Match> listMatch = matchDao.findByUser(userDao.get(arg0
 				.getUserDto().getId()));
-		logger.warning("**** Número de partidos encontrados: " + listMatch.size());
 		List<MatchDto> listMatchDto = Match.createList(listMatch);
-		logger.warning("**** Número de partidos encontrados: " + listMatchDto.size());
+
 		return new ListMatchResult(listMatchDto);
 	}
 

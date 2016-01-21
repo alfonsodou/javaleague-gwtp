@@ -3,9 +3,6 @@
 	xmlns:b.html="urn:import:org.gwtbootstrap3.client.ui.html" xmlns:up="urn:import:gwtupload.client"
 	xmlns:b.gwt="urn:import:org.gwtbootstrap3.client.ui.gwt" xmlns:cell="urn:import:com.google.gwt.user.cellview.client">
 
-	<ui:with field="nameTokens"
-		type="org.javahispano.javaleague.client.place.NameTokens" />
-
 	<ui:style>
 	.buttons button {
 		margin: 0.5em;
@@ -91,7 +88,7 @@
 			<b:Row>
 				<b:Column size="XS_12">
 					<b.gwt:CellTable bordered="true" condensed="true"
-						striped="true" hover="true" height="300px" width="100%" ui:field="cellTable" />
+						striped="true" hover="true" width="100%" ui:field="cellTable" />
 					<b:Pagination ui:field="cellTablePagination" />
 				</b:Column>
 			</b:Row>
