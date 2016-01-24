@@ -15,8 +15,10 @@ import org.javahispano.javaleague.client.application.tournament.TournamentPresen
 import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchAction;
+import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchResult;
 import org.javahispano.javaleague.shared.dto.MatchDto;
+import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -74,8 +76,8 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	}
 	
 	private void getListMatch() {
-		ListMatchAction listMatchAction = new ListMatchAction(
-				currentUser.getUser());
+		ListMatchLeagueAction listMatchLeagueAction = new ListMatchLeagueAction(
+				LeagueParameters.this.getLeagueId());
 		callListMatchAction(listMatchAction);
 	}
 

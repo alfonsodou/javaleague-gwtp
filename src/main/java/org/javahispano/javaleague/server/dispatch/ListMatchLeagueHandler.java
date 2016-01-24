@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.server.dispatch;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -10,9 +12,15 @@ import javax.inject.Inject;
 import org.javahispano.javaleague.server.dao.JourneyDao;
 import org.javahispano.javaleague.server.dao.LeagueDao;
 import org.javahispano.javaleague.server.dao.MatchDao;
+import org.javahispano.javaleague.server.dao.domain.Journey;
+import org.javahispano.javaleague.server.dao.domain.League;
+import org.javahispano.javaleague.server.dao.domain.Match;
+import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueResult;
+import org.javahispano.javaleague.shared.dto.MatchDto;
 
+import com.googlecode.objectify.Ref;
 import com.gwtplatform.dispatch.rpc.server.ExecutionContext;
 import com.gwtplatform.dispatch.rpc.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -40,8 +48,20 @@ public class ListMatchLeagueHandler extends
 	@Override
 	public ListMatchLeagueResult execute(ListMatchLeagueAction arg0,
 			ExecutionContext arg1) throws ActionException {
-		// TODO Auto-generated method stub
-		return null;
+		League league = leagueDao.get(arg0.getLeagueDto().getId());
+		List<Ref<Match>> listMatchs = new ArrayList<Ref<Match>>();
+		for(Ref<Journey> refJourney : league.getJourneys()) {
+			Journey journey = Deref.deref(refJourney);
+			listMatchs.addAll(journey.getMatchs());
+		}
+		List<MatchDto> listMatchDto = new ArrayList<MatchDto>();
+		for(Ref<Match> refMatch : listMatchs) {
+			Match match = Deref.deref(refMatch);
+			listMatchDto.add(Match.createDto(match));
+		}
+		ListMatchLeagueResult listMatchLeagueResult = new ListMatchLeagueResult(listMatchDto);
+		
+		return listMatchLeagueResult;
 	}
 
 	@Override
