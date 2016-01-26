@@ -76,8 +76,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	}
 	
 	private void getListMatch() {
-		ListMatchLeagueAction listMatchLeagueAction = new ListMatchLeagueAction(
-				LeagueParameters.this.getLeagueId());
+		ListMatchLeagueAction listMatchLeagueAction = new ListMatchLeagueAction();
 		callListMatchAction(listMatchAction);
 	}
 

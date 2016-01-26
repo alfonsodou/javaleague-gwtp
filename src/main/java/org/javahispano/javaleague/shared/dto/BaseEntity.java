@@ -21,7 +21,7 @@ import com.googlecode.objectify.annotation.Id;
 
 public class BaseEntity implements Dto {
     @Id
-    protected LeagueDto id;
+    protected Long id;
 
     protected BaseEntity() {
     }
@@ -61,11 +61,11 @@ public class BaseEntity implements Dto {
         return true;
     }
 
-    public LeagueDto getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(LeagueDto id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
