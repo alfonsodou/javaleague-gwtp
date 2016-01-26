@@ -8,12 +8,12 @@ package org.javahispano.javaleague.shared.parameters;
  *
  */
 public class LeagueParameters {
-	private Long leagueId = 6635320644730880L;
+	private static Long leagueId = 6635320644730880L;
 
 	/**
 	 * @return the leagueId
 	 */
-	public Long getLeagueId() {
+	public static Long getLeagueId() {
 		return leagueId;
 	}
 	

@@ -14,9 +14,8 @@ import org.javahispano.javaleague.client.application.tournament.TournamentPresen
 import org.javahispano.javaleague.client.application.tournament.TournamentPresenter.MyView;
 import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.security.CurrentUser;
-import org.javahispano.javaleague.shared.dispatch.match.ListMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
-import org.javahispano.javaleague.shared.dispatch.match.ListMatchResult;
+import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueResult;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
@@ -58,7 +57,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 
 	private final DispatchAsync dispatcher;
 	private final CurrentUser currentUser;
-	
+
 	private List<MatchDto> listMatchDto;
 
 	@Inject
@@ -69,20 +68,21 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		this.dispatcher = dispatcher;
 		this.currentUser = currentUser;
 	}
-	
+
 	@Override
 	protected void onReveal() {
 		getListMatch();
 	}
-	
+
 	private void getListMatch() {
-		ListMatchLeagueAction listMatchLeagueAction = new ListMatchLeagueAction();
-		callListMatchAction(listMatchAction);
+		ListMatchLeagueAction listMatchLeagueAction = new ListMatchLeagueAction(
+				LeagueParameters.getLeagueId());
+		callListMatchAction(listMatchLeagueAction);
 	}
 
-	private void callListMatchAction(ListMatchAction listMatchAction) {
-		dispatcher.execute(listMatchAction,
-				new AsyncCallback<ListMatchResult>() {
+	private void callListMatchAction(ListMatchLeagueAction listMatchLeagueAction) {
+		dispatcher.execute(listMatchLeagueAction,
+				new AsyncCallback<ListMatchLeagueResult>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -92,15 +92,17 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 					}
 
 					@Override
-					public void onSuccess(ListMatchResult result) {
+					public void onSuccess(ListMatchLeagueResult result) {
 						if (result.getMatchs() == null) {
 							listMatchDto = null;
 						} else {
 							listMatchDto = result.getMatchs();
 							getView().getListMatchs().getList().clear();
-							getView().getListMatchs().getList().addAll(listMatchDto);
+							getView().getListMatchs().getList()
+									.addAll(listMatchDto);
 							getView().getListMatchs().flush();
-							getView().getPagination().rebuild(getView().getPager());
+							getView().getPagination().rebuild(
+									getView().getPager());
 						}
 					}
 

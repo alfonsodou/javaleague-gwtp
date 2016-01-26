@@ -48,7 +48,7 @@ public class ListMatchLeagueHandler extends
 	@Override
 	public ListMatchLeagueResult execute(ListMatchLeagueAction arg0,
 			ExecutionContext arg1) throws ActionException {
-		League league = leagueDao.get(arg0.getLeagueDto().getId());
+		League league = leagueDao.get(arg0.getLeagueId());
 		List<Ref<Match>> listMatchs = new ArrayList<Ref<Match>>();
 		for(Ref<Journey> refJourney : league.getJourneys()) {
 			Journey journey = Deref.deref(refJourney);
