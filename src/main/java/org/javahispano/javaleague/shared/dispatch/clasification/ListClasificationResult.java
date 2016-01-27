@@ -20,13 +20,15 @@ public class ListClasificationResult implements Result {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<ClasificationDto> listClasification;
+	private int round;
 	
 	protected ListClasificationResult() {
 		
 	}
 	
-	public ListClasificationResult(List<ClasificationDto> listClasification) {
+	public ListClasificationResult(List<ClasificationDto> listClasification, int round) {
 		this.listClasification = listClasification;
+		this.round = round;
 	}
 
 	/**
@@ -43,4 +45,13 @@ public class ListClasificationResult implements Result {
 		this.listClasification = listClasification;
 	}
 
+	public int getRound() {
+		return round;
+	}
+
+	public void setRound(int round) {
+		this.round = round;
+	}
+
+	
 }

@@ -3,9 +3,6 @@
  */
 package org.javahispano.javaleague.shared.dispatch.match;
 
-import java.util.List;
-
-import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.shared.dto.UserDto;
 
 import com.gwtplatform.dispatch.rpc.shared.ActionImpl;

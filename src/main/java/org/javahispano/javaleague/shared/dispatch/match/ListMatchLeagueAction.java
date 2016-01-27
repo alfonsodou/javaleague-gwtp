@@ -12,11 +12,9 @@ import com.gwtplatform.dispatch.rpc.shared.ActionImpl;
 public class ListMatchLeagueAction extends ActionImpl<ListMatchLeagueResult> {
 	private Long leagueId;
 
-
-	protected
-	ListMatchLeagueAction() {
+	protected ListMatchLeagueAction() {
 	}
-	
+
 	public ListMatchLeagueAction(Long leagueId) {
 		this.leagueId = leagueId;
 	}
