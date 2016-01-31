@@ -5,6 +5,7 @@ package org.javahispano.javaleague.server.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -132,22 +133,30 @@ public class ClasificationServlet extends HttpServlet {
 				c1.setGoalsAgainst(match.getProperties().getGoalsAway());
 				c2.setMyGoals(match.getProperties().getGoalsAway());
 				c2.setGoalsAgainst(match.getProperties().getGoalsHome());
-				
-				if (match.getProperties().getGoalsHome() > match.getProperties().getGoalsAway()) {
+
+				if (match.getProperties().getGoalsHome() > match
+						.getProperties().getGoalsAway()) {
 					c1.setPoints(3);
-					c2.setPoints(0);					
-				} else if (match.getProperties().getGoalsHome() < match.getProperties().getGoalsAway()) {
+					c2.setPoints(0);
+				} else if (match.getProperties().getGoalsHome() < match
+						.getProperties().getGoalsAway()) {
 					c1.setPoints(0);
-					c2.setPoints(3);					
+					c2.setPoints(3);
 				} else {
 					c1.setPoints(1);
-					c2.setPoints(1);					
+					c2.setPoints(1);
 				}
-				
+
 				clasificationDao.put(c1);
 				clasificationDao.put(c2);
 				journey.getClasifications().add(Ref.create(c1));
 				journey.getClasifications().add(Ref.create(c2));
+			}
+			List<Clasification> list = Deref.deref(journey.getClasifications());
+			Collections.sort(list, Clasification.Comparators.POINTS);
+			journey.getClasifications().clear();
+			for (Clasification c : list) {
+				journey.getClasifications().add(Ref.create(c));
 			}
 			journeyDao.put(journey);
 		}

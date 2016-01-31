@@ -14,8 +14,11 @@ import org.javahispano.javaleague.client.application.tournament.TournamentPresen
 import org.javahispano.javaleague.client.application.tournament.TournamentPresenter.MyView;
 import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.security.CurrentUser;
+import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationAction;
+import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationResult;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueResult;
+import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
@@ -44,6 +47,12 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		SimplePager getPager();
 
 		Pagination getPagination();
+
+		ListDataProvider<ClasificationDto> getListClasification();
+
+		SimplePager getClasificationPager();
+
+		Pagination getClasificationPagination();
 	}
 
 	@ProxyCodeSplit
@@ -72,6 +81,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	@Override
 	protected void onReveal() {
 		getListMatch();
+		getListClasification();
 	}
 
 	private void getListMatch() {
@@ -104,6 +114,43 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 							getView().getPagination().rebuild(
 									getView().getPager());
 						}
+					}
+
+				});
+	}
+
+	private void getListClasification() {
+		ListClasificationAction listClasificationAction = new ListClasificationAction(
+				LeagueParameters.getLeagueId());
+		callListClasificationAction(listClasificationAction);
+	}
+
+	private void callListClasificationAction(
+			ListClasificationAction listClasificationAction) {
+		dispatcher.execute(listClasificationAction,
+				new AsyncCallback<ListClasificationResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						LOGGER.warning("Error on callListClasificationAction: "
+								+ caught.toString());
+
+					}
+
+					@Override
+					public void onSuccess(ListClasificationResult result) {
+						if (result.getListClasification() == null) {
+
+						} else {
+							getView().getListClasification().getList().clear();
+							getView().getListClasification().getList()
+									.addAll(result.getListClasification());
+							getView().getListClasification().flush();
+							getView().getClasificationPagination().rebuild(
+									getView().getClasificationPager());
+
+						}
+
 					}
 
 				});

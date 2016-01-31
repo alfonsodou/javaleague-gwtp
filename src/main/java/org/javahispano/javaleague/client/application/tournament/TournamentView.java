@@ -10,6 +10,7 @@ import org.gwtbootstrap3.client.ui.constants.ButtonType;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.gwt.ButtonCell;
 import org.gwtbootstrap3.client.ui.gwt.CellTable;
+import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
@@ -46,11 +47,23 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 	private SimplePager cellTablePager = new SimplePager();
 	private ListDataProvider<MatchDto> cellTableProvider = new ListDataProvider<MatchDto>();
 
+	@UiField(provided = true)
+	CellTable<ClasificationDto> cellTableClasification = new CellTable<ClasificationDto>(
+			4);
+	@UiField
+	Pagination cellTableClasificationPagination;
+
+	private SimplePager cellTableClasificationPager = new SimplePager();
+	private ListDataProvider<ClasificationDto> cellTableClasificationProvider = new ListDataProvider<ClasificationDto>();
+
 	@Inject
 	TournamentView(Binder uiBinder) {
 		initWidget(uiBinder.createAndBindUi(this));
 		initTable(cellTable, cellTablePager, cellTablePagination,
 				cellTableProvider);
+		initTableClasification(cellTableClasification,
+				cellTableClasificationPager, cellTableClasificationPagination,
+				cellTableClasificationProvider);
 	}
 
 	private void initTable(final AbstractCellTable<MatchDto> grid,
@@ -142,7 +155,70 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		pagination.clear();
 		dataProvider.addDataDisplay(grid);
 	}
-	
+
+	private void initTableClasification(
+			final AbstractCellTable<ClasificationDto> grid,
+			final SimplePager pager, final Pagination pagination,
+			final ListDataProvider<ClasificationDto> dataProvider) {
+		final TextColumn<ClasificationDto> col1 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getTeam().getTeamName());
+			}
+		};
+		grid.addColumn(col1, "Equipo");
+
+		final TextColumn<ClasificationDto> col2 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getPoints());
+			}
+		};
+		grid.addColumn(col2, "Puntos");
+
+		final TextColumn<ClasificationDto> col3 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getMyGoals());
+			}
+		};
+		grid.addColumn(col3, "Goles a favor");
+
+		final TextColumn<ClasificationDto> col4 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getGoalsAgainst());
+			}
+		};
+		grid.addColumn(col4, "Goles en contra");
+
+		final TextColumn<ClasificationDto> col5 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getMyGoals()
+						- object.getGoalsAgainst());
+			}
+		};
+		grid.addColumn(col5, "Diferencia de goles");
+
+		grid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+
+			@Override
+			public void onRangeChange(final RangeChangeEvent event) {
+				pagination.rebuild(pager);
+			}
+		});
+
+		pager.setDisplay(grid);
+		pagination.clear();
+		dataProvider.addDataDisplay(grid);
+	}
+
 	@Override
 	public ListDataProvider<MatchDto> getListMatchs() {
 		return cellTableProvider;
@@ -156,5 +232,20 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 	@Override
 	public Pagination getPagination() {
 		return cellTablePagination;
+	}
+
+	@Override
+	public ListDataProvider<ClasificationDto> getListClasification() {
+		return cellTableClasificationProvider;
+	}
+
+	@Override
+	public SimplePager getClasificationPager() {
+		return cellTableClasificationPager;
+	}
+
+	@Override
+	public Pagination getClasificationPagination() {
+		return cellTableClasificationPagination;
 	}
 }

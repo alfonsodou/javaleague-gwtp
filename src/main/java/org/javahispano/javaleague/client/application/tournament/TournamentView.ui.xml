@@ -31,6 +31,9 @@
 			<b.gwt:CellTable bordered="true" condensed="true"
 				striped="true" hover="true" width="100%" ui:field="cellTable" />
 			<b:Pagination ui:field="cellTablePagination" />
+			<b.gwt:CellTable bordered="true" condensed="true"
+				striped="true" hover="true" width="100%" ui:field="cellTableClasification"></b.gwt:CellTable>
+			<b:Pagination ui:field="cellTableClasificationPagination"></b:Pagination>
 		</b:Column>
 	</b:Row>
 
