@@ -68,7 +68,7 @@ public class TournamentServlet extends HttpServlet {
 			leagueDao.put(league);
 			List<User> usersTacticOK = userDao.getUsersTacticOk();
 			if (usersTacticOK != null) {
-				createCalendarLeague(league, new Date(), usersTacticOK, 1);
+				createCalendarLeague(league, new Date(), usersTacticOK, 2);
 			} else {
 				logger.warning("TournamentServlet: add: No hay usuarios con táctica OK!");
 			}
