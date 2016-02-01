@@ -92,8 +92,8 @@ public class TournamentServlet extends HttpServlet {
 		logger.warning("Total fechas: " + fechas);
 		logger.warning("Partidos por fecha: " + partidosPorFecha);
 
-		league.setMatchs(partidos);
-		league.setRoundMax(fechas);
+		league.setMatchs(partidos * fechas);
+		league.setRoundMax(fechas * fechas);
 
 		for (int f = 0; f < vueltas; f++) {
 			if (f % 2 == 0) { // es par
