@@ -81,7 +81,7 @@ public class Clasification extends BaseEntity implements
 		if (clasification == null) {
 			return null;
 		}
-		
+
 		ClasificationDto clasificationDto = new ClasificationDto();
 		clasificationDto.setGoalsAgainst(clasification.getGoalsAgainst());
 		clasificationDto.setMyGoals(clasification.getMyGoals());
@@ -109,7 +109,7 @@ public class Clasification extends BaseEntity implements
 		public static Comparator<Clasification> POINTS = new Comparator<Clasification>() {
 			@Override
 			public int compare(Clasification c1, Clasification c2) {
-				return c1.getPoints() - c2.getPoints();
+				return -(c1.getPoints() - c2.getPoints());
 			}
 		};
 

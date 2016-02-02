@@ -107,7 +107,7 @@ public class TournamentServlet extends HttpServlet {
 				
 				Journey journey = new Journey();
 				journey.setDate(start);
-				journey.setRound(round + 1);
+				journey.setRound((round * f) + 1);
 
 				for (int m = 0; m < partidosPorFecha; m++) {
 					logger.warning("Fecha: " + round + " :: Partido: " + m);

@@ -28,9 +28,11 @@
 
 	<b:Row>
 		<b:Column size="XS_12">
+			<b:Lead text="Jornada"></b:Lead>
 			<b.gwt:CellTable bordered="true" condensed="true"
 				striped="true" hover="true" width="100%" ui:field="cellTable" />
 			<b:Pagination ui:field="cellTablePagination" />
+			<b:Lead text="Clasificación"></b:Lead>
 			<b.gwt:CellTable bordered="true" condensed="true"
 				striped="true" hover="true" width="100%" ui:field="cellTableClasification"></b.gwt:CellTable>
 			<b:Pagination ui:field="cellTableClasificationPagination"></b:Pagination>

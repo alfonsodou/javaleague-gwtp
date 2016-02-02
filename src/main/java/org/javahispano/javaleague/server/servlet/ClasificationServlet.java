@@ -152,7 +152,8 @@ public class ClasificationServlet extends HttpServlet {
 				journey.getClasifications().add(Ref.create(c1));
 				journey.getClasifications().add(Ref.create(c2));
 			}
-			List<Clasification> list = Deref.deref(journey.getClasifications());
+			List<Clasification> list = new ArrayList<Clasification>(
+					Deref.deref(journey.getClasifications()));
 			Collections.sort(list, Clasification.Comparators.POINTS);
 			journey.getClasifications().clear();
 			for (Clasification c : list) {

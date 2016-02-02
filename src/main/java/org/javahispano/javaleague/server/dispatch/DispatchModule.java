@@ -16,6 +16,7 @@
 
 package org.javahispano.javaleague.server.dispatch;
 
+import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationAction;
 import org.javahispano.javaleague.shared.dispatch.login.LogInAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
@@ -36,5 +37,6 @@ public class DispatchModule extends HandlerModule {
         bindHandler(RegisterMatchAction.class, RegisterMatchHandler.class);
         bindHandler(ListMatchAction.class, ListMatchHandler.class);
         bindHandler(ListMatchLeagueAction.class, ListMatchLeagueHandler.class);
+        bindHandler(ListClasificationAction.class, ListClasificationHandler.class);
     }
 }

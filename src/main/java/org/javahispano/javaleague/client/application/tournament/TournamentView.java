@@ -100,7 +100,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 							+ " - "
 							+ object.getMatchPropertiesDto().getGoalsAway());
 				} else {
-					return "En juego";
+					return "Sin comenzar";
 				}
 			}
 		};
