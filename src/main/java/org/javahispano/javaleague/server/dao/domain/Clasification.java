@@ -109,7 +109,13 @@ public class Clasification extends BaseEntity implements
 		public static Comparator<Clasification> POINTS = new Comparator<Clasification>() {
 			@Override
 			public int compare(Clasification c1, Clasification c2) {
-				return -(c1.getPoints() - c2.getPoints());
+				if (c1.getPoints() > c2.getPoints())
+					return -1;
+				else if (c1.getPoints() < c2.getPoints()) 
+					return 1;
+				else {
+					return 0;
+				}
 			}
 		};
 
