@@ -95,7 +95,7 @@ public class Clasification extends BaseEntity implements
 
 	@Override
 	public int compareTo(Clasification c) {
-		return Comparators.ROUND.compare(this, c);
+		return Comparators.POINTS.compare(this, c);
 	}
 
 	public static class Comparators {

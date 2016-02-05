@@ -65,6 +65,7 @@ public class ClasificationServlet extends HttpServlet {
 						.delete(Deref.deref(journey.getClasifications()));
 				journey.setClasification(new ArrayList<Ref<Clasification>>());
 			}
+			List<Clasification> list = new ArrayList<Clasification>();
 			for (Ref<Clasification> c : journeyAnt.getClasifications()) {
 				Clasification clasificationAnt = Deref.deref(c);
 				Clasification clasification = new Clasification();
@@ -111,8 +112,14 @@ public class ClasificationServlet extends HttpServlet {
 					}
 				}
 				clasificationDao.put(clasification);
-				journey.getClasifications().add(Ref.create(clasification));
+				list.add(clasification);
 			}
+			Collections.sort(list, Clasification.Comparators.POINTS);
+			List<Ref<Clasification>> listRef = new ArrayList<Ref<Clasification>>();
+			for (Clasification c : list) {
+				listRef.add(Ref.create(c));
+			}
+			journey.setClasification(listRef);
 			journeyDao.put(journey);
 		} else {
 			Journey journey = journeyDao.findByRound(round);
@@ -122,6 +129,8 @@ public class ClasificationServlet extends HttpServlet {
 						.delete(Deref.deref(journey.getClasifications()));
 				journey.setClasification(new ArrayList<Ref<Clasification>>());
 			}
+			
+			List<Clasification> list = new ArrayList<Clasification>();
 
 			for (Ref<Match> m : journey.getMatchs()) {
 				Match match = Deref.deref(m);
@@ -149,16 +158,17 @@ public class ClasificationServlet extends HttpServlet {
 
 				clasificationDao.put(c1);
 				clasificationDao.put(c2);
-				journey.getClasifications().add(Ref.create(c1));
-				journey.getClasifications().add(Ref.create(c2));
+				list.add(c1);
+				list.add(c2);
+				//journey.getClasifications().add(Ref.create(c1));
+				//journey.getClasifications().add(Ref.create(c2));
 			}
-			List<Clasification> list = new ArrayList<Clasification>(
-					Deref.deref(journey.getClasifications()));
 			Collections.sort(list, Clasification.Comparators.POINTS);
-			journey.setClasification(new ArrayList<Ref<Clasification>>());
+			List<Ref<Clasification>> listRef = new ArrayList<Ref<Clasification>>();
 			for (Clasification c : list) {
-				journey.getClasifications().add(Ref.create(c));
+				listRef.add(Ref.create(c));
 			}
+			journey.setClasification(listRef);
 			journeyDao.put(journey);
 		}
 
