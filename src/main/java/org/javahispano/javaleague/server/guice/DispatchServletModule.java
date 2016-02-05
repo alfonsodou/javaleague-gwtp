@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 
 import org.javahispano.javaleague.server.servlet.AuthenticateUserServlet;
 import org.javahispano.javaleague.server.servlet.ClasificationServlet;
+import org.javahispano.javaleague.server.servlet.DispatchClasificationServlet;
 import org.javahispano.javaleague.server.servlet.DispatchMatchServlet;
 import org.javahispano.javaleague.server.servlet.FrameworkServlet;
 import org.javahispano.javaleague.server.servlet.GWTUploadTacticServlet;
@@ -54,6 +55,9 @@ public class DispatchServletModule extends ServletModule {
 		serve("/cron/dispatchMatchServlet").with(DispatchMatchServlet.class);
 		bind(DispatchMatchServlet.class).in(Singleton.class);
 
+		serve("/cron/dispatchClasificationServlet").with(DispatchClasificationServlet.class);
+		bind(DispatchClasificationServlet.class).in(Singleton.class);
+		
 		serve("/playMatchServlet").with(PlayMatchServlet.class);
 		bind(PlayMatchServlet.class).in(Singleton.class);
 

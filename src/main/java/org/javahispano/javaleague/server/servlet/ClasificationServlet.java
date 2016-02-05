@@ -20,9 +20,11 @@ import org.javahispano.javaleague.server.dao.JourneyDao;
 import org.javahispano.javaleague.server.dao.LeagueDao;
 import org.javahispano.javaleague.server.dao.domain.Clasification;
 import org.javahispano.javaleague.server.dao.domain.Journey;
+import org.javahispano.javaleague.server.dao.domain.League;
 import org.javahispano.javaleague.server.dao.domain.Match;
 import org.javahispano.javaleague.server.dao.domain.User;
 import org.javahispano.javaleague.server.dao.objectify.Deref;
+import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
 import com.googlecode.objectify.Ref;
 
@@ -55,7 +57,8 @@ public class ClasificationServlet extends HttpServlet {
 			throws ServletException, IOException {
 		int round = Integer
 				.parseInt(req.getParameter("round").replace("_", ""));
-
+		League league = leagueDao.get(LeagueParameters.getLeagueId());
+		
 		if (round > 1) {
 			Journey journeyAnt = journeyDao.findByRound(round - 1);
 			Journey journey = journeyDao.findByRound(round);
@@ -160,8 +163,6 @@ public class ClasificationServlet extends HttpServlet {
 				clasificationDao.put(c2);
 				list.add(c1);
 				list.add(c2);
-				//journey.getClasifications().add(Ref.create(c1));
-				//journey.getClasifications().add(Ref.create(c2));
 			}
 			Collections.sort(list, Clasification.Comparators.POINTS);
 			List<Ref<Clasification>> listRef = new ArrayList<Ref<Clasification>>();
@@ -171,7 +172,9 @@ public class ClasificationServlet extends HttpServlet {
 			journey.setClasification(listRef);
 			journeyDao.put(journey);
 		}
-
+		
+		league.setRound(round);
+		leagueDao.put(league);
 	}
 
 	private Match getMatch(List<Ref<Match>> listMatchs, Ref<User> refUser) {
