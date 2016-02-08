@@ -16,6 +16,8 @@ import org.javahispano.javaleague.client.place.NameTokens;
 import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationAction;
 import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationResult;
+import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyAction;
+import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyResult;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueResult;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
@@ -82,6 +84,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	protected void onReveal() {
 		getListMatch();
 		getListClasification();
+		getListJourney();
 	}
 
 	private void getListMatch() {
@@ -155,4 +158,33 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 
 				});
 	}
+
+	private void getListJourney() {
+		ListJourneyAction listJourneyAction = new ListJourneyAction(
+				LeagueParameters.getLeagueId());
+		callListJourneyAction(listJourneyAction);
+	}
+
+	private void callListJourneyAction(ListJourneyAction listJourneyAction) {
+		dispatcher.execute(listJourneyAction,
+				new AsyncCallback<ListJourneyResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						LOGGER.warning("Error on callListJourneyAction: "
+								+ caught.toString());
+					}
+
+					@Override
+					public void onSuccess(ListJourneyResult result) {
+						if (result.getListJourneyDto() == null) {
+
+						} else {
+
+						}
+					}
+
+				});
+	}
+
 }
