@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import org.gwtbootstrap3.client.ui.Container;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.javahispano.javaleague.client.application.ApplicationPresenter;
 import org.javahispano.javaleague.client.application.tournament.TournamentPresenter.MyProxy;
@@ -21,6 +22,7 @@ import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyResult;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
 import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueResult;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
+import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
@@ -55,6 +57,10 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		SimplePager getClasificationPager();
 
 		Pagination getClasificationPagination();
+
+		Container getJourneyContainer();
+
+		void viewJourney(List<JourneyDto> listJourneyDto);
 	}
 
 	@ProxyCodeSplit
@@ -178,9 +184,9 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 					@Override
 					public void onSuccess(ListJourneyResult result) {
 						if (result.getListJourneyDto() == null) {
-
+							LOGGER.warning("** No hay jornadas creadas **");
 						} else {
-
+							getView().viewJourney(result.getListJourneyDto());
 						}
 					}
 

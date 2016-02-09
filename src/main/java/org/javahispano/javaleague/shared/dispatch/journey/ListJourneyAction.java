@@ -27,5 +27,9 @@ public class ListJourneyAction extends ActionImpl<ListJourneyResult> {
 	public void setLeagueId(Long leagueId) {
 		this.leagueId = leagueId;
 	}
-
+	
+	@Override
+	public boolean isSecured() {
+		return false;
+	}
 }

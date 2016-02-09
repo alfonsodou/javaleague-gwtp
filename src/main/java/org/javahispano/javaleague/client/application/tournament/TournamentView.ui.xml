@@ -26,17 +26,29 @@
 	}
 	</ui:style>
 
-	<b:Row>
-		<b:Column size="XS_12">
-			<b:Lead text="Jornada"></b:Lead>
-			<b.gwt:CellTable bordered="true" condensed="true"
-				striped="true" hover="true" width="100%" ui:field="cellTable" />
-			<b:Pagination ui:field="cellTablePagination" />
-			<b:Lead text="Clasificación"></b:Lead>
-			<b.gwt:CellTable bordered="true" condensed="true"
-				striped="true" hover="true" width="100%" ui:field="cellTableClasification"></b.gwt:CellTable>
-			<b:Pagination ui:field="cellTableClasificationPagination"></b:Pagination>
-		</b:Column>
-	</b:Row>
-
+	<b:Container>
+		<b:NavTabs>
+			<b:TabListItem active="true" dataTarget="#tab1" text="Calendario">
+			</b:TabListItem>
+			<b:TabListItem dataTarget="#tab2" text="Clasificación"></b:TabListItem>
+		</b:NavTabs>
+		<b:TabContent>
+			<b:TabPane active="true" b:id="tab1">
+				<b:Row>
+					<b:Column size="XS_12">
+						<b:Lead text="Jornada"></b:Lead>
+						<b.gwt:CellTable bordered="true" condensed="true"
+							striped="true" hover="true" width="100%" ui:field="cellTable" />
+						<b:Pagination ui:field="cellTablePagination" />
+						<b:Lead text="Clasificación"></b:Lead>
+						<b.gwt:CellTable bordered="true" condensed="true"
+							striped="true" hover="true" width="100%" ui:field="cellTableClasification"></b.gwt:CellTable>
+						<b:Pagination ui:field="cellTableClasificationPagination"></b:Pagination>
+						<b:Container ui:field="journeyContainer"></b:Container>
+					</b:Column>
+				</b:Row>
+			</b:TabPane>
+			<b:TabPane b:id="tab2"></b:TabPane>
+		</b:TabContent>
+	</b:Container>
 </ui:UiBinder>
