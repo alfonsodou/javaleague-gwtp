@@ -13,6 +13,11 @@ public class ClasificationDto extends BaseEntity {
 	private int goalsAgainst;
 	private int round;
 	private UserDto team;
+	private int matchs;
+	private int wins;
+	private int tied;
+	private int lost;
+
 	
 	public ClasificationDto() {
 		this.points = 0;
@@ -20,6 +25,10 @@ public class ClasificationDto extends BaseEntity {
 		this.goalsAgainst = 0;
 		this.round = 0;
 		this.team = null;
+		this.matchs = 0;
+		this.wins = 0;
+		this.tied = 0;
+		this.lost = 0;
 	}
 
 	/**
@@ -91,5 +100,62 @@ public class ClasificationDto extends BaseEntity {
 	public void setTeam(UserDto team) {
 		this.team = team;
 	}
+
+	/**
+	 * @return the matchs
+	 */
+	public int getMatchs() {
+		return matchs;
+	}
+
+	/**
+	 * @param matchs the matchs to set
+	 */
+	public void setMatchs(int matchs) {
+		this.matchs = matchs;
+	}
+
+	/**
+	 * @return the wins
+	 */
+	public int getWins() {
+		return wins;
+	}
+
+	/**
+	 * @param wins the wins to set
+	 */
+	public void setWins(int wins) {
+		this.wins = wins;
+	}
+
+	/**
+	 * @return the tied
+	 */
+	public int getTied() {
+		return tied;
+	}
+
+	/**
+	 * @param tied the tied to set
+	 */
+	public void setTied(int tied) {
+		this.tied = tied;
+	}
+
+	/**
+	 * @return the lost
+	 */
+	public int getLost() {
+		return lost;
+	}
+
+	/**
+	 * @param lost the lost to set
+	 */
+	public void setLost(int lost) {
+		this.lost = lost;
+	}
+
 	
 }

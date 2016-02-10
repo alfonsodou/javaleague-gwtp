@@ -58,7 +58,7 @@ public class ClasificationServlet extends HttpServlet {
 		int round = Integer
 				.parseInt(req.getParameter("round").replace("_", ""));
 		League league = leagueDao.get(LeagueParameters.getLeagueId());
-		
+
 		if (round > 1) {
 			Journey journeyAnt = journeyDao.findByRound(round - 1);
 			Journey journey = journeyDao.findByRound(round);
@@ -73,6 +73,7 @@ public class ClasificationServlet extends HttpServlet {
 				Clasification clasificationAnt = Deref.deref(c);
 				Clasification clasification = new Clasification();
 				clasification.setTeam(clasificationAnt.getTeam());
+				clasification.setMatchs(clasificationAnt.getMatchs() + 1);
 				Match m = getMatch(journey.getMatchs(), clasification.getTeam());
 				if (m != null) {
 					if (m.getUserAway().getId() == Deref.deref(
@@ -86,13 +87,19 @@ public class ClasificationServlet extends HttpServlet {
 								.getProperties().getGoalsHome()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 3);
+							clasification
+									.setWins(clasificationAnt.getWins() + 1);
 						} else if (m.getProperties().getGoalsAway() == m
 								.getProperties().getGoalsHome()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 1);
+							clasification
+									.setTied(clasificationAnt.getTied() + 1);
 						} else {
 							clasification.setPoints(clasificationAnt
 									.getPoints());
+							clasification
+									.setLost(clasificationAnt.getLost() + 1);
 						}
 					} else {
 						clasification.setGoalsAgainst(clasificationAnt
@@ -104,13 +111,19 @@ public class ClasificationServlet extends HttpServlet {
 								.getProperties().getGoalsAway()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 3);
+							clasification
+									.setWins(clasificationAnt.getWins() + 1);
 						} else if (m.getProperties().getGoalsAway() == m
 								.getProperties().getGoalsHome()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 1);
+							clasification
+									.setTied(clasificationAnt.getTied() + 1);
 						} else {
 							clasification.setPoints(clasificationAnt
 									.getPoints());
+							clasification
+									.setLost(clasificationAnt.getLost() + 1);
 						}
 					}
 				}
@@ -132,7 +145,7 @@ public class ClasificationServlet extends HttpServlet {
 						.delete(Deref.deref(journey.getClasifications()));
 				journey.setClasification(new ArrayList<Ref<Clasification>>());
 			}
-			
+
 			List<Clasification> list = new ArrayList<Clasification>();
 
 			for (Ref<Match> m : journey.getMatchs()) {
@@ -145,18 +158,25 @@ public class ClasificationServlet extends HttpServlet {
 				c1.setGoalsAgainst(match.getProperties().getGoalsAway());
 				c2.setMyGoals(match.getProperties().getGoalsAway());
 				c2.setGoalsAgainst(match.getProperties().getGoalsHome());
-
+				c1.setMatchs(1);
+				c2.setMatchs(1);
 				if (match.getProperties().getGoalsHome() > match
 						.getProperties().getGoalsAway()) {
 					c1.setPoints(3);
+					c1.setWins(1);
 					c2.setPoints(0);
+					c2.setLost(1);
 				} else if (match.getProperties().getGoalsHome() < match
 						.getProperties().getGoalsAway()) {
 					c1.setPoints(0);
+					c1.setLost(1);
 					c2.setPoints(3);
+					c2.setWins(1);
 				} else {
 					c1.setPoints(1);
+					c1.setTied(1);
 					c2.setPoints(1);
+					c2.setTied(1);
 				}
 
 				clasificationDao.put(c1);
@@ -172,7 +192,7 @@ public class ClasificationServlet extends HttpServlet {
 			journey.setClasification(listRef);
 			journeyDao.put(journey);
 		}
-		
+
 		league.setRound(round);
 		leagueDao.put(league);
 	}
