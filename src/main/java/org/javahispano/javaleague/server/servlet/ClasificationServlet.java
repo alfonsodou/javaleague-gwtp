@@ -87,17 +87,23 @@ public class ClasificationServlet extends HttpServlet {
 								.getProperties().getGoalsHome()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 3);
+							clasification.setLost(clasificationAnt.getLost());
+							clasification.setTied(clasificationAnt.getTied());
 							clasification
 									.setWins(clasificationAnt.getWins() + 1);
 						} else if (m.getProperties().getGoalsAway() == m
 								.getProperties().getGoalsHome()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 1);
+							clasification.setWins(clasificationAnt.getWins());
+							clasification.setLost(clasificationAnt.getLost());
 							clasification
 									.setTied(clasificationAnt.getTied() + 1);
 						} else {
 							clasification.setPoints(clasificationAnt
 									.getPoints());
+							clasification.setWins(clasificationAnt.getWins());
+							clasification.setTied(clasificationAnt.getTied());
 							clasification
 									.setLost(clasificationAnt.getLost() + 1);
 						}
@@ -111,17 +117,23 @@ public class ClasificationServlet extends HttpServlet {
 								.getProperties().getGoalsAway()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 3);
+							clasification.setLost(clasificationAnt.getLost());
+							clasification.setTied(clasificationAnt.getTied());
 							clasification
 									.setWins(clasificationAnt.getWins() + 1);
 						} else if (m.getProperties().getGoalsAway() == m
 								.getProperties().getGoalsHome()) {
 							clasification.setPoints(clasificationAnt
 									.getPoints() + 1);
+							clasification.setWins(clasificationAnt.getWins());
+							clasification.setLost(clasificationAnt.getLost());
 							clasification
 									.setTied(clasificationAnt.getTied() + 1);
 						} else {
 							clasification.setPoints(clasificationAnt
 									.getPoints());
+							clasification.setWins(clasificationAnt.getWins());
+							clasification.setTied(clasificationAnt.getTied());
 							clasification
 									.setLost(clasificationAnt.getLost() + 1);
 						}
