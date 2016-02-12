@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 import org.gwtbootstrap3.client.ui.Container;
-import org.gwtbootstrap3.client.ui.Pagination;
 import org.javahispano.javaleague.client.application.ApplicationPresenter;
 import org.javahispano.javaleague.client.application.tournament.TournamentPresenter.MyProxy;
 import org.javahispano.javaleague.client.application.tournament.TournamentPresenter.MyView;
@@ -19,16 +18,12 @@ import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificatio
 import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationResult;
 import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyAction;
 import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyResult;
-import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
-import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueResult;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
-import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.view.client.ListDataProvider;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rpc.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -46,21 +41,11 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		TournamentUiHandlers {
 	interface MyView extends View, HasUiHandlers<TournamentUiHandlers> {
-		ListDataProvider<MatchDto> getListMatchs();
-
-		SimplePager getPager();
-
-		Pagination getPagination();
-
-		ListDataProvider<ClasificationDto> getListClasification();
-
-		SimplePager getClasificationPager();
-
-		Pagination getClasificationPagination();
-
 		Container getJourneyContainer();
 
 		void viewJourney(List<JourneyDto> listJourneyDto);
+
+		void viewClasification(List<ClasificationDto> listClasificationDto);
 	}
 
 	@ProxyCodeSplit
@@ -88,44 +73,8 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 
 	@Override
 	protected void onReveal() {
-		getListMatch();
 		getListClasification();
 		getListJourney();
-	}
-
-	private void getListMatch() {
-		ListMatchLeagueAction listMatchLeagueAction = new ListMatchLeagueAction(
-				LeagueParameters.getLeagueId());
-		callListMatchAction(listMatchLeagueAction);
-	}
-
-	private void callListMatchAction(ListMatchLeagueAction listMatchLeagueAction) {
-		dispatcher.execute(listMatchLeagueAction,
-				new AsyncCallback<ListMatchLeagueResult>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						LOGGER.warning("Error on callListMatchAction: "
-								+ caught.toString());
-
-					}
-
-					@Override
-					public void onSuccess(ListMatchLeagueResult result) {
-						if (result.getMatchs() == null) {
-							listMatchDto = null;
-						} else {
-							listMatchDto = result.getMatchs();
-							getView().getListMatchs().getList().clear();
-							getView().getListMatchs().getList()
-									.addAll(listMatchDto);
-							getView().getListMatchs().flush();
-							getView().getPagination().rebuild(
-									getView().getPager());
-						}
-					}
-
-				});
 	}
 
 	private void getListClasification() {
@@ -149,15 +98,10 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 					@Override
 					public void onSuccess(ListClasificationResult result) {
 						if (result.getListClasification() == null) {
-
+							LOGGER.warning("*** No hay clasificación creada ***");
 						} else {
-							getView().getListClasification().getList().clear();
-							getView().getListClasification().getList()
-									.addAll(result.getListClasification());
-							getView().getListClasification().flush();
-							getView().getClasificationPagination().rebuild(
-									getView().getClasificationPager());
-
+							getView().viewClasification(
+									result.getListClasification());
 						}
 
 					}

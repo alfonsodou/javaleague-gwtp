@@ -45,10 +45,11 @@ public class ListClasificationHandler extends
 			ExecutionContext arg1) throws ActionException {
 		League league = leagueDao.get(arg0.getLeagueId());
 		List<Ref<Clasification>> listClasification = new ArrayList<Ref<Clasification>>();
-		for (Ref<Journey> refJourney : league.getJourneys()) {
-			Journey journey = Deref.deref(refJourney);
-			listClasification.addAll(journey.getClasifications());
-		}
+
+		Journey journey = Deref.deref(league.getJourneys().get(
+				league.getRound() - 1));
+		listClasification.addAll(journey.getClasifications());
+
 		List<ClasificationDto> listClasificationDto = new ArrayList<ClasificationDto>();
 		for (Ref<Clasification> refClasification : listClasification) {
 			listClasificationDto.add(Clasification.createDto(Deref

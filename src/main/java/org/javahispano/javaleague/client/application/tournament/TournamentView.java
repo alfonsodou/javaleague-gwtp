@@ -49,123 +49,14 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 	interface Binder extends UiBinder<Widget, TournamentView> {
 	}
 
-	@UiField(provided = true)
-	CellTable<MatchDto> cellTable = new CellTable<MatchDto>(2);
-	@UiField
-	Pagination cellTablePagination;
 	@UiField
 	Container journeyContainer;
-
-	private SimplePager cellTablePager = new SimplePager();
-	private ListDataProvider<MatchDto> cellTableProvider = new ListDataProvider<MatchDto>();
-
-	@UiField(provided = true)
-	CellTable<ClasificationDto> cellTableClasification = new CellTable<ClasificationDto>(
-			4);
 	@UiField
-	Pagination cellTableClasificationPagination;
-
-	private SimplePager cellTableClasificationPager = new SimplePager();
-	private ListDataProvider<ClasificationDto> cellTableClasificationProvider = new ListDataProvider<ClasificationDto>();
+	Container clasificationContainer;
 
 	@Inject
 	TournamentView(Binder uiBinder) {
 		initWidget(uiBinder.createAndBindUi(this));
-		initTable(cellTable, cellTablePager, cellTablePagination,
-				cellTableProvider);
-		initTableClasification(cellTableClasification,
-				cellTableClasificationPager, cellTableClasificationPagination,
-				cellTableClasificationProvider);
-	}
-
-	private void initTable(final AbstractCellTable<MatchDto> grid,
-			final SimplePager pager, final Pagination pagination,
-			final ListDataProvider<MatchDto> dataProvider) {
-		final TextColumn<MatchDto> col1 = new TextColumn<MatchDto>() {
-
-			@Override
-			public String getValue(final MatchDto object) {
-				return String.valueOf(DateTimeFormat.getFormat(
-						PredefinedFormat.DATE_TIME_MEDIUM).format(
-						object.getDate()));
-			}
-		};
-		grid.addColumn(col1, "Fecha");
-
-		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
-
-			@Override
-			public String getValue(final MatchDto object) {
-				return String.valueOf(object.getUserHome().getTeamName()
-						+ " vs " + object.getUserAway().getTeamName());
-			}
-		};
-		grid.addColumn(col2, "Partido");
-
-		final TextColumn<MatchDto> col3 = new TextColumn<MatchDto>() {
-
-			@Override
-			public String getValue(final MatchDto object) {
-				if (object.getMatchPropertiesDto() != null) {
-					return String.valueOf(object.getMatchPropertiesDto()
-							.getGoalsHome()
-							+ " - "
-							+ object.getMatchPropertiesDto().getGoalsAway());
-				} else {
-					return "Sin comenzar";
-				}
-			}
-		};
-		grid.addColumn(col3, "Resultado");
-
-		final Column<MatchDto, String> col4 = new Column<MatchDto, String>(
-				new ButtonCell(ButtonType.PRIMARY, IconType.DOWNLOAD)) {
-			@Override
-			public String getValue(MatchDto object) {
-				return "Descargar";
-			}
-		};
-		col4.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
-			@Override
-			public void update(int index, MatchDto object, String value) {
-				Window.open(
-						UploadParameters.getBASE_URL()
-								+ "/serveMatchServlet?id="
-								+ Long.toString(object.getId()), "_blank", "");
-			}
-		});
-		grid.addColumn(col4, "Descargar");
-
-		final Column<MatchDto, String> col5 = new Column<MatchDto, String>(
-				new ButtonCell(ButtonType.PRIMARY, IconType.VIDEO_CAMERA)) {
-			@Override
-			public String getValue(MatchDto object) {
-				return "Ver";
-			}
-		};
-
-		col5.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
-			@Override
-			public void update(int index, MatchDto object, String value) {
-				Window.open(
-						UploadParameters.getBASE_URL()
-								+ "/visorwebgl/play.html?"
-								+ Long.toString(object.getId()), "_blank", "");
-			}
-		});
-		grid.addColumn(col5, "Ver");
-
-		grid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
-
-			@Override
-			public void onRangeChange(final RangeChangeEvent event) {
-				pagination.rebuild(pager);
-			}
-		});
-
-		pager.setDisplay(grid);
-		pagination.clear();
-		dataProvider.addDataDisplay(grid);
 	}
 
 	private void initTableClasification(
@@ -194,29 +85,55 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 
 			@Override
 			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getMatchs());
+			}
+		};
+		grid.addColumn(col3, "PJ");
+
+		final TextColumn<ClasificationDto> col4 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getWins());
+			}
+		};
+		grid.addColumn(col4, "PG");
+
+		final TextColumn<ClasificationDto> col5 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getTied());
+			}
+		};
+		grid.addColumn(col5, "PE");
+
+		final TextColumn<ClasificationDto> col6 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
+				return String.valueOf(object.getLost());
+			}
+		};
+		grid.addColumn(col6, "PP");
+
+		final TextColumn<ClasificationDto> col7 = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(final ClasificationDto object) {
 				return String.valueOf(object.getMyGoals());
 			}
 		};
-		grid.addColumn(col3, "Goles a favor");
+		grid.addColumn(col7, "GF");
 
-		final TextColumn<ClasificationDto> col4 = new TextColumn<ClasificationDto>() {
+		final TextColumn<ClasificationDto> col8 = new TextColumn<ClasificationDto>() {
 
 			@Override
 			public String getValue(final ClasificationDto object) {
 				return String.valueOf(object.getGoalsAgainst());
 			}
 		};
-		grid.addColumn(col4, "Goles en contra");
-
-		final TextColumn<ClasificationDto> col5 = new TextColumn<ClasificationDto>() {
-
-			@Override
-			public String getValue(final ClasificationDto object) {
-				return String.valueOf(object.getMyGoals()
-						- object.getGoalsAgainst());
-			}
-		};
-		grid.addColumn(col5, "Diferencia de goles");
+		grid.addColumn(col8, "GC");
 
 		grid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
 
@@ -229,36 +146,6 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		pager.setDisplay(grid);
 		pagination.clear();
 		dataProvider.addDataDisplay(grid);
-	}
-
-	@Override
-	public ListDataProvider<MatchDto> getListMatchs() {
-		return cellTableProvider;
-	}
-
-	@Override
-	public SimplePager getPager() {
-		return cellTablePager;
-	}
-
-	@Override
-	public Pagination getPagination() {
-		return cellTablePagination;
-	}
-
-	@Override
-	public ListDataProvider<ClasificationDto> getListClasification() {
-		return cellTableClasificationProvider;
-	}
-
-	@Override
-	public SimplePager getClasificationPager() {
-		return cellTableClasificationPager;
-	}
-
-	@Override
-	public Pagination getClasificationPagination() {
-		return cellTableClasificationPagination;
 	}
 
 	@Override
@@ -391,5 +278,31 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		pager.setDisplay(grid);
 		pagination.clear();
 		dataProvider.addDataDisplay(grid);
+	}
+
+	@Override
+	public void viewClasification(List<ClasificationDto> listClasificationDto) {
+		Row row = new Row();
+		org.gwtbootstrap3.client.ui.Column column = new org.gwtbootstrap3.client.ui.Column(
+				ColumnSize.XS_12);
+		Panel panel = new Panel();
+		panel.setType(PanelType.INFO);
+		PanelHeader panelHeader = new PanelHeader();
+		panelHeader.setText("Clasificación");
+		panel.add(panelHeader);
+		PanelBody panelBody = new PanelBody();
+		CellTable<ClasificationDto> cellTableClasification = new CellTable<ClasificationDto>(
+				listClasificationDto.size());
+		ListDataProvider<ClasificationDto> listClasificationDataDto = new ListDataProvider<ClasificationDto>();
+		listClasificationDataDto.setList(listClasificationDto);
+		Pagination pagination = new Pagination();
+		SimplePager simplePager = new SimplePager();
+		initTableClasification(cellTableClasification, simplePager, pagination,
+				listClasificationDataDto);
+		panelBody.add(cellTableClasification);
+		panel.add(panelBody);
+		column.add(panel);
+		row.add(column);
+		clasificationContainer.add(row);
 	}
 }
