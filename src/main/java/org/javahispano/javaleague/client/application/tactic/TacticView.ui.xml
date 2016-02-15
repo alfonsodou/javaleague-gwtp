@@ -28,7 +28,18 @@
 	.column {
 		text-align: center;
 	}
+	
+	.spacing {
+		margin-right: 10px;
+	}
+	
+	.escudo {
+		margin-right: 10px;
+		width: 150px;
+		height: 150px;
+	}
 	</ui:style>
+
 
 	<b:Panel>
 		<b:PanelHeader>
@@ -76,9 +87,12 @@
 				<b:Column size="XS_6">
 					<b:Panel>
 						<b:PanelHeader>
-							<b:Heading size="H3" text="Estadísticas"></b:Heading>
+							<b:Heading size="H3" text="Escudo"></b:Heading>
 						</b:PanelHeader>
-						<b:PanelBody></b:PanelBody>
+						<b:PanelBody>
+							<b:Image addStyleNames="{style.escudo}" type="THUMBNAIL"
+								url="images/sin_escudo.png" />
+						</b:PanelBody>
 						<b:PanelFooter>
 							<b:Button type="PRIMARY" ui:field="playGame">Jugar partido amistoso</b:Button>
 						</b:PanelFooter>

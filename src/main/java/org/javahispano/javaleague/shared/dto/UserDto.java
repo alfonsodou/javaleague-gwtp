@@ -17,54 +17,50 @@
 package org.javahispano.javaleague.shared.dto;
 
 public class UserDto extends BaseEntity {
-    private String userName;
-    private String hashPassword;
-    private String email;
-    private boolean active;
-    private boolean tacticOK;
-    private boolean awaitingMatch;
-    private String token;
-    private String teamName;
+	private String userName;
+	private String hashPassword;
+	private String email;
+	private boolean active;
+	private boolean tacticOK;
+	private boolean awaitingMatch;
+	private boolean logo;
+	private String token;
+	private String teamName;
 
-    public UserDto() {
-    }
+	public UserDto() {
+	}
 
-    public UserDto(
-            String username,
-            String hashPassword,
-            String email,
-            boolean active,
-            boolean tacticOK,
-            boolean awaitingMatch,
-            String token,
-            String teamName) {
-        this.userName = username;
-        this.hashPassword = hashPassword;
-        this.email = email;
-        this.active = active;
-        this.tacticOK = tacticOK;
-        this.awaitingMatch = awaitingMatch;
-        this.token = token;
-        this.teamName = teamName;
-    }
+	public UserDto(String username, String hashPassword, String email,
+			boolean active, boolean tacticOK, boolean awaitingMatch,
+			boolean logo, String token, String teamName) {
+		this.userName = username;
+		this.hashPassword = hashPassword;
+		this.email = email;
+		this.active = active;
+		this.tacticOK = tacticOK;
+		this.awaitingMatch = awaitingMatch;
+		this.logo = logo;
+		this.token = token;
+		this.teamName = teamName;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public String getHashPassword() {
-        return hashPassword;
-    }
+	public String getHashPassword() {
+		return hashPassword;
+	}
 
-    public void setHashPassword(String hashPassword) {
-        this.hashPassword = hashPassword;
-    }
+	public void setHashPassword(String hashPassword) {
+		this.hashPassword = hashPassword;
+	}
 
-    /**
+	/**
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -72,7 +68,8 @@ public class UserDto extends BaseEntity {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -86,7 +83,8 @@ public class UserDto extends BaseEntity {
 	}
 
 	/**
-	 * @param active the active to set
+	 * @param active
+	 *            the active to set
 	 */
 	public void setActive(boolean active) {
 		this.active = active;
@@ -100,20 +98,21 @@ public class UserDto extends BaseEntity {
 	}
 
 	/**
-	 * @param token the token to set
+	 * @param token
+	 *            the token to set
 	 */
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
 	public String getTeamName() {
 		return teamName;
 	}
 
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
-	}	
-	
+	}
+
 	/**
 	 * @return the tacticOK
 	 */
@@ -122,12 +121,13 @@ public class UserDto extends BaseEntity {
 	}
 
 	/**
-	 * @param tacticOK the tacticOK to set
+	 * @param tacticOK
+	 *            the tacticOK to set
 	 */
 	public void setTacticOK(boolean tacticOK) {
 		this.tacticOK = tacticOK;
 	}
-	
+
 	/**
 	 * @return the awaitingMatch
 	 */
@@ -136,25 +136,35 @@ public class UserDto extends BaseEntity {
 	}
 
 	/**
-	 * @param awaitingMatch the awaitingMatch to set
+	 * @param awaitingMatch
+	 *            the awaitingMatch to set
 	 */
 	public void setAwaitingMatch(boolean awaitingMatch) {
 		this.awaitingMatch = awaitingMatch;
 	}
 
+	public boolean isLogo() {
+		return logo;
+	}
+
+	public void setLogo(boolean logo) {
+		this.logo = logo;
+	}
+
 	@Override
-    public String toString() {
-        String s = " { User ";
-        s += "id=" + id + " ";
-        s += "username=" + userName + " ";
-        s += "hasPassword=" + hashPassword + " ";
-        s += "email=" + email + " ";
-        s += "active=" + active + " ";
-        s += "tacticOK=" + tacticOK + " ";
-        s += "awaitingMatch=" + awaitingMatch + " ";
-        s += "token=" + token + " ";
-        s += "teamName=" + teamName + " ";
-        s += " User } ";
-        return s;
-    }
+	public String toString() {
+		String s = " { User ";
+		s += "id=" + id + " ";
+		s += "username=" + userName + " ";
+		s += "hasPassword=" + hashPassword + " ";
+		s += "email=" + email + " ";
+		s += "active=" + active + " ";
+		s += "tacticOK=" + tacticOK + " ";
+		s += "awaitingMatch=" + awaitingMatch + " ";
+		s += "token=" + token + " ";
+		s += "teamName=" + teamName + " ";
+		s += "logo=" + logo + " ";
+		s += " User } ";
+		return s;
+	}
 }

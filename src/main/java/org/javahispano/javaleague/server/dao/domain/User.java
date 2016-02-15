@@ -1,5 +1,3 @@
-
-
 package org.javahispano.javaleague.server.dao.domain;
 
 import org.javahispano.javaleague.server.dao.objectify.Deref;
@@ -20,6 +18,7 @@ public class User extends BaseEntity {
 	private boolean active;
 	private boolean tacticOK;
 	private boolean awaitingMatch;
+	private boolean logo;
 	private String token;
 	private String teamName;
 
@@ -147,6 +146,14 @@ public class User extends BaseEntity {
 		this.awaitingMatch = awaitingMatch;
 	}
 
+	public boolean isLogo() {
+		return logo;
+	}
+
+	public void setLogo(boolean logo) {
+		this.logo = logo;
+	}
+
 	@Override
 	public String toString() {
 		String s = "{ User ";
@@ -159,6 +166,7 @@ public class User extends BaseEntity {
 		s += "awaitingMatch" + awaitingMatch + " ";
 		s += "token= " + token + " ";
 		s += "teamName=" + teamName + " ";
+		s += "logo=" + logo + " ";
 		s += "}";
 		return s;
 	}
@@ -174,6 +182,7 @@ public class User extends BaseEntity {
 		userDto.setActive(user.isActive());
 		userDto.setTacticOK(user.isTacticOK());
 		userDto.setAwaitingMatch(user.isAwaitingMatch());
+		userDto.setLogo(user.isLogo());
 		userDto.setToken(user.getToken());
 		userDto.setTeamName(user.getTeamName());
 
