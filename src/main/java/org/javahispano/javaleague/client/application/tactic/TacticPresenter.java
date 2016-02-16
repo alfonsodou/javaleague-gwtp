@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.gwtbootstrap3.client.ui.Button;
-import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Modal;
 import org.gwtbootstrap3.client.ui.ModalBody;
 import org.gwtbootstrap3.client.ui.ModalFooter;
@@ -19,6 +18,8 @@ import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.client.ui.constants.ButtonType;
 import org.gwtbootstrap3.client.ui.constants.IconType;
+import org.gwtbootstrap3.client.ui.html.Paragraph;
+import org.gwtbootstrap3.client.ui.html.Small;
 import org.gwtbootstrap3.client.ui.html.Span;
 import org.gwtbootstrap3.extras.notify.client.constants.NotifyPlacement;
 import org.gwtbootstrap3.extras.notify.client.constants.NotifyType;
@@ -65,9 +66,9 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 		TextBox getTeamName();
 
-		Label getPackageName();
+		Paragraph getPackageName();
 
-		Label getPackageNameUser();
+		Small getPackageNameUser();
 
 		Button getPlayGame();
 
@@ -322,7 +323,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 					public void onFailure(Throwable caught) {
 						LOGGER.warning("Error on callListMatchAction: "
 								+ caught.toString());
-
 					}
 
 					@Override

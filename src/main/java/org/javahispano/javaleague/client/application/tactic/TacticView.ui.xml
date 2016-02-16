@@ -34,7 +34,9 @@
 	}
 	
 	.escudo {
-		margin-right: 10px;
+		display: block;
+		margin-right: auto;
+		margin-left: auto;
 		width: 150px;
 		height: 150px;
 	}
@@ -47,10 +49,21 @@
 		</b:PanelHeader>
 		<b:PanelBody>
 			<b:Row>
-				<b:Column size="XS_6">
+				<b:Column size="XS_3">
 					<b:Panel>
 						<b:PanelHeader>
-							<b:Heading size="H3" text="Datos" />
+							<b:Heading size="H3" text="Escudo"></b:Heading>
+						</b:PanelHeader>
+						<b:PanelBody>
+							<b:Image addStyleNames="{style.escudo}" type="THUMBNAIL"
+								url="images/sin_escudo.png" />
+						</b:PanelBody>
+					</b:Panel>
+				</b:Column>
+				<b:Column size="XS_4">
+					<b:Panel>
+						<b:PanelHeader>
+							<b:Heading size="H3" text="Nombre" />
 						</b:PanelHeader>
 						<b:PanelBody ui:field="body">
 							<b:Form ui:field="formTactic">
@@ -68,35 +81,35 @@
 								</b:FieldSet>
 							</b:Form>
 						</b:PanelBody>
-						<b:PanelFooter addStyleNames="{style.footer}">
+					</b:Panel>
+				</b:Column>
+				<b:Column size="XS_5">
+					<b:Panel>
+						<b:PanelHeader>
+							<b:Heading size="H3" text="Clases" />
+						</b:PanelHeader>
+						<b:PanelBody>
 							<up:SingleUploader ui:field="singleUploader"
 								type="ANCHOR" enabled="true"></up:SingleUploader>
 							<b:Row>
 								<b:Column size="MD_12" addStyleNames="{style.column}">
-									<b:Label type="INFO" ui:field="packageName"></b:Label>
+									<b.html:Paragraph emphasis="INFO" ui:field="packageName" />
 								</b:Column>
 							</b:Row>
 							<b:Row>
 								<b:Column size="MD_12" addStyleNames="{style.column}">
-									<b:Label type="INFO" ui:field="packageNameUser"></b:Label>
+									<b.html:Small ui:field="packageNameUser" />
 								</b:Column>
 							</b:Row>
-						</b:PanelFooter>
+						</b:PanelBody>
 					</b:Panel>
 				</b:Column>
-				<b:Column size="XS_6">
-					<b:Panel>
-						<b:PanelHeader>
-							<b:Heading size="H3" text="Escudo"></b:Heading>
-						</b:PanelHeader>
-						<b:PanelBody>
-							<b:Image addStyleNames="{style.escudo}" type="THUMBNAIL"
-								url="images/sin_escudo.png" />
-						</b:PanelBody>
-						<b:PanelFooter>
-							<b:Button type="PRIMARY" ui:field="playGame">Jugar partido amistoso</b:Button>
-						</b:PanelFooter>
-					</b:Panel>
+
+			</b:Row>
+			<b:Row>
+				<b:Column size="XS_2" offset="XS_5">
+					<b:Button type="PRIMARY" ui:field="playGame">Jugar partido
+						amistoso</b:Button>
 				</b:Column>
 			</b:Row>
 			<b:Row>
@@ -108,5 +121,4 @@
 			</b:Row>
 		</b:PanelBody>
 	</b:Panel>
-
 </ui:UiBinder>

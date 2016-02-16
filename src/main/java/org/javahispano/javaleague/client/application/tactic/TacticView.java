@@ -6,13 +6,14 @@ package org.javahispano.javaleague.client.application.tactic;
 import gwtupload.client.SingleUploader;
 
 import org.gwtbootstrap3.client.ui.Button;
-import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.client.ui.constants.ButtonType;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.gwt.ButtonCell;
 import org.gwtbootstrap3.client.ui.gwt.CellTable;
+import org.gwtbootstrap3.client.ui.html.Paragraph;
+import org.gwtbootstrap3.client.ui.html.Small;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
@@ -49,9 +50,9 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	@UiField
 	TextBox teamName;
 	@UiField
-	Label packageName;
+	Paragraph packageName;
 	@UiField
-	Label packageNameUser;
+	Small packageNameUser;
 	@UiField
 	Button playGame;
 	@UiField(provided = true)
@@ -191,12 +192,12 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	}
 
 	@Override
-	public Label getPackageName() {
+	public Paragraph getPackageName() {
 		return packageName;
 	}
 
 	@Override
-	public Label getPackageNameUser() {
+	public Small getPackageNameUser() {
 		return packageNameUser;
 	}
 
