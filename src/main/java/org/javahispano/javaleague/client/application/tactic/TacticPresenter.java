@@ -5,7 +5,7 @@ package org.javahispano.javaleague.client.application.tactic;
 
 import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
-import gwtupload.client.SingleUploader;
+import gwtupload.client.SingleUploaderModal;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -62,7 +62,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		TacticUiHandlers {
 	interface MyView extends View, HasUiHandlers<TacticUiHandlers> {
-		SingleUploader getSingleUploader();
+		SingleUploaderModal getSingleUploader();
 
 		TextBox getTeamName();
 
@@ -102,7 +102,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		this.dispatcher = dispatcher;
 		this.currentUser = currentUser;
 		this.messages = messages;
-
+		
 		getView().setUiHandlers(this);
 		getView().getSingleUploader().addOnStartUploadHandler(
 				onStartUploaderHandler);
@@ -159,6 +159,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	};
 
 	private void OnErrorUploadTactic(String error) {
+		Notify.hideAll();
 		final Modal modal = new Modal();
 		modal.setTitle(messages.onErrorUploadTactic());
 		modal.setClosable(true);
@@ -181,12 +182,13 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 		modal.show();
 	}
-
+	
 	private void OnStartUploadTactic() {
 		NotifySettings settings = NotifySettings.newSettings();
 		settings.setType(NotifyType.INFO);
 		settings.setPlacement(NotifyPlacement.TOP_CENTER);
 		settings.setAllowDismiss(false);
+		settings.setDelay(0);
 		Notify.notify(messages.title(), messages.onStartUploadTactic(),
 				IconType.FILE_CODE_O, settings);
 
@@ -198,6 +200,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	}
 
 	private void OnSuccessfulUploadTactic() {
+		Notify.hideAll();
 		NotifySettings settings = NotifySettings.newSettings();
 		settings.setType(NotifyType.SUCCESS);
 		settings.setPlacement(NotifyPlacement.TOP_CENTER);
@@ -212,6 +215,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	}
 
 	private void OnCancelUploadTactic() {
+		Notify.hideAll();
 		NotifySettings settings = NotifySettings.newSettings();
 		settings.setType(NotifyType.DANGER);
 		settings.setPlacement(NotifyPlacement.TOP_CENTER);

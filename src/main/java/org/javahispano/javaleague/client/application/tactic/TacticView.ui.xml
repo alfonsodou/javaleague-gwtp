@@ -51,9 +51,6 @@
 			<b:Row>
 				<b:Column size="XS_3">
 					<b:Panel>
-						<b:PanelHeader>
-							<b:Heading size="H3" text="Escudo"></b:Heading>
-						</b:PanelHeader>
 						<b:PanelBody>
 							<b:Image addStyleNames="{style.escudo}" type="THUMBNAIL"
 								url="images/sin_escudo.png" />
@@ -89,8 +86,8 @@
 							<b:Heading size="H3" text="Clases" />
 						</b:PanelHeader>
 						<b:PanelBody>
-							<up:SingleUploader ui:field="singleUploader"
-								type="ANCHOR" enabled="true"></up:SingleUploader>
+							<up:SingleUploaderModal ui:field="singleUploader"
+								type="BROWSER_INPUT" enabled="true" validExtensions="jar"></up:SingleUploaderModal>
 							<b:Row>
 								<b:Column size="MD_12" addStyleNames="{style.column}">
 									<b.html:Paragraph emphasis="INFO" ui:field="packageName" />
