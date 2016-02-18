@@ -71,22 +71,37 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 				byte[] tacticBytes = IOUtils.toByteArray(item.getInputStream());
 				if (tacticBytes != null) {
 					Long userSessionKey = authenticator.getUserSessionKey();
-					String result = validateTactic(tacticBytes, userSessionKey);
-					if (result.equals(UploadParameters.getVALIDATETACTICOK())) {
+					if (item.getName()
+							.substring(item.getName().lastIndexOf('.') + 1)
+							.equals("jar")) {
+
+						String result = validateTactic(tacticBytes,
+								userSessionKey);
+						if (result.equals(UploadParameters
+								.getVALIDATETACTICOK())) {
+							GcsFilename fileName = new GcsFilename(
+									UploadParameters.getGCS_BUCKET()
+											+ UploadParameters.getGCS_USERS()
+											+ userSessionKey,
+									UploadParameters.getFILENAMETACTIC());
+							writeToFile(fileName, tacticBytes);
+
+							User user = userDao.get(userSessionKey);
+							user.setTacticOK(true);
+							userDao.put(user);
+						} else {
+							logger.warning("Exception: " + out);
+						}
+						out = result;
+					} else {
 						GcsFilename fileName = new GcsFilename(
 								UploadParameters.getGCS_BUCKET()
 										+ UploadParameters.getGCS_USERS()
 										+ userSessionKey,
-								UploadParameters.getFILENAMETACTIC());
+								UploadParameters.getFILENAMEIMAGE());
 						writeToFile(fileName, tacticBytes);
 
-						User user = userDao.get(userSessionKey);
-						user.setTacticOK(true);
-						userDao.put(user);
-					} else {
-						logger.warning("Exception: " + out);
 					}
-					out = result;
 				}
 			} catch (Throwable e) {
 				if (e instanceof UploadActionException) {

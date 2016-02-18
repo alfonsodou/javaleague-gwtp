@@ -24,4 +24,6 @@ public interface TacticMessages extends Messages {
 	String packageName();
 	String onRegisterMatch();
 	String onErrorRegisterMatch();
+	String titleUploadImage();
+	String uploadModalImage();
 }

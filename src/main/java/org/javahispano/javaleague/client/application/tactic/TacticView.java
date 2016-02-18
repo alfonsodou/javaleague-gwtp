@@ -3,10 +3,10 @@
  */
 package org.javahispano.javaleague.client.application.tactic;
 
-import gwtupload.client.SingleUploader;
 import gwtupload.client.SingleUploaderModal;
 
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.ImageAnchor;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.client.ui.constants.ButtonType;
@@ -60,6 +60,8 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	CellTable<MatchDto> cellTable = new CellTable<MatchDto>(10);
 	@UiField
 	Pagination cellTablePagination;
+	@UiField
+	ImageAnchor imageTeam;
 
 	private SimplePager cellTablePager = new SimplePager();
 	private ListDataProvider<MatchDto> cellTableProvider = new ListDataProvider<MatchDto>();
@@ -183,7 +185,16 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	void onClickPlayGame(ClickEvent e) {
 		doPlayGame();
 	}
+	
+	@UiHandler("imageTeam")
+	void onClickImageTeam(ClickEvent e) {
+		doUploadImage();
+	}
 
+	private void doUploadImage() {
+		getUiHandlers().showUploadImageModal();
+	}
+	
 	private void doPlayGame() {
 		getUiHandlers().playGame();
 	}
@@ -221,4 +232,16 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	public Pagination getPagination() {
 		return cellTablePagination;
 	}
+
+	@Override
+	public ImageAnchor getImageTeam() {
+		return imageTeam;
+	}
+
+	@Override
+	public void setImageTeam(ImageAnchor imageAnchor) {
+		this.imageTeam = imageAnchor;
+	}
+	
+	
 }

@@ -49,17 +49,17 @@
 		</b:PanelHeader>
 		<b:PanelBody>
 			<b:Row>
-				<b:Column size="XS_4">
+				<b:Column size="XS_3">
 					<b:Panel>
 						<b:PanelBody>
 							<b:Tooltip text="Pulsa sobre la imagen para modificarla">
-								<b:ImageAnchor addStyleNames="{style.escudo}"
-									type="THUMBNAIL" url="images/sin_escudo.png" />
+								<b:ImageAnchor ui:field="imageTeam" addStyleNames="{style.escudo}"
+									type="ROUNDED" url="images/sin_escudo.png" />
 							</b:Tooltip>
 						</b:PanelBody>
 					</b:Panel>
 				</b:Column>
-				<b:Column size="XS_3">
+				<b:Column size="XS_4">
 					<b:Panel>
 						<b:PanelHeader>
 							<b:Heading size="H3" text="Nombre" />

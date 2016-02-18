@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.application.tactic;
 
+import gwtupload.client.IFileInput.FileInputType;
 import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
 import gwtupload.client.SingleUploaderModal;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.ImageAnchor;
 import org.gwtbootstrap3.client.ui.Modal;
 import org.gwtbootstrap3.client.ui.ModalBody;
 import org.gwtbootstrap3.client.ui.ModalFooter;
@@ -43,6 +45,7 @@ import org.javahispano.javaleague.shared.parameters.UploadParameters;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
@@ -78,6 +81,9 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 		Pagination getPagination();
 
+		ImageAnchor getImageTeam();
+
+		void setImageTeam(ImageAnchor imageAnchor);
 	}
 
 	@ProxyStandard
@@ -94,6 +100,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 	private List<MatchDto> listMatchDto;
 
+	private Modal modalImage;
+
 	@Inject
 	TacticPresenter(EventBus eventBus, MyView view, MyProxy proxy,
 			DispatchAsync dispatcher, CurrentUser currentUser,
@@ -102,7 +110,9 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		this.dispatcher = dispatcher;
 		this.currentUser = currentUser;
 		this.messages = messages;
-		
+
+		createModalImage();
+
 		getView().setUiHandlers(this);
 		getView().getSingleUploader().addOnStartUploadHandler(
 				onStartUploaderHandler);
@@ -128,6 +138,18 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		@Override
 		public void onStart(IUploader uploader) {
 			OnStartUploadTactic();
+		}
+	};
+
+	private IUploader.OnFinishUploaderHandler onFinishUploaderImageHandler = new IUploader.OnFinishUploaderHandler() {
+		@Override
+		public void onFinish(IUploader uploader) {
+			if (uploader.getStatus() == Status.SUCCESS) {
+				modalImage.hide();
+				getView().getImageTeam().setUrl(
+						uploader.getServerInfo().getFileUrl());
+				Window.alert(uploader.getServerInfo().getFileUrl());
+			}
 		}
 	};
 
@@ -158,6 +180,37 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		}
 	};
 
+	private void createModalImage() {
+		modalImage = new Modal();
+		modalImage.setTitle(messages.titleUploadImage());
+		modalImage.setClosable(false);
+		final ModalBody modalBody = new ModalBody();
+		SingleUploaderModal singleUploaderModal = new SingleUploaderModal(
+				FileInputType.BROWSER_INPUT);
+		singleUploaderModal.avoidEmptyFiles(false);
+		singleUploaderModal.setValidExtensions("gif", "jpg", "jpeg", "png");
+		singleUploaderModal
+				.addOnFinishUploadHandler(onFinishUploaderImageHandler);
+		modalBody.add(singleUploaderModal);
+
+		final ModalFooter modalFooter = new ModalFooter();
+
+		Button closeButton = new Button(messages.closeModal(),
+				new ClickHandler() {
+					@Override
+					public void onClick(final ClickEvent event) {
+						modalImage.hide();
+					}
+				});
+		closeButton.setType(ButtonType.DANGER);
+		modalFooter.add(closeButton);
+
+		modalImage.add(modalBody);
+		modalImage.add(modalFooter);
+
+		modalImage.hide();
+	}
+
 	private void OnErrorUploadTactic(String error) {
 		Notify.hideAll();
 		final Modal modal = new Modal();
@@ -182,7 +235,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 		modal.show();
 	}
-	
+
 	private void OnStartUploadTactic() {
 		NotifySettings settings = NotifySettings.newSettings();
 		settings.setType(NotifyType.INFO);
@@ -191,12 +244,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		settings.setDelay(0);
 		Notify.notify(messages.title(), messages.onStartUploadTactic(),
 				IconType.FILE_CODE_O, settings);
-
-		/*
-		 * DisplayMessageEvent.fire(this, new
-		 * Message(messages.onStartUploadTactic(), MessageStyle.SUCCESS,
-		 * MessageCloseDelay.HIGH));
-		 */
 	}
 
 	private void OnSuccessfulUploadTactic() {
@@ -207,11 +254,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		settings.setAllowDismiss(false);
 		Notify.notify(messages.title(), messages.onSuccessfulUploadTactic(),
 				IconType.FILE_CODE_O, settings);
-
-		/*
-		 * DisplayMessageEvent.fire(this, new
-		 * Message(messages.onSuccessfulUploadTactic(), MessageStyle.SUCCESS));
-		 */
 	}
 
 	private void OnCancelUploadTactic() {
@@ -222,11 +264,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		settings.setAllowDismiss(false);
 		Notify.notify(messages.title(), messages.onCancelUploadTactic(),
 				IconType.FILE_CODE_O, settings);
-
-		/*
-		 * DisplayMessageEvent .fire(this, new
-		 * Message(messages.onCancelUploadTactic(), MessageStyle.ERROR));
-		 */
 	}
 
 	@Override
@@ -336,12 +373,19 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						} else {
 							listMatchDto = result.getMatchs();
 							getView().getListMatchs().getList().clear();
-							getView().getListMatchs().getList().addAll(listMatchDto);
+							getView().getListMatchs().getList()
+									.addAll(listMatchDto);
 							getView().getListMatchs().flush();
-							getView().getPagination().rebuild(getView().getPager());
+							getView().getPagination().rebuild(
+									getView().getPager());
 						}
 					}
 
 				});
+	}
+
+	@Override
+	public void showUploadImageModal() {
+		modalImage.show();
 	}
 }
