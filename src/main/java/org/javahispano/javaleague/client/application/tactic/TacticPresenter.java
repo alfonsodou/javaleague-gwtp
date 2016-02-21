@@ -393,7 +393,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 			getView().getImageTeam().setUrl(
 					UploadParameters.getBASE_URL()
 							+ "/serveTeamImageServlet?id="
-							+ currentUser.getUser().getId() + "&min=KO");
+							+ currentUser.getUser().getId() + "&min=KO&"
+							+ System.currentTimeMillis());
 		}
 	}
 }
