@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.client.application.tactic;
 
-import gwtupload.client.SingleUploaderModal;
+import gwtupload.client.SingleUploader;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.ImageAnchor;
@@ -47,7 +47,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	}
 
 	@UiField
-	SingleUploaderModal singleUploader;
+	SingleUploader singleUploader;
 	@UiField
 	TextBox teamName;
 	@UiField
@@ -167,7 +167,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	}
 
 	@Override
-	public SingleUploaderModal getSingleUploader() {
+	public SingleUploader getSingleUploader() {
 		return singleUploader;
 	}
 

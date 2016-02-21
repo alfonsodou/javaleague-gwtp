@@ -54,7 +54,7 @@
 						<b:PanelBody>
 							<b:Tooltip text="Pulsa sobre la imagen para modificarla">
 								<b:ImageAnchor ui:field="imageTeam" addStyleNames="{style.escudo}"
-									type="ROUNDED" url="images/sin_escudo.png" />
+									type="ROUNDED" url="images/sin_escudo.png"  />
 							</b:Tooltip>
 						</b:PanelBody>
 					</b:Panel>
@@ -88,8 +88,8 @@
 							<b:Heading size="H3" text="Clases" />
 						</b:PanelHeader>
 						<b:PanelBody>
-							<up:SingleUploaderModal ui:field="singleUploader"
-								type="BROWSER_INPUT" enabled="true" validExtensions="jar"></up:SingleUploaderModal>
+							<up:SingleUploader ui:field="singleUploader"
+								type="BROWSER_INPUT" enabled="true" validExtensions="jar"></up:SingleUploader>
 							<b:Row>
 								<b:Column size="MD_12" addStyleNames="{style.column}">
 									<b.html:Paragraph emphasis="INFO" ui:field="packageName" />
@@ -103,7 +103,6 @@
 						</b:PanelBody>
 					</b:Panel>
 				</b:Column>
-
 			</b:Row>
 			<b:Row>
 				<b:Column size="XS_2" offset="XS_5">

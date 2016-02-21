@@ -27,6 +27,10 @@ import org.javahispano.javaleague.server.dao.domain.User;
 import org.javahispano.javaleague.server.utils.ServletUtils;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsInputChannel;
@@ -94,13 +98,15 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 						}
 						out = result;
 					} else {
-						GcsFilename fileName = new GcsFilename(
-								UploadParameters.getGCS_BUCKET()
-										+ UploadParameters.getGCS_USERS()
-										+ userSessionKey,
-								UploadParameters.getFILENAMEIMAGE());
-						writeToFile(fileName, tacticBytes);
 
+						resizeImage(tacticBytes, 150, 150, userSessionKey,
+								UploadParameters.getFILENAMEIMAGE());
+						resizeImage(tacticBytes, 30, 30, userSessionKey,
+								UploadParameters.getFILENAMEIMAGEMIN());
+
+						User user = userDao.get(userSessionKey);
+						user.setLogo(true);
+						userDao.put(user);
 					}
 				}
 			} catch (Throwable e) {
@@ -115,6 +121,20 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		}
 
 		return out;
+	}
+
+	private void resizeImage(byte[] bytesImage, int width, int height,
+			Long userSessionKey, String name) throws IOException {
+		ImagesService imagesService = ImagesServiceFactory.getImagesService();
+
+		Image oldImage = ImagesServiceFactory.makeImage(bytesImage);
+		Transform resize = ImagesServiceFactory.makeResize(width, height);
+
+		Image newImage = imagesService.applyTransform(resize, oldImage);
+
+		GcsFilename fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
+				+ UploadParameters.getGCS_USERS() + userSessionKey, name);
+		writeToFile(fileName, newImage.getImageData());
 	}
 
 	private void writeToFile(GcsFilename fileName, byte[] content)

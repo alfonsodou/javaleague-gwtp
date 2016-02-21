@@ -28,6 +28,7 @@ import org.javahispano.javaleague.server.servlet.ImageServlet;
 import org.javahispano.javaleague.server.servlet.PlayMatchServlet;
 import org.javahispano.javaleague.server.servlet.ServeMatchBinServlet;
 import org.javahispano.javaleague.server.servlet.ServeMatchServlet;
+import org.javahispano.javaleague.server.servlet.ServeTeamImageServlet;
 import org.javahispano.javaleague.server.servlet.TournamentServlet;
 import org.javahispano.javaleague.shared.api.ApiPaths;
 
@@ -61,6 +62,9 @@ public class DispatchServletModule extends ServletModule {
 		serve("/playMatchServlet").with(PlayMatchServlet.class);
 		bind(PlayMatchServlet.class).in(Singleton.class);
 
+		serve("/serveTeamImageServlet").with(ServeTeamImageServlet.class);
+		bind(ServeTeamImageServlet.class).in(Singleton.class);
+		
 		serve("/serveMatchBinServlet").with(ServeMatchBinServlet.class);
 		bind(ServeMatchBinServlet.class).in(Singleton.class);
 

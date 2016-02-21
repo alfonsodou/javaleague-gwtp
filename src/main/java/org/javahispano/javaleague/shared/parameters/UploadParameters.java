@@ -20,6 +20,7 @@ public class UploadParameters {
 	private static String FILENAMETACTIC = "tactica.jar";
 	private static String FILENAMEFRAMEWORK = "framework_20150901.jar";
 	private static String FILENAMEIMAGE = "escudo";
+	private static String FILENAMEIMAGEMIN = "escudo-min";
 	private static int NUMITER = 600;
 	private static String VALIDATETACTICOK = "OK";
 	private static String VALIDATETACTICKO = "KO";
@@ -89,6 +90,12 @@ public class UploadParameters {
 	 */
 	public static String getFILENAMEIMAGE() {
 		return FILENAMEIMAGE;
+	}
+	/**
+	 * @return the fILENAMEIMAGEMIN
+	 */
+	public static String getFILENAMEIMAGEMIN() {
+		return FILENAMEIMAGEMIN;
 	}	
 	
 	

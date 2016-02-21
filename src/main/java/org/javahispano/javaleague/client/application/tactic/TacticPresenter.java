@@ -6,6 +6,7 @@ package org.javahispano.javaleague.client.application.tactic;
 import gwtupload.client.IFileInput.FileInputType;
 import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
+import gwtupload.client.SingleUploader;
 import gwtupload.client.SingleUploaderModal;
 
 import java.util.List;
@@ -45,7 +46,6 @@ import org.javahispano.javaleague.shared.parameters.UploadParameters;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
@@ -65,7 +65,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		TacticUiHandlers {
 	interface MyView extends View, HasUiHandlers<TacticUiHandlers> {
-		SingleUploaderModal getSingleUploader();
+		SingleUploader getSingleUploader();
 
 		TextBox getTeamName();
 
@@ -132,6 +132,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		getView().getPlayGame().setEnabled(
 				!currentUser.getUser().isAwaitingMatch());
 		getListMatch();
+		getTeamImage();
 	}
 
 	private IUploader.OnStartUploaderHandler onStartUploaderHandler = new IUploader.OnStartUploaderHandler() {
@@ -146,9 +147,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		public void onFinish(IUploader uploader) {
 			if (uploader.getStatus() == Status.SUCCESS) {
 				modalImage.hide();
-				getView().getImageTeam().setUrl(
-						uploader.getServerInfo().getFileUrl());
-				Window.alert(uploader.getServerInfo().getFileUrl());
+				getTeamImage();
 			}
 		}
 	};
@@ -185,7 +184,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		modalImage.setTitle(messages.titleUploadImage());
 		modalImage.setClosable(false);
 		final ModalBody modalBody = new ModalBody();
-		SingleUploaderModal singleUploaderModal = new SingleUploaderModal(
+		SingleUploader singleUploaderModal = new SingleUploader(
 				FileInputType.BROWSER_INPUT);
 		singleUploaderModal.avoidEmptyFiles(false);
 		singleUploaderModal.setValidExtensions("gif", "jpg", "jpeg", "png");
@@ -387,5 +386,14 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	@Override
 	public void showUploadImageModal() {
 		modalImage.show();
+	}
+
+	private void getTeamImage() {
+		if (currentUser.getUser().isLogo()) {
+			getView().getImageTeam().setUrl(
+					UploadParameters.getBASE_URL()
+							+ "/serveTeamImageServlet?id="
+							+ currentUser.getUser().getId() + "&min=KO");
+		}
 	}
 }
