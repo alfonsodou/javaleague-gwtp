@@ -42,6 +42,8 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		TournamentUiHandlers {
 	interface MyView extends View, HasUiHandlers<TournamentUiHandlers> {
 		Container getJourneyContainer();
+		
+		Container getClasificationContainer();
 
 		void viewJourney(List<JourneyDto> listJourneyDto);
 
@@ -78,6 +80,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	}
 
 	private void getListClasification() {
+		getView().getClasificationContainer().clear();
 		ListClasificationAction listClasificationAction = new ListClasificationAction(
 				LeagueParameters.getLeagueId());
 		callListClasificationAction(listClasificationAction);
@@ -110,6 +113,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	}
 
 	private void getListJourney() {
+		getView().getJourneyContainer().clear();
 		ListJourneyAction listJourneyAction = new ListJourneyAction(
 				LeagueParameters.getLeagueId());
 		callListJourneyAction(listJourneyAction);

@@ -25,6 +25,7 @@ import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -63,6 +64,35 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			final AbstractCellTable<ClasificationDto> grid,
 			final SimplePager pager, final Pagination pagination,
 			final ListDataProvider<ClasificationDto> dataProvider) {
+		final TextColumn<ClasificationDto> numColumn = new TextColumn<ClasificationDto>() {
+
+			@Override
+			public String getValue(ClasificationDto object) {
+				return Integer
+						.toString(dataProvider.getList().indexOf(object) + 1);
+			}
+
+		};
+		grid.addColumn(numColumn);
+
+		final Column<ClasificationDto, String> imageColumn = new Column<ClasificationDto, String>(
+				new ImageCell()) {
+
+			@Override
+			public String getValue(ClasificationDto object) {
+				if (object.getTeam().isLogo()) {
+					return UploadParameters.getBASE_URL()
+							+ "/serveTeamImageServlet?id="
+							+ object.getTeam().getId() + "&min=OK&"
+							+ System.currentTimeMillis();
+				} else {
+					return UploadParameters.getBASE_URL()
+							+ "/images/sin_escudo_min.png";
+				}
+			}
+		};
+		grid.addColumn(imageColumn);
+
 		final TextColumn<ClasificationDto> col1 = new TextColumn<ClasificationDto>() {
 
 			@Override
@@ -304,5 +334,10 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		column.add(panel);
 		row.add(column);
 		clasificationContainer.add(row);
+	}
+
+	@Override
+	public Container getClasificationContainer() {
+		return clasificationContainer;
 	}
 }

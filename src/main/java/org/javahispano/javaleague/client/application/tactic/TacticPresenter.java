@@ -395,6 +395,9 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 							+ "/serveTeamImageServlet?id="
 							+ currentUser.getUser().getId() + "&min=KO&"
 							+ System.currentTimeMillis());
+		} else {
+			getView().getImageTeam().setUrl(
+					UploadParameters.getBASE_URL() + "/images/sin_escudo.png");
 		}
 	}
 }
