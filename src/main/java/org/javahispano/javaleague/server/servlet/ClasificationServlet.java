@@ -144,7 +144,10 @@ public class ClasificationServlet extends HttpServlet {
 			}
 			Collections.sort(list, Clasification.Comparators.POINTS);
 			List<Ref<Clasification>> listRef = new ArrayList<Ref<Clasification>>();
+			int position = 1;
 			for (Clasification c : list) {
+				c.setPosition(position++);
+				clasificationDao.put(c);
 				listRef.add(Ref.create(c));
 			}
 			journey.setClasification(listRef);

@@ -30,6 +30,7 @@ public class Clasification extends BaseEntity implements
 	private int wins;
 	private int tied;
 	private int lost;
+	private int position;
 
 	@Load
 	private Ref<User> team;
@@ -42,7 +43,8 @@ public class Clasification extends BaseEntity implements
 		this.matchs = 0;
 		this.wins = 0;
 		this.tied = 0;
-		this.lost = 0;	
+		this.lost = 0;
+		this.position = 0;
 	}
 
 	public int getPoints() {
@@ -141,6 +143,14 @@ public class Clasification extends BaseEntity implements
 		this.lost = lost;
 	}
 
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
 	public static ClasificationDto createDto(Clasification clasification) {
 		if (clasification == null) {
 			return null;
@@ -157,6 +167,7 @@ public class Clasification extends BaseEntity implements
 		clasificationDto.setWins(clasification.getWins());
 		clasificationDto.setTied(clasification.getTied());
 		clasificationDto.setLost(clasification.getLost());
+		clasificationDto.setPosition(clasification.getPosition());
 
 		return clasificationDto;
 	}

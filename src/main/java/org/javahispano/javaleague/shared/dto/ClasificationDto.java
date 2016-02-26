@@ -17,6 +17,7 @@ public class ClasificationDto extends BaseEntity {
 	private int wins;
 	private int tied;
 	private int lost;
+	private int position;
 
 	
 	public ClasificationDto() {
@@ -29,6 +30,7 @@ public class ClasificationDto extends BaseEntity {
 		this.wins = 0;
 		this.tied = 0;
 		this.lost = 0;
+		this.position = 0;
 	}
 
 	/**
@@ -155,6 +157,14 @@ public class ClasificationDto extends BaseEntity {
 	 */
 	public void setLost(int lost) {
 		this.lost = lost;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	

@@ -68,8 +68,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 
 			@Override
 			public String getValue(ClasificationDto object) {
-				return Integer
-						.toString(dataProvider.getList().indexOf(object) + 1);
+				return String.valueOf(object.getPosition());
 			}
 
 		};
@@ -234,6 +233,24 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			}
 		};
 		grid.addColumn(col1, "Local");
+		
+		final Column<MatchDto, String> imageColumn = new Column<MatchDto, String>(
+				new ImageCell()) {
+
+			@Override
+			public String getValue(MatchDto object) {
+				if (object.getUserHome().isLogo()) {
+					return UploadParameters.getBASE_URL()
+							+ "/serveTeamImageServlet?id="
+							+ object.getUserHome().getId() + "&min=OK&"
+							+ System.currentTimeMillis();
+				} else {
+					return UploadParameters.getBASE_URL()
+							+ "/images/sin_escudo_min.png";
+				}
+			}
+		};
+		grid.addColumn(imageColumn);
 
 		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
 
@@ -250,6 +267,24 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			}
 		};
 		grid.addColumn(col2, "");
+
+		final Column<MatchDto, String> imageColumn2 = new Column<MatchDto, String>(
+				new ImageCell()) {
+
+			@Override
+			public String getValue(MatchDto object) {
+				if (object.getUserAway().isLogo()) {
+					return UploadParameters.getBASE_URL()
+							+ "/serveTeamImageServlet?id="
+							+ object.getUserAway().getId() + "&min=OK&"
+							+ System.currentTimeMillis();
+				} else {
+					return UploadParameters.getBASE_URL()
+							+ "/images/sin_escudo_min.png";
+				}
+			}
+		};
+		grid.addColumn(imageColumn2);
 
 		final TextColumn<MatchDto> col3 = new TextColumn<MatchDto>() {
 
