@@ -19,17 +19,22 @@ import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.AbstractCellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.SafeHtmlHeader;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.RangeChangeEvent;
@@ -79,7 +84,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	private void initTable(final AbstractCellTable<MatchDto> grid,
 			final SimplePager pager, final Pagination pagination,
 			final ListDataProvider<MatchDto> dataProvider) {
-		final TextColumn<MatchDto> col1 = new TextColumn<MatchDto>() {
+		final TextColumn<MatchDto> colFecha = new TextColumn<MatchDto>() {
 
 			@Override
 			public String getValue(final MatchDto object) {
@@ -88,19 +93,58 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 						object.getDate()));
 			}
 		};
-		grid.addColumn(col1, "Fecha");
+		colFecha.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		colFecha.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		SafeHtmlHeader headerFecha = new SafeHtmlHeader(new SafeHtml() {
+			private static final long serialVersionUID = 1L;
 
-		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
+			@Override
+			public String asString() {
+				return "<p style=\"text-align:center;\">Fecha</p>";
+			}
+		});
+		grid.addColumn(colFecha, headerFecha);
+
+		final TextColumn<MatchDto> col1 = new TextColumn<MatchDto>() {
 
 			@Override
 			public String getValue(final MatchDto object) {
-				return String.valueOf(object.getUserHome().getTeamName()
-						+ " vs " + object.getUserAway().getTeamName());
+				return String.valueOf(object.getUserHome().getTeamName());
 			}
 		};
-		grid.addColumn(col2, "Partido");
+		col1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		col1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		SafeHtmlHeader headerCol1 = new SafeHtmlHeader(new SafeHtml() {
+			private static final long serialVersionUID = 1L;
 
-		final TextColumn<MatchDto> col3 = new TextColumn<MatchDto>() {
+			@Override
+			public String asString() {
+				return "<p style=\"text-align:center;\">Local</p>";
+			}
+		});
+		grid.addColumn(col1, headerCol1);
+
+		final Column<MatchDto, String> imageColumn = new Column<MatchDto, String>(
+				new ImageCell()) {
+
+			@Override
+			public String getValue(MatchDto object) {
+				if (object.getUserHome().isLogo()) {
+					return UploadParameters.getBASE_URL()
+							+ "/serveTeamImageServlet?id="
+							+ object.getUserHome().getId() + "&min=OK&"
+							+ System.currentTimeMillis();
+				} else {
+					return UploadParameters.getBASE_URL()
+							+ "/images/sin_escudo_min.png";
+				}
+			}
+		};
+		imageColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		imageColumn.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		grid.addColumn(imageColumn);
+
+		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
 
 			@Override
 			public String getValue(final MatchDto object) {
@@ -110,17 +154,59 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 							+ " - "
 							+ object.getMatchPropertiesDto().getGoalsAway());
 				} else {
-					return "En juego";
+					return "Sin comenzar";
 				}
 			}
 		};
-		grid.addColumn(col3, "Resultado");
+		col2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		col2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		grid.addColumn(col2, "");
+
+		final Column<MatchDto, String> imageColumn2 = new Column<MatchDto, String>(
+				new ImageCell()) {
+
+			@Override
+			public String getValue(MatchDto object) {
+				if (object.getUserAway().isLogo()) {
+					return UploadParameters.getBASE_URL()
+							+ "/serveTeamImageServlet?id="
+							+ object.getUserAway().getId() + "&min=OK&"
+							+ System.currentTimeMillis();
+				} else {
+					return UploadParameters.getBASE_URL()
+							+ "/images/sin_escudo_min.png";
+				}
+			}
+		};
+		imageColumn2
+				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		imageColumn2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		grid.addColumn(imageColumn2);
+
+		final TextColumn<MatchDto> col3 = new TextColumn<MatchDto>() {
+
+			@Override
+			public String getValue(final MatchDto object) {
+				return String.valueOf(object.getUserAway().getTeamName());
+			}
+		};
+		col3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		col3.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		SafeHtmlHeader headerCol3 = new SafeHtmlHeader(new SafeHtml() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String asString() {
+				return "<p style=\"text-align:center;\">Visitante</p>";
+			}
+		});
+		grid.addColumn(col3, headerCol3);
 
 		final Column<MatchDto, String> col4 = new Column<MatchDto, String>(
 				new ButtonCell(ButtonType.PRIMARY, IconType.DOWNLOAD)) {
 			@Override
 			public String getValue(MatchDto object) {
-				return "Descargar";
+				return "";
 			}
 		};
 		col4.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
@@ -132,13 +218,15 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 								+ Long.toString(object.getId()), "_blank", "");
 			}
 		});
-		grid.addColumn(col4, "Descargar");
+		col4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		col4.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		grid.addColumn(col4, "");
 
 		final Column<MatchDto, String> col5 = new Column<MatchDto, String>(
 				new ButtonCell(ButtonType.PRIMARY, IconType.VIDEO_CAMERA)) {
 			@Override
 			public String getValue(MatchDto object) {
-				return "Ver";
+				return "";
 			}
 		};
 
@@ -151,7 +239,9 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 								+ Long.toString(object.getId()), "_blank", "");
 			}
 		});
-		grid.addColumn(col5, "Ver");
+		col5.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		col5.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		grid.addColumn(col5, "");
 
 		grid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
 
@@ -185,7 +275,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	void onClickPlayGame(ClickEvent e) {
 		doPlayGame();
 	}
-	
+
 	@UiHandler("imageTeam")
 	void onClickImageTeam(ClickEvent e) {
 		doUploadImage();
@@ -194,7 +284,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	private void doUploadImage() {
 		getUiHandlers().showUploadImageModal();
 	}
-	
+
 	private void doPlayGame() {
 		getUiHandlers().playGame();
 	}
@@ -242,6 +332,5 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	public void setImageTeam(ImageAnchor imageAnchor) {
 		this.imageTeam = imageAnchor;
 	}
-	
-	
+
 }
