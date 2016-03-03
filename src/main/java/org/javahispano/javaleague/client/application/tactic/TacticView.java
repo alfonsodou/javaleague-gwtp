@@ -100,7 +100,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 			@Override
 			public String asString() {
-				return "<p style=\"text-align:center;\">Fecha</p>";
+				return "<strong><p style=\"text-align:center;\">Fecha</p></strong>";
 			}
 		});
 		grid.addColumn(colFecha, headerFecha);
@@ -119,7 +119,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 			@Override
 			public String asString() {
-				return "<p style=\"text-align:center;\">Local</p>";
+				return "<strong><p style=\"text-align:center;\">Local</p></strong>";
 			}
 		});
 		grid.addColumn(col1, headerCol1);
@@ -197,7 +197,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 			@Override
 			public String asString() {
-				return "<p style=\"text-align:center;\">Visitante</p>";
+				return "<strong><p style=\"text-align:center;\">Visitante</p></strong>";
 			}
 		});
 		grid.addColumn(col3, headerCol3);
