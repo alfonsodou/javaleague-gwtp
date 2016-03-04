@@ -54,7 +54,7 @@
 						<b:PanelBody>
 							<b:Tooltip text="Pulsa sobre la imagen para modificarla">
 								<b:ImageAnchor ui:field="imageTeam" addStyleNames="{style.escudo}"
-									type="ROUNDED" url="images/sin_escudo.png"  />
+									type="ROUNDED" url="images/sin_escudo.png" />
 							</b:Tooltip>
 						</b:PanelBody>
 					</b:Panel>
@@ -105,9 +105,12 @@
 				</b:Column>
 			</b:Row>
 			<b:Row>
-				<b:Column size="XS_2" offset="XS_5">
+				<b:Column size="XS_2" offset="XS_3">
 					<b:Button type="PRIMARY" ui:field="playGame">Jugar partido
 						amistoso</b:Button>
+				</b:Column>
+				<b:Column size="XS_2" offset="XS_2">
+					<b:Button type="PRIMARY" ui:field="refreshGame">Actualizar partidos</b:Button>
 				</b:Column>
 			</b:Row>
 			<b:Row>

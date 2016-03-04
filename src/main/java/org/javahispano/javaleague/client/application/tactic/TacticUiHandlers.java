@@ -13,4 +13,5 @@ public interface TacticUiHandlers extends UiHandlers {
 	void updateTeamNameTactic(String teamName);
 	void playGame();
 	void showUploadImageModal();
+	void refreshGame();
 }

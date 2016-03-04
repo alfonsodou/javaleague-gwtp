@@ -74,6 +74,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		Small getPackageNameUser();
 
 		Button getPlayGame();
+		
+		Button getRefreshGame();
 
 		ListDataProvider<MatchDto> getListMatchs();
 
@@ -399,5 +401,10 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 			getView().getImageTeam().setUrl(
 					UploadParameters.getBASE_URL() + "/images/sin_escudo.png");
 		}
+	}
+
+	@Override
+	public void refreshGame() {
+		getListMatch();
 	}
 }

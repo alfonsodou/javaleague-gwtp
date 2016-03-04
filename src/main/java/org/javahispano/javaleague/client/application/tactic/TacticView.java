@@ -61,6 +61,8 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	Small packageNameUser;
 	@UiField
 	Button playGame;
+	@UiField
+	Button refreshGame;
 	@UiField(provided = true)
 	CellTable<MatchDto> cellTable = new CellTable<MatchDto>(10);
 	@UiField
@@ -275,6 +277,11 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	void onClickPlayGame(ClickEvent e) {
 		doPlayGame();
 	}
+	
+	@UiHandler("refreshGame")
+	void onClickRefreshGame(ClickEvent e) {
+		doRefreshGame();
+	}
 
 	@UiHandler("imageTeam")
 	void onClickImageTeam(ClickEvent e) {
@@ -287,6 +294,10 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 
 	private void doPlayGame() {
 		getUiHandlers().playGame();
+	}
+	
+	private void doRefreshGame() {
+		getUiHandlers().refreshGame();
 	}
 
 	private void doUpdateTactic() {
@@ -331,6 +342,11 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	@Override
 	public void setImageTeam(ImageAnchor imageAnchor) {
 		this.imageTeam = imageAnchor;
+	}
+
+	@Override
+	public Button getRefreshGame() {
+		return refreshGame;
 	}
 
 }
