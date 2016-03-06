@@ -40,8 +40,8 @@ public class ListMatchHandler extends
 	@Override
 	public ListMatchResult execute(ListMatchAction arg0, ExecutionContext arg1)
 			throws ActionException {
-		List<Match> listMatch = matchDao.findByUser(userDao.get(arg0
-				.getUserDto().getId()));
+		List<Match> listMatch = matchDao.findByUser(
+				userDao.get(arg0.getUserDto().getId()), true);
 		List<MatchDto> listMatchDto = Match.createList(listMatch);
 
 		return new ListMatchResult(listMatchDto);

@@ -64,21 +64,22 @@
 					next="true" iconType="CHEVRON_CIRCLE_RIGHT" />
 			</b:Carousel>
 			<b:Jumbotron>
-				<b:Heading size="H1" text="Demo for GwtBootstrap" />
-				<g:InlineHyperlink targetHistoryToken="{nameTokens.getRules}">Rules
-				</g:InlineHyperlink>
-				<b.html:Paragraph>
-					A
-					<a href="http://gwtproject.org/">GWT</a>
-					wrapper for
-					<a href="http://getbootstrap.com/">Bootstrap</a>
-				</b.html:Paragraph>
-				<b.html:Paragraph>
-					This is the demo for
-					<a href="https://github.com/gwtbootstrap3/gwtbootstrap3">GwtBootstrap3</a>
-					version 1.0-SNAPSHOT. For previous releases please go to:
-					<a href="https://github.com/gwtbootstrap3/gwtbootstrap3/releases">Previous Releases</a>
-				</b.html:Paragraph>
+				<b:Row>
+					<b:Column size="XS_8">
+						<b:Heading size="H1" text="javacup 2016" />
+						<b.html:Paragraph>
+							¡ Por fin estamos de vuelta ! Actualiza o crea tu equipo para el
+							nuevo torneo
+						</b.html:Paragraph>
+						<b.html:Paragraph>
+							Hay novedades en esta edición. No lo pienses más y participa.
+							Tienes hasta el 30 de abril de 2016 para preparar tu equipo.
+						</b.html:Paragraph>
+					</b:Column>
+					<b:Column size="XS_4">
+						<b:Image url="images/duke-futbol.png"></b:Image>
+					</b:Column>
+				</b:Row>
 			</b:Jumbotron>
 		</b:Column>
 	</b:Row>

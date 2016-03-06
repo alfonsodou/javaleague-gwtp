@@ -24,19 +24,21 @@ public class MatchDao extends BaseDao<Match> {
 		super(Match.class);
 	}
 
-	public List<Match> findByUserHome(User user) {
+	public List<Match> findByUserHome(User user, boolean isFriendly) {
 		return ofy().load().type(Match.class)
-				.filter("userHome", Ref.create(user)).list();
+				.filter("userHome", Ref.create(user))
+				.filter("isFriendly", isFriendly).list();
 	}
 
-	public List<Match> findByUserAway(User user) {
+	public List<Match> findByUserAway(User user, boolean isFriendly) {
 		return ofy().load().type(Match.class)
-				.filter("userAway", Ref.create(user)).list();
+				.filter("userAway", Ref.create(user))
+				.filter("isFriendly", isFriendly).list();
 	}
-	
-	public List<Match> findByUser(User user) {
-		List<Match> listMatch = findByUserHome(user);
-		listMatch.addAll(findByUserAway(user));
+
+	public List<Match> findByUser(User user, boolean isFriendly) {
+		List<Match> listMatch = findByUserHome(user, isFriendly);
+		listMatch.addAll(findByUserAway(user, isFriendly));
 		Collections.sort(listMatch, Match.Comparators.DATE);
 		return listMatch;
 	}
