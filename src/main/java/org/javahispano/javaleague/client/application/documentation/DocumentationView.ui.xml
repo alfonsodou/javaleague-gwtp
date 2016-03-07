@@ -26,24 +26,55 @@
 
 	<b:Row>
 		<b:Column size="XS_12">
-			<b:Jumbotron>
-				<b:Row>
-					<b:Column size="XS_8">
-						<b:Heading size="H1" text="javacup 2016" />
-						<b.html:Paragraph>
-							¡ Por fin estamos de vuelta ! Actualiza o crea tu equipo para el
-							nuevo torneo
-						</b.html:Paragraph>
-						<b.html:Paragraph>
-							Hay novedades en esta edición. No lo pienses más y participa.
-							Tienes hasta el 30 de abril de 2016 para preparar tu equipo.
-						</b.html:Paragraph>
-					</b:Column>
-					<b:Column size="XS_4">
-						<b:Image type="THUMBNAIL" url="images/duke-futbol.png"></b:Image>
-					</b:Column>
-				</b:Row>
-			</b:Jumbotron>
+			<b:Panel>
+				<b:PanelHeader>
+					<b:Heading size="H3"
+						text="Documentación" />
+				</b:PanelHeader>
+				<b:PanelBody>
+					<b:PanelGroup b:id="accordion2">
+						<b:Panel>
+							<b:PanelHeader dataToggle="COLLAPSE" dataParent="#accordion2"
+								dataTarget="#collapseFour">
+								<b:Heading size="H4" text="Crear usuario" />
+							</b:PanelHeader>
+							<b:PanelCollapse b:id="collapseFour" in="true">
+								<b:PanelBody>
+									<b.html:Paragraph>
+										I am the content of Collapse Group!
+									</b.html:Paragraph>
+								</b:PanelBody>
+							</b:PanelCollapse>
+						</b:Panel>
+						<b:Panel>
+							<b:PanelHeader dataToggle="COLLAPSE" dataParent="#accordion2"
+								dataTarget="#collapseFive">
+								<b:Heading size="H4" text="Crear táctica" />
+							</b:PanelHeader>
+							<b:PanelCollapse b:id="collapseFive">
+								<b:PanelBody>
+									<b.html:Paragraph>
+										I am the content of Collapse!
+									</b.html:Paragraph>
+								</b:PanelBody>
+							</b:PanelCollapse>
+						</b:Panel>
+						<b:Panel>
+							<b:PanelHeader dataToggle="COLLAPSE" dataParent="#accordion2"
+								dataTarget="#collapseSix">
+								<b:Heading size="H4" text="Exportar táctica" />
+							</b:PanelHeader>
+							<b:PanelCollapse b:id="collapseSix">
+								<b:PanelBody>
+									<b.html:Paragraph>
+										I am the content of Collapse!
+									</b.html:Paragraph>
+								</b:PanelBody>
+							</b:PanelCollapse>
+						</b:Panel>
+					</b:PanelGroup>
+				</b:PanelBody>
+			</b:Panel>
 		</b:Column>
 	</b:Row>
 
