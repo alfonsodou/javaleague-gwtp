@@ -14,7 +14,6 @@ import org.javahispano.javaleague.client.application.event.DisplayMessageEvent;
 import org.javahispano.javaleague.client.application.event.UserLoginEvent;
 import org.javahispano.javaleague.client.application.home.HomePresenter.MyProxy;
 import org.javahispano.javaleague.client.application.home.HomePresenter.MyView;
-import org.javahispano.javaleague.client.application.login.LoginPresenter;
 import org.javahispano.javaleague.client.application.widget.message.Message;
 import org.javahispano.javaleague.client.application.widget.message.MessageStyle;
 import org.javahispano.javaleague.client.place.NameTokens;

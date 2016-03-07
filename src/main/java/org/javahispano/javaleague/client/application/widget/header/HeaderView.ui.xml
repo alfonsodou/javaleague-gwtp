@@ -27,6 +27,8 @@
 						targetHistoryToken="{DOWNLOAD}">Descargas</b:AnchorListItem>
 					<b:AnchorListItem ui:field="rules"
 						targetHistoryToken="{RULES}">Reglas</b:AnchorListItem>
+					<b:AnchorListItem ui:field="documentation"
+						targetHistoryToken="{DOCUMENTATION}">Documentación</b:AnchorListItem>						
 					<b:AnchorListItem ui:field="forum"
 						href="http://www.javahispano.org/foro-de-la-javacup/">Foro</b:AnchorListItem>
 					<b:ListDropDown ui:field="userLogin" pull="RIGHT">
