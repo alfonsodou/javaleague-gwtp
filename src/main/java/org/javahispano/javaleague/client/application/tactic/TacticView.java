@@ -16,14 +16,17 @@ import org.gwtbootstrap3.client.ui.gwt.CellTable;
 import org.gwtbootstrap3.client.ui.html.Paragraph;
 import org.gwtbootstrap3.client.ui.html.Small;
 import org.javahispano.javaleague.shared.dto.MatchDto;
+import org.javahispano.javaleague.shared.parameters.MatchParameters;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
+import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -147,7 +150,6 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 		grid.addColumn(imageColumn);
 
 		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
-
 			@Override
 			public String getValue(final MatchDto object) {
 				if (object.getMatchPropertiesDto() != null) {
@@ -214,10 +216,15 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 		col4.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
 			@Override
 			public void update(int index, MatchDto object, String value) {
-				Window.open(
-						UploadParameters.getBASE_URL()
-								+ "/serveMatchServlet?id="
-								+ Long.toString(object.getId()), "_blank", "");
+				if (object.getState() == MatchParameters.getMATCHSTATE_FINISH()) {
+					Window.open(
+							UploadParameters.getBASE_URL()
+									+ "/serveMatchServlet?id="
+									+ Long.toString(object.getId()), "_blank",
+							"");
+				} else {
+					Window.alert("Partido no disponible");
+				}
 			}
 		});
 		col4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -235,10 +242,15 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 		col5.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
 			@Override
 			public void update(int index, MatchDto object, String value) {
-				Window.open(
-						UploadParameters.getBASE_URL()
-								+ "/visorwebgl/play.html?"
-								+ Long.toString(object.getId()), "_blank", "");
+				if (object.getState() == MatchParameters.getMATCHSTATE_FINISH()) {
+					Window.open(
+							UploadParameters.getBASE_URL()
+									+ "/visorwebgl/play.html?"
+									+ Long.toString(object.getId()), "_blank",
+							"");
+				} else {
+					Window.alert("Partido no disponible");
+				}
 			}
 		});
 		col5.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -277,7 +289,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	void onClickPlayGame(ClickEvent e) {
 		doPlayGame();
 	}
-	
+
 	@UiHandler("refreshGame")
 	void onClickRefreshGame(ClickEvent e) {
 		doRefreshGame();
@@ -295,7 +307,7 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 	private void doPlayGame() {
 		getUiHandlers().playGame();
 	}
-	
+
 	private void doRefreshGame() {
 		getUiHandlers().refreshGame();
 	}
