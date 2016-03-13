@@ -26,6 +26,7 @@
 	<inherits name="com.googlecode.objectify.Objectify" />
 	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
 	<inherits name="org.gwtbootstrap3.extras.notify.Notify"/>
+	<inherits name="org.gwtbootstrap3.extras.card.Card"/>
 	<inherits name="org.gwtbootstrap3.extras.cachemanifest.Offline" />
 	<add-linker name="offline" />
 	<extend-configuration-property name="cachemanifest_static_files"

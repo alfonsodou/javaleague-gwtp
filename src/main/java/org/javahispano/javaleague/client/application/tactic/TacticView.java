@@ -15,18 +15,18 @@ import org.gwtbootstrap3.client.ui.gwt.ButtonCell;
 import org.gwtbootstrap3.client.ui.gwt.CellTable;
 import org.gwtbootstrap3.client.ui.html.Paragraph;
 import org.gwtbootstrap3.client.ui.html.Small;
+import org.javahispano.javaleague.client.application.ui.ResultMatchCell;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
-import com.google.gwt.cell.client.Cell.Context;
+import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -149,6 +149,17 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 		imageColumn.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(imageColumn);
 
+		Cell<ResultMatchCell> col2 = new Cell<ResultMatchCell>();
+		Column<MatchDto, ResultMatchCell> nameCol2 = new Column<MatchDto, ResultMatchCell>(col2) {
+
+			@Override
+			public String getValue(MatchDto object) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+		};
+		
 		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
 			@Override
 			public String getValue(final MatchDto object) {
