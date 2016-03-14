@@ -20,13 +20,13 @@ import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
-import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -149,30 +149,39 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 		imageColumn.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(imageColumn);
 
-		Cell<ResultMatchCell> col2 = new Cell<ResultMatchCell>();
-		Column<MatchDto, ResultMatchCell> nameCol2 = new Column<MatchDto, ResultMatchCell>(col2) {
-
+		final Column<MatchDto, SafeHtml> col2 = new Column<MatchDto, SafeHtml>(
+				new ResultMatchCell()) {
 			@Override
-			public String getValue(MatchDto object) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-		};
-		
-		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
-			@Override
-			public String getValue(final MatchDto object) {
+			public SafeHtml getValue(MatchDto object) {
+				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					return String.valueOf(object.getMatchPropertiesDto()
-							.getGoalsHome()
-							+ " - "
-							+ object.getMatchPropertiesDto().getGoalsAway());
+					sb.appendHtmlConstant("<a href=\"javascript:;\">");
+					sb.appendEscaped("Pulsa para ver el resultado");
+					sb.appendHtmlConstant("</a>");
 				} else {
-					return "Sin comenzar";
+					sb.appendHtmlConstant("<div>En juego</div>");
 				}
+				return sb.toSafeHtml();
 			}
 		};
+
+		col2.setFieldUpdater(new FieldUpdater<MatchDto, SafeHtml>() {
+			@Override
+			public void update(int index, MatchDto object, SafeHtml value) {
+				Window.alert(object.getMatchPropertiesDto().getGoalsHome()
+						+ " - " + object.getMatchPropertiesDto().getGoalsAway());
+			}
+		});
+
+		/*
+		 * final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
+		 * 
+		 * @Override public String getValue(final MatchDto object) { if
+		 * (object.getMatchPropertiesDto() != null) { return
+		 * String.valueOf(object.getMatchPropertiesDto() .getGoalsHome() + " - "
+		 * + object.getMatchPropertiesDto().getGoalsAway()); } else { return
+		 * "Sin comenzar"; } } };
+		 */
 		col2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		col2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(col2, "");
