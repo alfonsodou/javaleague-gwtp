@@ -7,8 +7,9 @@ import gwtupload.client.IFileInput.FileInputType;
 import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
 import gwtupload.client.SingleUploader;
-import gwtupload.client.SingleUploaderModal;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -297,7 +298,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						NotifySettings settings = NotifySettings.newSettings();
 						settings.setType(NotifyType.INFO);
 						settings.setPlacement(NotifyPlacement.TOP_CENTER);
-						settings.setAllowDismiss(false);
+						settings.setAllowDismiss(true);
 						Notify.notify(messages.title(),
 								messages.onUpdateTactic(),
 								IconType.FILE_CODE_O, settings);
@@ -337,7 +338,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						NotifySettings settings = NotifySettings.newSettings();
 						settings.setType(NotifyType.INFO);
 						settings.setPlacement(NotifyPlacement.TOP_CENTER);
-						settings.setAllowDismiss(false);
+						settings.setAllowDismiss(true);
 						Notify.notify(messages.title(),
 								messages.onRegisterMatch(),
 								IconType.FILE_CODE_O, settings);

@@ -5,6 +5,9 @@ package org.javahispano.javaleague.client.application.tactic;
 
 import gwtupload.client.SingleUploader;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.ImageAnchor;
 import org.gwtbootstrap3.client.ui.Pagination;
@@ -15,6 +18,10 @@ import org.gwtbootstrap3.client.ui.gwt.ButtonCell;
 import org.gwtbootstrap3.client.ui.gwt.CellTable;
 import org.gwtbootstrap3.client.ui.html.Paragraph;
 import org.gwtbootstrap3.client.ui.html.Small;
+import org.gwtbootstrap3.extras.notify.client.constants.NotifyPlacement;
+import org.gwtbootstrap3.extras.notify.client.constants.NotifyType;
+import org.gwtbootstrap3.extras.notify.client.ui.Notify;
+import org.gwtbootstrap3.extras.notify.client.ui.NotifySettings;
 import org.javahispano.javaleague.client.application.ui.ResultMatchCell;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
@@ -155,9 +162,20 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 			public SafeHtml getValue(MatchDto object) {
 				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					sb.appendHtmlConstant("<a href=\"javascript:;\">");
-					sb.appendEscaped("Pulsa para ver el resultado");
-					sb.appendHtmlConstant("</a>");
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(new Date());
+					calendar.add(Calendar.HOUR, -1);
+					if (calendar.getTime().before(object.getDate())) {
+						sb.appendHtmlConstant("<a href=\"javascript:;\">");
+						sb.appendEscaped("Pulsa para ver el resultado");
+						sb.appendHtmlConstant("</a>");
+					} else {
+						sb.appendHtmlConstant("<div>"
+								+ object.getMatchPropertiesDto().getGoalsHome()
+								+ " - "
+								+ object.getMatchPropertiesDto().getGoalsAway()
+								+ "</div>");
+					}
 				} else {
 					sb.appendHtmlConstant("<div>En juego</div>");
 				}
@@ -168,20 +186,18 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 		col2.setFieldUpdater(new FieldUpdater<MatchDto, SafeHtml>() {
 			@Override
 			public void update(int index, MatchDto object, SafeHtml value) {
-				Window.alert(object.getMatchPropertiesDto().getGoalsHome()
-						+ " - " + object.getMatchPropertiesDto().getGoalsAway());
+				NotifySettings settings = NotifySettings.newSettings();
+				settings.setType(NotifyType.INFO);
+				settings.setPlacement(NotifyPlacement.TOP_CENTER);
+				settings.setAllowDismiss(true);
+				Notify.notify("", object.getUserHome().getTeamName() + " "
+						+ object.getMatchPropertiesDto().getGoalsHome() + " - "
+						+ object.getMatchPropertiesDto().getGoalsAway() + " "
+						+ object.getUserAway().getTeamName(),
+						IconType.CALENDAR, settings);
 			}
 		});
 
-		/*
-		 * final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
-		 * 
-		 * @Override public String getValue(final MatchDto object) { if
-		 * (object.getMatchPropertiesDto() != null) { return
-		 * String.valueOf(object.getMatchPropertiesDto() .getGoalsHome() + " - "
-		 * + object.getMatchPropertiesDto().getGoalsAway()); } else { return
-		 * "Sin comenzar"; } } };
-		 */
 		col2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		col2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(col2, "");
