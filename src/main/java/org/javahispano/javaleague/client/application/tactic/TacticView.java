@@ -5,7 +5,6 @@ package org.javahispano.javaleague.client.application.tactic;
 
 import gwtupload.client.SingleUploader;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.gwtbootstrap3.client.ui.Button;
@@ -162,10 +161,13 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 			public SafeHtml getValue(MatchDto object) {
 				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(new Date());
-					calendar.add(Calendar.HOUR, -1);
-					if (calendar.getTime().before(object.getDate())) {
+					Date now = new Date();
+					long d = (now.getTime() - object.getDate().getTime())
+							/ (1000 * 60);
+					// Calendar calendar = Calendar.getInstance();
+					// calendar.setTime(new Date());
+					// calendar.add(Calendar.HOUR, -1);
+					if (d < 60) {
 						sb.appendHtmlConstant("<a href=\"javascript:;\">");
 						sb.appendEscaped("Pulsa para ver el resultado");
 						sb.appendHtmlConstant("</a>");
