@@ -164,9 +164,6 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 					Date now = new Date();
 					long d = (now.getTime() - object.getDate().getTime())
 							/ (1000 * 60);
-					// Calendar calendar = Calendar.getInstance();
-					// calendar.setTime(new Date());
-					// calendar.add(Calendar.HOUR, -1);
 					if (d < 60) {
 						sb.appendHtmlConstant("<a href=\"javascript:;\">");
 						sb.appendEscaped("Pulsa para ver el resultado");
@@ -261,7 +258,12 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 									+ Long.toString(object.getId()), "_blank",
 							"");
 				} else {
-					Window.alert("Partido no disponible");
+					NotifySettings settings = NotifySettings.newSettings();
+					settings.setType(NotifyType.INFO);
+					settings.setPlacement(NotifyPlacement.TOP_CENTER);
+					settings.setAllowDismiss(true);
+					Notify.notify("", "Partido no disponible",
+							IconType.CALENDAR, settings);
 				}
 			}
 		});
@@ -287,7 +289,12 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 									+ Long.toString(object.getId()), "_blank",
 							"");
 				} else {
-					Window.alert("Partido no disponible");
+					NotifySettings settings = NotifySettings.newSettings();
+					settings.setType(NotifyType.INFO);
+					settings.setPlacement(NotifyPlacement.TOP_CENTER);
+					settings.setAllowDismiss(true);
+					Notify.notify("", "Partido no disponible",
+							IconType.CALENDAR, settings);
 				}
 			}
 		});

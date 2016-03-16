@@ -28,8 +28,7 @@
 		<b:Column size="XS_12">
 			<b:Panel>
 				<b:PanelHeader>
-					<b:Heading size="H3"
-						text="Documentación" />
+					<b:Heading size="H3" text="Documentación" />
 				</b:PanelHeader>
 				<b:PanelBody>
 					<b:PanelGroup b:id="accordion2">
@@ -40,9 +39,27 @@
 							</b:PanelHeader>
 							<b:PanelCollapse b:id="collapseFour" in="true">
 								<b:PanelBody>
-									<b.html:Paragraph>
-										I am the content of Collapse Group!
-									</b.html:Paragraph>
+									<b:Row>
+										<b:Column size="XS_4">
+											<b.html:Paragraph>
+												Registrarse es muy fácil!
+											</b.html:Paragraph>
+											<b.html:Paragraph>
+												Sólo necesitas introducir tu nombre, correo
+												electrónico y la
+												contraseña que quieras.
+											</b.html:Paragraph>
+											<b.html:Paragraph>
+												Una vez introducidos estos datos, recibirás
+												un correo para
+												validar tu cuenta y listo! Ya puedes
+												participar!
+											</b.html:Paragraph>
+										</b:Column>
+										<b:Column size="XS_8">
+											<b:Image type="THUMBNAIL" url="images/registro.png"></b:Image>
+										</b:Column>
+									</b:Row>
 								</b:PanelBody>
 							</b:PanelCollapse>
 						</b:Panel>

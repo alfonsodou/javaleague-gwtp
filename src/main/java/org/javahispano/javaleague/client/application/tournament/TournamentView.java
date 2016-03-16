@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.application.tournament;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,9 +20,15 @@ import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.constants.PanelType;
 import org.gwtbootstrap3.client.ui.gwt.ButtonCell;
 import org.gwtbootstrap3.client.ui.gwt.CellTable;
+import org.gwtbootstrap3.extras.notify.client.constants.NotifyPlacement;
+import org.gwtbootstrap3.extras.notify.client.constants.NotifyType;
+import org.gwtbootstrap3.extras.notify.client.ui.Notify;
+import org.gwtbootstrap3.extras.notify.client.ui.NotifySettings;
+import org.javahispano.javaleague.client.application.ui.ResultMatchCell;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.dto.MatchDto;
+import org.javahispano.javaleague.shared.parameters.MatchParameters;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
 import com.google.gwt.cell.client.FieldUpdater;
@@ -29,6 +36,7 @@ import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.AbstractCellTable;
@@ -331,7 +339,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			}
 		});
 		grid.addColumn(col1, headerCol1);
-		
+
 		final Column<MatchDto, String> imageColumn = new Column<MatchDto, String>(
 				new ImageCell()) {
 
@@ -352,20 +360,47 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		imageColumn.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(imageColumn);
 
-		final TextColumn<MatchDto> col2 = new TextColumn<MatchDto>() {
-
+		final Column<MatchDto, SafeHtml> col2 = new Column<MatchDto, SafeHtml>(
+				new ResultMatchCell()) {
 			@Override
-			public String getValue(final MatchDto object) {
+			public SafeHtml getValue(MatchDto object) {
+				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					return String.valueOf(object.getMatchPropertiesDto()
-							.getGoalsHome()
-							+ " - "
-							+ object.getMatchPropertiesDto().getGoalsAway());
+					Date now = new Date();
+					long d = (now.getTime() - object.getDate().getTime())
+							/ (1000 * 60);
+					if (d < 60) {
+						sb.appendHtmlConstant("<a href=\"javascript:;\">");
+						sb.appendEscaped("Pulsa para ver el resultado");
+						sb.appendHtmlConstant("</a>");
+					} else {
+						sb.appendHtmlConstant("<div>"
+								+ object.getMatchPropertiesDto().getGoalsHome()
+								+ " - "
+								+ object.getMatchPropertiesDto().getGoalsAway()
+								+ "</div>");
+					}
 				} else {
-					return "Sin comenzar";
+					sb.appendHtmlConstant("<div>En juego</div>");
 				}
+				return sb.toSafeHtml();
 			}
 		};
+
+		col2.setFieldUpdater(new FieldUpdater<MatchDto, SafeHtml>() {
+			@Override
+			public void update(int index, MatchDto object, SafeHtml value) {
+				NotifySettings settings = NotifySettings.newSettings();
+				settings.setType(NotifyType.INFO);
+				settings.setPlacement(NotifyPlacement.TOP_CENTER);
+				settings.setAllowDismiss(true);
+				Notify.notify("", object.getUserHome().getTeamName() + " "
+						+ object.getMatchPropertiesDto().getGoalsHome() + " - "
+						+ object.getMatchPropertiesDto().getGoalsAway() + " "
+						+ object.getUserAway().getTeamName(),
+						IconType.CALENDAR, settings);
+			}
+		});
 		col2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		col2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(col2);
@@ -386,7 +421,8 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 				}
 			}
 		};
-		imageColumn2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		imageColumn2
+				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		imageColumn2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(imageColumn2);
 
@@ -419,10 +455,20 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		col4.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
 			@Override
 			public void update(int index, MatchDto object, String value) {
-				Window.open(
-						UploadParameters.getBASE_URL()
-								+ "/serveMatchServlet?id="
-								+ Long.toString(object.getId()), "_blank", "");
+				if (object.getState() == MatchParameters.getMATCHSTATE_FINISH()) {
+					Window.open(
+							UploadParameters.getBASE_URL()
+									+ "/serveMatchServlet?id="
+									+ Long.toString(object.getId()), "_blank",
+							"");
+				} else {
+					NotifySettings settings = NotifySettings.newSettings();
+					settings.setType(NotifyType.INFO);
+					settings.setPlacement(NotifyPlacement.TOP_CENTER);
+					settings.setAllowDismiss(true);
+					Notify.notify("", "Partido no disponible",
+							IconType.CALENDAR, settings);
+				}
 			}
 		});
 		col1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -440,10 +486,20 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		col5.setFieldUpdater(new FieldUpdater<MatchDto, String>() {
 			@Override
 			public void update(int index, MatchDto object, String value) {
-				Window.open(
-						UploadParameters.getBASE_URL()
-								+ "/visorwebgl/play.html?"
-								+ Long.toString(object.getId()), "_blank", "");
+				if (object.getState() == MatchParameters.getMATCHSTATE_FINISH()) {
+					Window.open(
+							UploadParameters.getBASE_URL()
+									+ "/visorwebgl/play.html?"
+									+ Long.toString(object.getId()), "_blank",
+							"");
+				} else {
+					NotifySettings settings = NotifySettings.newSettings();
+					settings.setType(NotifyType.INFO);
+					settings.setPlacement(NotifyPlacement.TOP_CENTER);
+					settings.setAllowDismiss(true);
+					Notify.notify("", "Partido no disponible",
+							IconType.CALENDAR, settings);
+				}
 			}
 		});
 		col5.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);

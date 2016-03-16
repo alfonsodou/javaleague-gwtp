@@ -24,6 +24,10 @@
 	.margin-fix {
 		margin-top: 0 !important;
 	}
+	
+	.push {
+		padding-top: 10px;
+	}
 	</ui:style>
 
 	<b:Container>
@@ -34,10 +38,10 @@
 		</b:NavTabs>
 		<b:TabContent>
 			<b:TabPane active="true" b:id="tab1">
-				<b:Container ui:field="journeyContainer"></b:Container>
+				<b:Container ui:field="journeyContainer" addStyleNames="{style.push}"></b:Container>
 			</b:TabPane>
 			<b:TabPane b:id="tab2">
-				<b:Container ui:field="clasificationContainer"></b:Container>
+				<b:Container ui:field="clasificationContainer" addStyleNames="{style.push}"></b:Container>
 			</b:TabPane>
 		</b:TabContent>
 	</b:Container>
