@@ -28,23 +28,15 @@
 		<b:Column size="XS_12">
 			<b:Jumbotron>
 				<b:Row>
-					<b:Column>
-						<b:Image type="THUMBNAIL" url="images/DukeFriends.png"></b:Image>
-					</b:Column>
-				</b:Row>
-				<b:Row>
 					<b:Column size="XS_8">
 						<b:Heading size="H1" text="javacup 2016" />
 						<b.html:Paragraph>
-							¡ Por fin estamos de vuelta ! Actualiza o crea
-							tu equipo para el
+							¡ Por fin estamos de vuelta ! Actualiza o crea tu equipo para el
 							nuevo torneo
 						</b.html:Paragraph>
 						<b.html:Paragraph>
-							Hay novedades en esta edición. No lo pienses más
-							y participa.
-							Tienes hasta el 30 de abril de 2016 para preparar tu
-							equipo.
+							Hay novedades en esta edición. No lo pienses más y participa.
+							Tienes hasta el 30 de abril de 2016 para preparar tu equipo.
 						</b.html:Paragraph>
 					</b:Column>
 					<b:Column size="XS_4">

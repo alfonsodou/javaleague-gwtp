@@ -18,6 +18,7 @@ package org.javahispano.javaleague.client.application;
 
 import org.javahispano.javaleague.client.application.cars.CarsDesktopModule;
 import org.javahispano.javaleague.client.application.documentation.DocumentationModule;
+import org.javahispano.javaleague.client.application.download.DownloadModule;
 import org.javahispano.javaleague.client.application.home.HomeModule;
 import org.javahispano.javaleague.client.application.login.LoginModule;
 import org.javahispano.javaleague.client.application.manufacturer.ManufacturerModule;
@@ -49,6 +50,7 @@ public class ApplicationDesktopModule extends AbstractPresenterModule {
 		install(new TacticModule());
 		install(new TournamentModule());
 		install(new DocumentationModule());
+		install(new DownloadModule());
 
 		bindPresenter(ApplicationPresenter.class,
 				ApplicationPresenter.MyView.class, ApplicationView.class,
