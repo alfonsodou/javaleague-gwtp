@@ -8,7 +8,6 @@ import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
 import gwtupload.client.SingleUploader;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,6 +40,8 @@ import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchResult;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticAction;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticResult;
+import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeAction;
+import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeResult;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.UploadParameters;
 
@@ -75,7 +76,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 		Small getPackageNameUser();
 
 		Button getPlayGame();
-		
+
 		Button getRefreshGame();
 
 		ListDataProvider<MatchDto> getListMatchs();
@@ -105,6 +106,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 	private Modal modalImage;
 
+	private Date serverDate;
+
 	@Inject
 	TacticPresenter(EventBus eventBus, MyView view, MyProxy proxy,
 			DispatchAsync dispatcher, CurrentUser currentUser,
@@ -127,6 +130,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 	@Override
 	protected void onReveal() {
+		getServerTime();
 		getView().getTeamName().setText(currentUser.getUser().getTeamName());
 		getView().getPackageName().setText(messages.packageName());
 		getView().getPackageNameUser().setText(
@@ -408,4 +412,32 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	public void refreshGame() {
 		getListMatch();
 	}
+
+	private void getServerTime() {
+		callGetServerTime(new GetServerTimeAction());
+	}
+
+	private void callGetServerTime(GetServerTimeAction getServerTimeAction) {
+		dispatcher.execute(getServerTimeAction,
+				new AsyncCallback<GetServerTimeResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						LOGGER.warning("Error on callGetServerTime: "
+								+ caught.toString());
+					}
+
+					@Override
+					public void onSuccess(GetServerTimeResult result) {
+						if (result != null) {
+							serverDate = result.getDate();
+						}
+					}
+				});
+	}
+
+	@Override
+	public Date getServerDate() {
+		return serverDate;
+	}	
 }

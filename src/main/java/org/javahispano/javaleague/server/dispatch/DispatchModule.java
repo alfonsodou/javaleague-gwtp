@@ -24,6 +24,7 @@ import org.javahispano.javaleague.shared.dispatch.match.ListMatchLeagueAction;
 import org.javahispano.javaleague.shared.dispatch.match.RegisterMatchAction;
 import org.javahispano.javaleague.shared.dispatch.register.RegisterAction;
 import org.javahispano.javaleague.shared.dispatch.tactic.UpdateTacticAction;
+import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeAction;
 
 import com.gwtplatform.dispatch.rpc.server.guice.HandlerModule;
 
@@ -40,5 +41,6 @@ public class DispatchModule extends HandlerModule {
         bindHandler(ListMatchLeagueAction.class, ListMatchLeagueHandler.class);
         bindHandler(ListClasificationAction.class, ListClasificationHandler.class);
         bindHandler(ListJourneyAction.class, ListJourneyHandler.class);
+        bindHandler(GetServerTimeAction.class, GetServerTimeHandler.class);
     }
 }

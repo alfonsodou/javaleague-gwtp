@@ -366,8 +366,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			public SafeHtml getValue(MatchDto object) {
 				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					Date now = new Date();
-					long d = (now.getTime() - object.getDate().getTime())
+					long d = (getUiHandlers().getServerDate().getTime() - object.getDate().getTime())
 							/ (1000 * 60);
 					if (d < 60) {
 						sb.appendHtmlConstant("<a href=\"javascript:;\">");

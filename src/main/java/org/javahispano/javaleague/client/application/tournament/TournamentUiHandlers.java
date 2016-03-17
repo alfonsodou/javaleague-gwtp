@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.client.application.tournament;
 
+import java.util.Date;
+
 import com.gwtplatform.mvp.client.UiHandlers;
 
 /**
@@ -10,5 +12,5 @@ import com.gwtplatform.mvp.client.UiHandlers;
  *
  */
 public interface TournamentUiHandlers extends UiHandlers {
-
+	Date getServerDate();
 }

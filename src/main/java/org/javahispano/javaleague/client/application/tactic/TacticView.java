@@ -161,9 +161,8 @@ public class TacticView extends ViewWithUiHandlers<TacticUiHandlers> implements
 			public SafeHtml getValue(MatchDto object) {
 				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					Date now = new Date();
-					long d = (now.getTime() - object.getDate().getTime())
-							/ (1000 * 60);
+					long d = (getUiHandlers().getServerDate().getTime() - object
+							.getDate().getTime()) / (1000 * 60);
 					if (d < 60) {
 						sb.appendHtmlConstant("<a href=\"javascript:;\">");
 						sb.appendEscaped("Pulsa para ver el resultado");

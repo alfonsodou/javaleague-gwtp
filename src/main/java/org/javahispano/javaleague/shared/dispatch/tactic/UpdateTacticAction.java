@@ -3,8 +3,6 @@
  */
 package org.javahispano.javaleague.shared.dispatch.tactic;
 
-import org.javahispano.javaleague.client.security.CurrentUser;
-
 import com.gwtplatform.dispatch.rpc.shared.ActionImpl;
 
 /**

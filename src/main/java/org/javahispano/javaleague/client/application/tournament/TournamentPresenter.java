@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.application.tournament;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -13,14 +14,14 @@ import org.javahispano.javaleague.client.application.ApplicationPresenter;
 import org.javahispano.javaleague.client.application.tournament.TournamentPresenter.MyProxy;
 import org.javahispano.javaleague.client.application.tournament.TournamentPresenter.MyView;
 import org.javahispano.javaleague.client.place.NameTokens;
-import org.javahispano.javaleague.client.security.CurrentUser;
 import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationAction;
 import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationResult;
 import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyAction;
 import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyResult;
+import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeAction;
+import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeResult;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
-import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -60,21 +61,20 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 			.getLogger(TournamentPresenter.class.getName());
 
 	private final DispatchAsync dispatcher;
-	private final CurrentUser currentUser;
 
-	private List<MatchDto> listMatchDto;
-
+	private Date serverDate;
+	
 	@Inject
 	TournamentPresenter(EventBus eventBus, MyView view, MyProxy proxy,
-			DispatchAsync dispatcher, CurrentUser currentUser) {
+			DispatchAsync dispatcher) {
 		super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
 
 		this.dispatcher = dispatcher;
-		this.currentUser = currentUser;
 	}
 
 	@Override
 	protected void onReveal() {
+		getServerTime();
 		getListClasification();
 		getListJourney();
 	}
@@ -140,5 +140,32 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 
 				});
 	}
+	
+	private void getServerTime() {
+		callGetServerTime(new GetServerTimeAction());
+	}
 
+	private void callGetServerTime(GetServerTimeAction getServerTimeAction) {
+		dispatcher.execute(getServerTimeAction,
+				new AsyncCallback<GetServerTimeResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						LOGGER.warning("Error on callGetServerTime: "
+								+ caught.toString());
+					}
+
+					@Override
+					public void onSuccess(GetServerTimeResult result) {
+						if (result != null) {
+							serverDate = result.getDate();
+						}
+					}
+				});
+	}
+
+	@Override
+	public Date getServerDate() {
+		return serverDate;
+	}	
 }

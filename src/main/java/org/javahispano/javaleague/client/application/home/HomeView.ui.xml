@@ -28,7 +28,7 @@
 		<b:Column size="XS_12">
 			<b:Jumbotron>
 				<b:Row>
-					<b:Column>
+					<b:Column size="XS_12">
 						<b:Image type="THUMBNAIL" url="images/DukeFriends.png"></b:Image>
 					</b:Column>
 				</b:Row>

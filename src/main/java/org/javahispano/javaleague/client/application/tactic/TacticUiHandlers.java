@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.client.application.tactic;
 
+import java.util.Date;
+
 import com.gwtplatform.mvp.client.UiHandlers;
 
 /**
@@ -14,4 +16,5 @@ public interface TacticUiHandlers extends UiHandlers {
 	void playGame();
 	void showUploadImageModal();
 	void refreshGame();
+	Date getServerDate();
 }
