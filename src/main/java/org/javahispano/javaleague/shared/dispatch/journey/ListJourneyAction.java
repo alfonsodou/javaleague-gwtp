@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.shared.dispatch.journey;
 
+import java.util.Date;
+
 import com.gwtplatform.dispatch.rpc.shared.ActionImpl;
 
 /**
@@ -32,4 +34,5 @@ public class ListJourneyAction extends ActionImpl<ListJourneyResult> {
 	public boolean isSecured() {
 		return false;
 	}
+
 }

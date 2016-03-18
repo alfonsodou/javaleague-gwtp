@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.server.dispatch;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -42,7 +43,7 @@ public class ListJourneyHandler extends
 		League league = leagueDao.get(arg0.getLeagueId());
 		LeagueDto leagueDto = League.createDto(league);
 
-		return new ListJourneyResult(leagueDto.getJourneys());
+		return new ListJourneyResult(leagueDto.getJourneys(), new Date());
 	}
 
 	@Override

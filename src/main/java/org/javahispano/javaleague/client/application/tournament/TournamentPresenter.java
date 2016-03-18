@@ -74,7 +74,6 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 
 	@Override
 	protected void onReveal() {
-		getServerTime();
 		getListClasification();
 		getListJourney();
 	}
@@ -134,6 +133,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 						if (result.getListJourneyDto() == null) {
 							LOGGER.warning("** No hay jornadas creadas **");
 						} else {
+							serverDate = result.getServerDate();
 							getView().viewJourney(result.getListJourneyDto());
 						}
 					}

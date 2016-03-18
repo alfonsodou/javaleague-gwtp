@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.server.dispatch;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -44,7 +45,7 @@ public class ListMatchHandler extends
 				userDao.get(arg0.getUserDto().getId()), true);
 		List<MatchDto> listMatchDto = Match.createList(listMatch);
 
-		return new ListMatchResult(listMatchDto);
+		return new ListMatchResult(listMatchDto, new Date());
 	}
 
 	@Override

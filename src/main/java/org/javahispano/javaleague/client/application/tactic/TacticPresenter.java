@@ -130,7 +130,6 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 	@Override
 	protected void onReveal() {
-		getServerTime();
 		getView().getTeamName().setText(currentUser.getUser().getTeamName());
 		getView().getPackageName().setText(messages.packageName());
 		getView().getPackageNameUser().setText(
@@ -377,6 +376,7 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 						if (result.getMatchs() == null) {
 							listMatchDto = null;
 						} else {
+							serverDate = result.getServerDate();
 							listMatchDto = result.getMatchs();
 							getView().getListMatchs().getList().clear();
 							getView().getListMatchs().getList()

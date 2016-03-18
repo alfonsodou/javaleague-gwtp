@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.server.dispatch;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -59,7 +60,7 @@ public class ListMatchLeagueHandler extends
 			Match match = Deref.deref(refMatch);
 			listMatchDto.add(Match.createDto(match));
 		}
-		ListMatchLeagueResult listMatchLeagueResult = new ListMatchLeagueResult(listMatchDto);
+		ListMatchLeagueResult listMatchLeagueResult = new ListMatchLeagueResult(listMatchDto, new Date());
 		
 		return listMatchLeagueResult;
 	}
