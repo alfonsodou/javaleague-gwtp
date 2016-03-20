@@ -279,7 +279,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 	}
 
 	@Override
-	public void viewJourney(List<JourneyDto> listJourneyDto) {
+	public void viewJourney(List<JourneyDto> listJourneyDto, Date serverDate) {
 		Row row = new Row();
 		int count = 0;
 		int journey = 0;
@@ -299,13 +299,14 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 							journeyDto.getDate()));
 			panel.add(panelHeader);
 			PanelBody panelBody = new PanelBody();
-			CellTable<MatchDto> cellTableJourney = new CellTable<MatchDto>(2);
+			CellTable<MatchDto> cellTableJourney = new CellTable<MatchDto>(
+					journeyDto.getMatchs().size());
 			ListDataProvider<MatchDto> listMatchDto = new ListDataProvider<MatchDto>();
 			listMatchDto.setList(journeyDto.getMatchs());
 			Pagination pagination = new Pagination();
 			SimplePager simplePager = new SimplePager();
 			initJourneyTable(cellTableJourney, simplePager, pagination,
-					listMatchDto);
+					listMatchDto, serverDate);
 			panelBody.add(cellTableJourney);
 			panel.add(panelBody);
 			column.add(panel);
@@ -320,7 +321,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 
 	private void initJourneyTable(final AbstractCellTable<MatchDto> grid,
 			final SimplePager pager, final Pagination pagination,
-			final ListDataProvider<MatchDto> dataProvider) {
+			final ListDataProvider<MatchDto> dataProvider, final Date serverDate) {
 		final TextColumn<MatchDto> col1 = new TextColumn<MatchDto>() {
 
 			@Override
@@ -366,8 +367,8 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			public SafeHtml getValue(MatchDto object) {
 				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					long d = (getUiHandlers().getServerDate().getTime() - object.getDate().getTime())
-							/ (1000 * 60);
+					long d = (serverDate.getTime() - object
+							.getDate().getTime()) / (1000 * 60);
 					if (d < 60) {
 						sb.appendHtmlConstant("<a href=\"javascript:;\">");
 						sb.appendEscaped("Pulsa para ver el resultado");

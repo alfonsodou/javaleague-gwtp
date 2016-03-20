@@ -21,7 +21,7 @@
 		<gwtupload.version>1.0.3</gwtupload.version>
 
 		<!-- Server -->
-		<gae.version>1.9.32</gae.version>
+		<gae.version>1.9.34</gae.version>
 		<guice.version>3.0</guice.version>
 		<resteasy.version>3.0.9.Final</resteasy.version>
 		<guava.version>18.0</guava.version>

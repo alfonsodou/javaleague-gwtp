@@ -1,0 +1,32 @@
+<queue-entries>
+	<queue>
+		<name>default</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
+	<queue>
+		<name>league1</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
+	<queue>
+		<name>league2</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
+	<queue>
+		<name>league3</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
+	<queue>
+		<name>league4</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
+	<queue>
+		<name>league5</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
+</queue-entries>

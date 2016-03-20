@@ -24,6 +24,7 @@ import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rpc.shared.DispatchAsync;
@@ -46,7 +47,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		
 		Container getClasificationContainer();
 
-		void viewJourney(List<JourneyDto> listJourneyDto);
+		void viewJourney(List<JourneyDto> listJourneyDto, Date serverDate);
 
 		void viewClasification(List<ClasificationDto> listClasificationDto);
 	}
@@ -134,7 +135,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 							LOGGER.warning("** No hay jornadas creadas **");
 						} else {
 							serverDate = result.getServerDate();
-							getView().viewJourney(result.getListJourneyDto());
+							getView().viewJourney(result.getListJourneyDto(), serverDate);
 						}
 					}
 
