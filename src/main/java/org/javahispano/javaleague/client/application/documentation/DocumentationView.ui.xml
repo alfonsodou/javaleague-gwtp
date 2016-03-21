@@ -40,7 +40,7 @@
 							<b:PanelCollapse b:id="collapseFour" in="true">
 								<b:PanelBody>
 									<b:Row>
-										<b:Column size="XS_4">
+										<b:Column size="XS_5">
 											<b.html:Paragraph>
 												Registrarse es muy fácil!
 											</b.html:Paragraph>
@@ -55,9 +55,25 @@
 												validar tu cuenta y listo! Ya puedes
 												participar!
 											</b.html:Paragraph>
+											<b.html:Paragraph>
+												Introduce tus credenciales para acceder a
+												los datos de tu táctica.
+											</b.html:Paragraph>
+											<b.html:Paragraph>
+												Podrás cambiar el escudo de tu equipo,
+												ponerle el nombre y subir
+												el archivo .jar con las clases de
+												tu táctica.
+											</b.html:Paragraph>
+											<b:Lead
+												text="IMPORTANTE: Fíjate en el nombre del package a partir del cual deben estar incluidas todas las clases de tu táctica">
+											</b:Lead>
+											<b:ImageAnchor type="THUMBNAIL" url="images/mi-tactica.png"
+												href="images/mi-tactica.png" responsive="true" width="100%"></b:ImageAnchor>
 										</b:Column>
-										<b:Column size="XS_8">
-											<b:Image type="THUMBNAIL" url="images/registro.png"></b:Image>
+										<b:Column size="XS_7">
+											<b:ImageAnchor type="THUMBNAIL" url="images/registro.png"
+												href="images/registro.png" responsive="true" width="100%"></b:ImageAnchor>
 										</b:Column>
 									</b:Row>
 								</b:PanelBody>

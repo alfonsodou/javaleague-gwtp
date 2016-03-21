@@ -27,20 +27,9 @@
 	<b:Row>
 		<b:Column size="XS_12">
 			<b:Jumbotron>
-				<b:Heading size="H1" text="Demo for GwtBootstrap" />
-				<g:InlineHyperlink targetHistoryToken="{nameTokens.getRules}">Rules
-				</g:InlineHyperlink>
+				<b:Heading size="H1" text="Gracias por registrarte" />
 				<b.html:Paragraph>
-					A
-					<a href="http://gwtproject.org/">GWT</a>
-					wrapper for
-					<a href="http://getbootstrap.com/">Bootstrap</a>
-				</b.html:Paragraph>
-				<b.html:Paragraph>
-					This is the demo for
-					<a href="https://github.com/gwtbootstrap3/gwtbootstrap3">GwtBootstrap3</a>
-					version 1.0-SNAPSHOT. For previous releases please go to:
-					<a href="https://github.com/gwtbootstrap3/gwtbootstrap3/releases">Previous Releases</a>
+					Ya puedes usar tus credenciales para iniciar sesión y participar en el torneo.
 				</b.html:Paragraph>
 			</b:Jumbotron>
 		</b:Column>

@@ -137,7 +137,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 				UploadParameters.getPACKAGENAME()
 						+ currentUser.getUser().getId().toString());
 		getView().getPlayGame().setEnabled(
-				!currentUser.getUser().isAwaitingMatch());
+				!currentUser.getUser().isAwaitingMatch()
+						&& currentUser.getUser().isTacticOK());
 		getListMatch();
 		getTeamImage();
 	}
@@ -349,6 +350,8 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 
 						if (result.getMathDto() == null) {
 							getView().getPlayGame().setEnabled(false);
+						} else {
+							getListMatch();
 						}
 
 						LOGGER.info("callRegisterMatchAction: Solicitud partido amistoso registrada correctamente");
@@ -440,5 +443,5 @@ public class TacticPresenter extends Presenter<MyView, MyProxy> implements
 	@Override
 	public Date getServerDate() {
 		return serverDate;
-	}	
+	}
 }
