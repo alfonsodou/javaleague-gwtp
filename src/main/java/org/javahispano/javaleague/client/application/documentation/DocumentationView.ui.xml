@@ -22,6 +22,10 @@
 	.margin-fix {
 		margin-top: 0 !important;
 	}
+	
+	.push {
+		padding-top: 10px;
+	}
 	</ui:style>
 
 	<b:Row>
@@ -40,7 +44,7 @@
 							<b:PanelCollapse b:id="collapseFour" in="true">
 								<b:PanelBody>
 									<b:Row>
-										<b:Column size="XS_5">
+										<b:Column size="XS_6">
 											<b.html:Paragraph>
 												Registrarse es muy fácil!
 											</b.html:Paragraph>
@@ -65,15 +69,21 @@
 												el archivo .jar con las clases de
 												tu táctica.
 											</b.html:Paragraph>
+										</b:Column>
+										<b:Column size="XS_6">
+											<b:Image type="THUMBNAIL" url="images/registro.png"
+												responsive="true"></b:Image>
+										</b:Column>
+									</b:Row>
+									<b:Row>
+										<b:Column size="XS_8" addStyleNames="{style.push}">
+											<b:Image type="THUMBNAIL" url="images/mi-tactica.png"
+												responsive="true"></b:Image>
+										</b:Column>
+										<b:Column size="XS_4" addStyleNames="{style.push}">
 											<b:Lead
 												text="IMPORTANTE: Fíjate en el nombre del package a partir del cual deben estar incluidas todas las clases de tu táctica">
 											</b:Lead>
-											<b:ImageAnchor type="THUMBNAIL" url="images/mi-tactica.png"
-												href="images/mi-tactica.png" responsive="true" width="100%"></b:ImageAnchor>
-										</b:Column>
-										<b:Column size="XS_7">
-											<b:ImageAnchor type="THUMBNAIL" url="images/registro.png"
-												href="images/registro.png" responsive="true" width="100%"></b:ImageAnchor>
 										</b:Column>
 									</b:Row>
 								</b:PanelBody>
