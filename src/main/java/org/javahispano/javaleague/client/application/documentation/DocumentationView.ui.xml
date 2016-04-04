@@ -92,12 +92,37 @@
 						<b:Panel>
 							<b:PanelHeader dataToggle="COLLAPSE" dataParent="#accordion2"
 								dataTarget="#collapseFive">
-								<b:Heading size="H4" text="Crear táctica" />
+								<b:Heading size="H4" text="Instalar framework" />
 							</b:PanelHeader>
 							<b:PanelCollapse b:id="collapseFive">
 								<b:PanelBody>
 									<b.html:Paragraph>
-										I am the content of Collapse!
+										En la página de descargas encontrarás el
+										enlace para descargarte el framework necesario para crear tu
+										táctica.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										Descrompime el archivo en el directorio que
+										desees. Sigue los siguientes pasos para instalar el framework
+										en Eclipse.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										Importa el proyecto en Eclipse desde el
+										directorio donde has descomprimido el framework.
+									</b.html:Paragraph>
+									<b:Image url="images/import_project_eclipse_3.png"
+										type="THUMBNAIL" responsive="true" addStyleNames="{style.push}"></b:Image>
+									<b:Image url="images/import_project_eclipse_2.png"
+										type="THUMBNAIL" responsive="true" addStyleNames="{style.push}"></b:Image>
+									<b:Image url="images/import_project_eclipse_0.png"
+										type="THUMBNAIL" responsive="true"></b:Image>
+									<b:Image url="images/import_project_eclipse.png" type="THUMBNAIL"
+										responsive="true" addStyleNames="{style.push}"></b:Image>
+									<b.html:Paragraph addStyleNames="{style.push}">
+										Ya tienes
+										correctamente instalado el
+										framework. Ahora, el siguiente paso
+										es crear tu tácitca!
 									</b.html:Paragraph>
 								</b:PanelBody>
 							</b:PanelCollapse>
@@ -105,13 +130,677 @@
 						<b:Panel>
 							<b:PanelHeader dataToggle="COLLAPSE" dataParent="#accordion2"
 								dataTarget="#collapseSix">
-								<b:Heading size="H4" text="Exportar táctica" />
+								<b:Heading size="H4" text="Crear táctica" />
 							</b:PanelHeader>
 							<b:PanelCollapse b:id="collapseSix">
 								<b:PanelBody>
 									<b.html:Paragraph>
-										I am the content of Collapse!
+										Para desarrollar una táctica solo se debe
+										escribir una clase que implemente la interfaz
+										org.javahispano.javacup.model.Tactic. Esto quiere decir que
+										debemos implementar
+										cada uno de los métodos definidos en dicha
+										interfaz.
 									</b.html:Paragraph>
+									<b:Lead
+										text="IMPORTANTE: Recuerda que todas las clases que implementen tu táctica deben estar en el package indicado al crear tu usuario en javaleague"></b:Lead>
+									<b.html:Paragraph>Los métodos a
+										implementar son los
+										siguientes:
+									</b.html:Paragraph>
+									<b.html:OrderedList>
+										<b:ListItem>
+											<b:Code>public TacticDetail getDetail();</b:Code>
+										</b:ListItem>
+										<b:ListItem>
+											<b:Code>public Position[] getStartPositions(GameSituations
+												sp);</b:Code>
+										</b:ListItem>
+										<b:ListItem>
+											<b:Code> public Position[] getNoStartPositions(GameSituations
+												sp);
+											</b:Code>
+										</b:ListItem>
+										<b:ListItem>
+											<b:Code>
+												public List &#60;Command&#62; execute(GameSituations
+												sp);
+											</b:Code>
+										</b:ListItem>
+									</b.html:OrderedList>
+									<b.html:Paragraph>
+										El primer método denominado
+										<b.html:Strong>getDetail</b.html:Strong>
+										retorna
+										un objeto
+										<b.html:Strong>TacticDetail</b.html:Strong>
+										. En dicho
+										objeto se define la configuración de la táctica
+										(nombre del equipo,
+										el país, el nombre del entrenador,
+										los
+										colores y estilo de la vestimenta; y para cada jugador su
+										nombre, número, colores, si es portero,
+										su velocidad, su fuerza
+										de remate y su precisión).
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										Para facilitar la implementación de este método se ha
+										desarrollado un programa asistente
+										que de manera gráfica
+										permite generar el código del objeto
+										<b.html:Strong>TacticDetail</b.html:Strong>
+										.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										El segundo y tercer método especifican la ubicación que deben
+										tomar los jugadores
+										después de cada gol y cuando se inicie el
+										juego. Se usara
+										<b.html:Strong>getStartPositions</b.html:Strong>
+										cuando se
+										inicie “sacando” después de haber recibido un gol, y
+										se usara
+										<b.html:Strong>getNoStartPositions</b.html:Strong>
+										cuando
+										se inicie “recibiendo” después de marcar un gol. Como el
+										partido
+										ocurre en un solo tiempo y por lo
+										tanto no hay cambio de
+										lado, al inicio ambas tácticas se ubicaran
+										según
+										<b.html:Strong>getNoStartPositions</b.html:Strong>
+										,
+										para que ambas tácticas tengan posibilidades de controlar el
+										balón
+										primero que la otra. Ambos
+										métodos deberán retornar un
+										array de objetos Posición de tamaño 11.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										Al igual que en el primer método el programa asistente
+										permitirá de manera gráfica
+										generar los códigos necesarios para
+										implementar los métodos
+										<b.html:Strong>getStartPositions</b.html:Strong>
+										y
+										<b.html:Strong>getNoStartPositions</b.html:Strong>
+										.
+									</b.html:Paragraph>
+									<b:Lead text="Programa asistente para la creación de equipos"></b:Lead>
+									<b.html:Paragraph>Con el fin de facilitar la creación de
+										tácticas se ha desarrollado un programa asistente que
+										apoyara
+										la generación de código, la administración de alineaciones, y
+										la simulación de remates.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										A continuación describiremos como se usa.</b.html:Paragraph>
+									<b.html:Paragraph>
+										Para iniciar el asistente debes ejecutar la clase:
+										<b.html:Strong>JavaCupCodeGenerator</b.html:Strong>
+										, ubicada en la raíz del código fuente.
+									</b.html:Paragraph>
+									<b.html:Paragraph>El asistente consta de tres pestañas:
+										“Equipo”, “Jugadores” y “Alineaciones y
+										simulación de Remate”.</b.html:Paragraph>
+									<b.html:Paragraph>En la primera pestaña, se definen
+										características descriptivas y de visualización del equipo.
+										Los datos obligatorios a ingresar son el nombre del equipo, el
+										país y el nombre del entrenador.
+									</b.html:Paragraph>
+									<b:Image url="images/asistente_0.png" responsive="true"
+										type="THUMBNAIL"></b:Image>
+									<b.html:Paragraph>El botón “Al Azar” permitirá generar
+										vestimentas al azar.</b.html:Paragraph>
+									<b.html:Paragraph>En la segunda pestaña se definen las
+										características de los jugadores (nombre, número,
+										¿es portero?,
+										color de piel, color de pelo, velocidad, potencia
+										del remate y
+										error del remate).
+									</b.html:Paragraph>
+									<b:Image url="images/asistente_1.png" responsive="true"
+										type="THUMBNAIL"></b:Image>
+									<b.html:Paragraph>Cada aptitud (velocidad, remate y error)
+										poseen un valor mínimo y otro máximo, el valor
+										mínimo esta a la
+										izquierda y equivale a cero crédito usado, por otro
+										lado, el
+										valor máximo esta a la
+										derecha y equivale a un crédito usado.
+										La manera de configurar esto
+										es distribuyendo a gusto los
+										créditos disponibles entre los jugadores y sus aptitudes.
+									</b.html:Paragraph>
+									<b.html:Paragraph>El error del remate se refiere a un error
+										angular expresado en porcentaje. Por ejemplo un
+										15% de error
+										significa un 15% sobre 180°, es decir 0.15*180°, que
+										equivale a
+										27°. Ahora si el
+										remate está dirigido hacia los 90°, el ángulo
+										final puede variar
+										entre 90°+27°/2 y 90°-27°/2, es decir,
+										entre
+										76.5° y 103.5°.</b.html:Paragraph>
+									<b.html:Paragraph>Las alineaciones se configuran en la tercera
+										pestaña. Recordemos que la interfaz Tactic,
+										nos exige definir 2
+										alineaciones, una para cuando se inicia
+										sacando y otra para
+										cuando se inicia
+										recibiendo. En el campo de juego que se
+										muestra en la figura se pueden
+										ubicar los jugadores y
+										así
+										configurar alineaciones.</b.html:Paragraph>
+									<b:Image url="images/asistente_2.png" responsive="true"
+										type="THUMBNAIL"></b:Image>
+									<b.html:Paragraph>Se tienen 3 tipos de alineaciones: un tipo de
+										alineación para ser usada durante el juego,
+										otro tipo para
+										cuando se inicie sacando, y otro cuando se inicie
+										recibiendo.
+										El tipo de alineación se
+										configura en el segundo comboBox.
+									</b.html:Paragraph>
+									<b.html:Paragraph>El primer comboBox mantiene la lista de
+										alineaciones guardadas, los botones
+										siguientes sirven para
+										crear una nueva alineación, para eliminar la
+										alineación
+										seleccionada y
+										para subir o bajar una alineación.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										Los controles de la derecha (así como también, el botón
+										derecho y el scroll del
+										mouse) nos sirven para simular remates,
+										indicando
+										la fuerza [0-1], el ángulo de remate [0-360] y el
+										ángulo
+										vertical
+										[0 -
+										<b.html:Strong>Constants.ANGULO_VERTICAL_MAX</b.html:Strong>
+										]. Luego con el botón “>” se simula el
+										remate indicando las
+										alturas del balón con colores según la leyenda
+										de colores
+										ubicada
+										en la zona inferior derecha.
+									</b.html:Paragraph>
+									<b.html:Paragraph>Por defecto se dispone de 6 alineaciones de
+										ejemplo: 1 para iniciar sacando, 1 para iniciar
+										recibiendo y 4
+										alineaciones para usarlas durante la ejecución de
+										partidos.
+									</b.html:Paragraph>
+									<b.html:Paragraph>El menú del asistente permite abrir, guardar,
+										generar código y validar una táctica.
+									</b.html:Paragraph>
+									<b:Image url="images/asistente_3.png" responsive="true"
+										type="THUMBNAIL"></b:Image>
+									<b.html:Paragraph>Para generar código se tienen diversas
+										alternativas:</b.html:Paragraph>
+									<b.html:OrderedList>
+										<b:ListItem
+											text="1) 
+											La primera alternativa genera el código de
+											la clase
+											que implementa la interfaz Tactic y
+											como clase interna se
+											incluye la clase que implementa
+											TacticDetail, además se
+											incluye el
+											código de las alineaciones."></b:ListItem>
+										<b:ListItem
+											text="2)
+											La segunda opción solo genera la clase que
+											implementa
+											Tactic."></b:ListItem>
+										<b:ListItem
+											text="3)
+											La tercera opción solo genera la clase que
+											implementa TacticDetail.">
+										</b:ListItem>
+										<b:ListItem
+											text="4) la cuarta alternativa solo genera el código de
+											las
+											alineaciones."></b:ListItem>
+									</b.html:OrderedList>
+									<b.html:Paragraph>La opción de validación nos muestra errores
+										que podemos estar cometiendo, como por
+										ejemplo que no estén
+										definidos nombres para el equipo o entrenador, o
+										que dos
+										jugadores
+										tengan el mismo número, o que se ocupen mas de los
+										créditos
+										disponibles, etc.
+									</b.html:Paragraph>
+									<b:Lead text="El framework"></b:Lead>
+									<b.html:Paragraph>
+										El framework se compone de varios paquetes, siendo
+										<b.html:Strong>org.javahispano.javacup.model</b.html:Strong>
+										el más importante. Esta es una lista de las clases
+										principales
+										ubicadas en dicho paquete:
+									</b.html:Paragraph>
+									<b.html:OrderedList>
+										<b:ListItem
+											text="Tactic: La interfaz que deberás implementar.
+TacticDetail: La interfaz que genera el asistente."></b:ListItem>
+										<b:ListItem
+											text="
+Command: Clase abstracta, que representa un comando que puede ejecutar un jugador."></b:ListItem>
+										<b:ListItem
+											text="CommandMoveTo: Extiende de Comando e indica a un jugador hacia dónde dirigirse."></b:ListItem>
+										<b:ListItem
+											text="ComandoHitBall: Extiende de Comando e indica a un jugador como rematar."></b:ListItem>
+										<b:ListItem
+											text="GameSituationsions: Retorna datos del estado del juego durante
+										la ejecución de un partido."></b:ListItem>
+										<b:ListItem text="Partido: Clase que ejecuta los partidos."></b:ListItem>
+										<b:ListItem
+											text="Position: coordenadas espaciales horizontales(x,y) con tipo primitivo
+										double."></b:ListItem>
+										<b:ListItem text="Constants: Clase donde están las constantes.">
+										</b:ListItem>
+									</b.html:OrderedList>
+									<b:Code>public List&#60;Command&#62; execute(GameSituations
+										sp);</b:Code>
+									<b.html:Paragraph>
+										En la implementación del método
+										<b.html:Strong>execute</b.html:Strong>
+										de la interfaz
+										<b.html:Strong>Tactic</b.html:Strong>
+										, es donde se
+										programa la lógica que modelará el comportamiento
+										de tu equipo.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										El método
+										<b.html:Strong>execute</b.html:Strong>
+										recibe como parámetro un objeto
+										<b.html:Strong>GameSituations</b.html:Strong>
+										. Este objeto
+										contiene la información del estado en que se
+										encuentra el partido, y
+										esta es la información que nos
+										provee:
+									</b.html:Paragraph>
+									<b:Description>
+										<b:DescriptionTitle text="double ballAltitude()"></b:DescriptionTitle>
+										<b:DescriptionData text="Retorna la altura del balón."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="Position ballPosition()"></b:DescriptionTitle>
+										<b:DescriptionData text="Retorna la posición x,y del balón."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="PlayerDetail[] rivalPlayersDetail()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna la configuración (nombre, número, velocidad, remate y precisión) de los jugadores rivales."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="PlayerDetail[] myPlayersDetail()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna la configuración (nombre, número, velocidad, remate y precisión) de mis jugadores."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int myGoals()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna la cantidad de goles convertidos por mi equipo."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int rivalGoals()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna la cantidad de goles convertidos por el rival."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int iteration()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna el número de iteraciones cursadas en el partido."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int[] iterationsToKick()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Indica cuantas iteraciones deben pasar para que mis jugadores puedan volver a rematar."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int[] rivalIterationsToKick()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Indica cuantas iteraciones deben pasar para que los jugadores rivales puedan volver a rematar."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="Position[] myPlayers()"></b:DescriptionTitle>
+										<b:DescriptionData text="Array de posiciones de mis jugadores."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="Position[] rivalPlayers()"></b:DescriptionTitle>
+										<b:DescriptionData text="Array de posiciones de rivales."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int[] canKick()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Array de índices de jugadores míos que están en condición de rematar."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int[] rivalCanKick()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Array de índices de jugadores rivales que están en condición de rematar."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="boolean isRivalStarts()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna true si el rival realizara un saque, hasta que el rival no saque, mis jugadores se apartan de la posición de saque y no corre el tiempo."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="boolean isStarts()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna true si tengo que realizar un saque, hasta que yo no saque, el rival se aparta de la posición de saque y no corre el tiempo."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="double[] getTrajectory(int iteration)"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna un array con las coordenadas x,y,z de la posición del balón en la iteración indicada."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="int[] getRecoveryBall()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text=" Retorna un array donde el primer elemento es la iteración donde se puede recuperar el balón, los siguientes números corresponden a los índices de los jugadores que pueden recuperar el balón en dicha iteración, ordenados desde el más cercano al más lejano del punto de recuperación (Este método no considera el caso que los jugadores pueden obstruirse el paso ni tampoco se cuenta el factor sprint). "></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle
+											text="double distanceIter(int playerIndex, int iter, boolean isSprint)"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna la distancia que recorrerá el jugador en la iteracción que se le pasa como parámetro. Devuelve la distancia recorrida en dicha iteracción, no la suma de todas las anteriores."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle
+											text="double distanceTotal(int playerIndex, int iter)"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Devuelve la distancia total recorrida por un jugador en las iteracciones que se le pasa como parámetro sin tener en cuenta el factor sprint."></b:DescriptionData>
+									</b:Description>
+									<b:Description>
+										<b:DescriptionTitle text="boolean[] getOffSidePlayers()"></b:DescriptionTitle>
+										<b:DescriptionData
+											text="Retorna un array indicando verdadero o falso si el jugador del índice correspondiente está en fuera de juego."></b:DescriptionData>
+									</b:Description>
+									<b.html:Paragraph>
+										Y Finalmente los metodos
+										<b.html:Strong>getMyPlayerSpeed(int
+											idx), getMyPlayerPower(int
+											idx),
+											getMyPlayerError(int idx), getRivalPlayerSpeed(int idx),
+											getRivalPlayerPower(int
+											idx) y
+											getRivalPlayerError(int idx)</b.html:Strong>
+										que retornan las aptitudes de mis jugadores y de los
+										jugadores
+										rivales.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										Todos estos métodos nos entregan información útil para tomar
+										decisiones, y así poder indicar qué acciones deberán realizar
+										los jugadores. Estas acciones serán la lista de comandos que
+										retornara el método
+										<b.html:Strong>execute</b.html:Strong>
+										. Sólo se tienen dos comandos
+										disponibles;
+										<b.html:Strong>CommandMoveTo y CommandHitBall</b.html:Strong>
+										.
+									</b.html:Paragraph>
+									<b.html:Paragraph>Algunos Ejemplos de uso:</b.html:Paragraph>
+									<b:Code>new CommandMoveTo(0,new Position(0,0)); /*Se le indica
+										al jugador de índice 0 que debe
+										dirigirse a la posición de
+										coordenadas 0,0. Los índices de los
+										jugadores van de 0 hasta
+										10. La
+										posición 0,0 corresponde al centro del campo de juego.*/</b:Code>
+									<b:Code>new CommandMoveTo(0,new Position(0,0), true); /*Se le
+										indica al jugador de índice 0
+										que debe dirigirse a la posición
+										de coordenadas 0,0 realizando un
+										sprint. Los índices de los
+										jugadores van de 0 hasta 10. La posición 0,0 corresponde al
+										centro del
+										campo de juego.*/</b:Code>
+									<b:Code>new CommandHitBall(6, new Position(60,30), 1, true);
+										/*Se le indica al jugador de
+										índice 6 que remate con dirección
+										destino a las coordenadas (60;30),
+										con fuerza 1, y que el
+										remate
+										sea por alto. La fuerza que corresponde al tercer
+										parámetro y
+										acepta valores double entre 0 y 1,
+										cuando sea 1 el
+										remate se realizara a la velocidad máxima que puede
+										rematar el
+										jugador de índice
+										6. El ultimo parámetro al ser true indica que
+										el remate se
+										realizara por alto. (El remate por alto se
+										realiza
+										con un ángulo vertical igual a Constants.ANGULO_VERTICAL */</b:Code>
+									<b:Code>new CommandHitBall(6, 15, 1, true); /* Otra forma de
+										indicar el destino del remate es
+										especificar directamente cual
+										es ángulo de remate, en este caso es 15° */</b:Code>
+									<b:Code>new CommandHitBall(6, 15, 1, 25); /* Otra forma es
+										indicar explícitamente
+										el ángulo vertical, 25 grados en este
+										caso. El ángulo vertical
+										puede estar entre 0 y
+										Constantes.ANGULO_VERTICAL_MAX. */</b:Code>
+									<b:Code>new CommandHitBall(6); /* Este constructor se usa para
+										simular la acción de avanzar
+										con el balón.*/</b:Code>
+									<b:Lead text="Datos útiles sobre la lógica de un partido"></b:Lead>
+									<b.html:Paragraph>
+										En cada partido se ejecutaran n iteraciones, en cada iteración
+										se enviara a las tácticas
+										la situación del partido, y seguido a
+										esto las tácticas
+										retornaran la lista de los comandos que
+										especifiquen en el método ejecutar. De acuerdo a esto se
+										modificará el
+										estado del partido para
+										la siguiente iteración. En
+										especifico se ejecutarán
+										<b.html:Strong>Constants.ITERACIONES iteraciones</b.html:Strong>
+										.
+									</b.html:Paragraph>
+									<b.html:Paragraph>Un jugador sólo puede ir a una dirección y
+										sólo puede rematar de una forma durante la
+										iteración. Es decir,
+										se ejecutará sólo un comando “ir a” y sólo un
+										comando “golpear
+										balón” para
+										cada jugador en cada iteración.</b.html:Paragraph>
+									<b.html:Paragraph>
+										Cuando ocurra que en una misma iteración se indique más de un
+										<b.html:Strong>CommandMoveTo</b.html:Strong>
+										para
+										el mismo jugador, los primeros comandos se ignorarán y
+										sólo se
+										considerará el último. Análogo
+										sucederá con el comando
+										<b.html:Strong>CommandHitBall</b.html:Strong>
+										.
+									</b.html:Paragraph>
+									<b.html:Paragraph>Es importante comprender que todos los
+										comandos actúan sobre el mismo instante de
+										tiempo. Por esto no
+										es válido pensar que primero ejecuto un comando
+										“ir a” para
+										acercarme al
+										balón y luego que estoy cerca ejecuto golpear el
+										balón.</b.html:Paragraph>
+									<b.html:Paragraph>
+										Un jugador está en condiciones de rematar si se encuentra a
+										una distancia menor o igual
+										al balón que
+										<b.html:Strong>Constants.DISTANCIA_CONTROL_BALON</b.html:Strong>
+										y además que el balón se encuentre
+										a una altura menor o igual
+										que
+										<b.html:Strong>Constants.ALTURA_CONTROL_BALON</b.html:Strong>
+										. Para evitar el caso de
+										porteros perfectos, se aplica también
+										una probabilidad de control del
+										balón que depende de la
+										velocidad del balón.
+									</b.html:Paragraph>
+									<b.html:Paragraph>Dentro de los jugadores propios y rivales que
+										estén en condiciones de rematar se
+										seleccionará uno al azar y
+										sólo es ese quien rematará. Al remate se le
+										aplicara un error
+										angular
+										(en el plano x,y) que dependerá del error del jugador
+										que
+										rematara.</b.html:Paragraph>
+									<b.html:Paragraph>
+										Para evitar excesivos rebotes, un jugador que ya remató, sólo
+										podrá volver a rematar
+										en
+										<b.html:Strong>Constants.ITERACIONES_GOLPEAR_BALON</b.html:Strong>
+										iteraciones después.
+									</b.html:Paragraph>
+									<b.html:Paragraph>Cada vez que el balón sale del campo de
+										juego, deberá sacar el equipo rival del que lanzó el
+										balón, en
+										la posición donde salió el balón. Si un equipo lanza el
+										balón
+										por detrás de su propio arco
+										se produce un tiro de esquina, que
+										no es más que un saque normal
+										pero en la posición de córner.
+										En
+										los saques de costado se reduce la potencia de remate a un
+										75%.</b.html:Paragraph>
+									<b.html:Paragraph>
+										Durante las iteraciones entre que sale el balón y cuando se
+										realiza el saque
+										el tiempo no avanza, y los jugadores del
+										equipo que no saca se
+										alejaran en un radio
+										<b.html:Strong>Constants.DISTANCIA_SAQUE</b.html:Strong>
+										desde la posición de saque. Sin embargo, si pasa un tiempo
+										excesivo y no se realiza el saque, se multara al equipo que no
+										saco, permitiendo sacar al otro
+										equipo.
+									</b.html:Paragraph>
+									<b.html:Paragraph>Un jugador se encuentra en fuera de juego
+										cuando toca la pelota a pase de un
+										compañero y se encuentra en
+										una posición más adelantada que la defensa
+										rival.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										Cada vez que un jugador realiza un comando, consume la energía
+										indicada en el
+										parámetro
+										<b.html:Strong>Constants.ENERGIA_DIFF</b.html:Strong>
+										pero si además está realizando sprint, el consumo
+										de energía
+										aumentará en
+										<b.html:Strong>Constants.SPRINT_ENERGIA_EXTRA</b.html:Strong>
+										. La cantidad de energía
+										mínima que puede llegar a tener un
+										jugador se define en
+										<b.html:Strong>Constants.ENERGIA_MIN</b.html:Strong>
+										y la
+										energía mínima que debe tener un jugador para poder
+										realizar un
+										sprint está definidia en
+										<b.html:Strong>Constants.SPRINT_ENERGIA_MIN</b.html:Strong>
+										. Cada iteración que el jugador no ejecute ninguna
+										acción,
+										recuperará
+										<b.html:Strong>Constants.ENERGIA_DIFF</b.html:Strong>
+										de energía.
+									</b.html:Paragraph>
+									<b.html:Paragraph>
+										En este
+										<b:Anchor href="framework/Ejemplo_Metodo_Execute.java">enlace</b:Anchor>
+										puedes descargarte un código de ejemplo del método
+										<b.html:Strong>execute</b.html:Strong>
+										.
+									</b.html:Paragraph>
+									<b:Lead text="Visor de partidos"></b:Lead>
+									<b.html:Paragraph>
+										Para usar el visor de partidos debes ejecutar la clase
+										<b.html:Strong>JavaCup</b.html:Strong>
+										, ubicada en la raíz del código fuente.
+									</b.html:Paragraph>
+									<b:Image url="images/visor_0.png" type="THUMBNAIL"
+										responsive="true"></b:Image>
+									<b.html:Paragraph>En la pestaña “Tácticas” aparecerán las
+										tácticas que agregadas al código del
+										proyecto.</b.html:Paragraph>
+									<b.html:Paragraph>Al seleccionar una táctica y presionar
+										“Tactica Visita” asignas el equipo visita, análogo
+										para asignar
+										el local.</b.html:Paragraph>
+									<b.html:Paragraph>
+										Con el botón “Local - Visita” se invierte el
+										local y la visita.
+									</b.html:Paragraph>
+									<b.html:Paragraph>En el comboBox seleccionas visualizar el
+										partido mediante el
+										Visor OpenGl o mediante
+										el visor normal.
+										Finalmente presione “Ver
+										Partido” para ejecutar y ver el
+										partido.
+										En el Visor OpenGL:</b.html:Paragraph>
+									<b.html:Paragraph>Al
+										presionar + y – se activa el zoom.
+										Al
+										presionar F1 se activa o
+										desactiva el estadio. Al
+										presionar F2
+										se activa o desactiva el
+										entorno. Al presionar
+										F3 muestra los
+										frames por segundo.
+										Al
+										presiona F4 activa o desactiva los
+										números y nombres.
+									</b.html:Paragraph>
+									<b.html:Paragraph>En la
+										pestaña “Guardados” están los partidos
+										que has salvado, al
+										visualizar uno de estos
+										partidos puedes,
+										avanzar, retroceder
+										(con las flechas), marcar el una
+										sección
+										(con la tecla “Inicio”
+										y “Fin”), puedes cortar la sección (con
+										tecla “supr”) y puedes
+										volver a guardar el partido con la
+										tecla
+										"S".</b.html:Paragraph>
+								</b:PanelBody>
+							</b:PanelCollapse>
+						</b:Panel>
+						<b:Panel>
+							<b:PanelHeader dataToggle="COLLAPSE" dataParent="#accordion2"
+								dataTarget="#collapseSeven">
+								<b:Heading size="H4" text="Actualizar táctica" />
+							</b:PanelHeader>
+							<b:PanelCollapse b:id="collapseSeven">
+								<b:PanelBody>
+									<b.html:Paragraph>Una vez creada tu táctica, sólo falta
+										exportarla para poder subirla a javaleague y poder competir en
+										el torneo y realizar partidos amistosos contra otros
+										jugadores.</b.html:Paragraph>
 								</b:PanelBody>
 							</b:PanelCollapse>
 						</b:Panel>
