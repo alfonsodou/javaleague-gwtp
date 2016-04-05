@@ -41,7 +41,7 @@
 								dataTarget="#collapseFour">
 								<b:Heading size="H4" text="Crear usuario" />
 							</b:PanelHeader>
-							<b:PanelCollapse b:id="collapseFour" in="true">
+							<b:PanelCollapse b:id="collapseFour">
 								<b:PanelBody>
 									<b:Row>
 										<b:Column size="XS_6">
@@ -144,6 +144,14 @@
 									</b.html:Paragraph>
 									<b:Lead
 										text="IMPORTANTE: Recuerda que todas las clases que implementen tu táctica deben estar en el package indicado al crear tu usuario en javaleague"></b:Lead>
+									<b:Lead
+										text="IMPORTANTE: Los partidos se ejecutarán en el entorno de Google App Engine, que no admite todas las clases de JRE."></b:Lead>
+									<b.html:Paragraph>
+										Esta es la
+										<b:Anchor
+											href="https://cloud.google.com/appengine/docs/java/jrewhitelist">lista</b:Anchor>
+										con las clases permitidas en GAE.
+									</b.html:Paragraph>
 									<b.html:Paragraph>Los métodos a
 										implementar son los
 										siguientes:
