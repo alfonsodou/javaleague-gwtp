@@ -145,12 +145,10 @@
 									<b:Lead
 										text="IMPORTANTE: Recuerda que todas las clases que implementen tu táctica deben estar en el package indicado al crear tu usuario en javaleague"></b:Lead>
 									<b:Lead
-										text="IMPORTANTE: Los partidos se ejecutarán en el entorno de Google App Engine, que no admite todas las clases de JRE."></b:Lead>
+										text="IMPORTANTE: Los partidos se ejecutarán en el entorno de Google App Engine, que no soporta todas las clases de JRE. En el siguiente enlace puedes acceder a la lista de clases permitidas."></b:Lead>
 									<b.html:Paragraph>
-										Esta es la
 										<b:Anchor
-											href="https://cloud.google.com/appengine/docs/java/jrewhitelist">lista</b:Anchor>
-										con las clases permitidas en GAE.
+											href="https://cloud.google.com/appengine/docs/java/jrewhitelist">https://cloud.google.com/appengine/docs/java/jrewhitelist</b:Anchor>
 									</b.html:Paragraph>
 									<b.html:Paragraph>Los métodos a
 										implementar son los
@@ -806,9 +804,33 @@ Command: Clase abstracta, que representa un comando que puede ejecutar un jugado
 							<b:PanelCollapse b:id="collapseSeven">
 								<b:PanelBody>
 									<b.html:Paragraph>Una vez creada tu táctica, sólo falta
-										exportarla para poder subirla a javaleague y poder competir en
-										el torneo y realizar partidos amistosos contra otros
+										exportarla para poder subirla a javaleague. Entonces podrás
+										competir en
+										el torneo y realizar partidos amistosos contra
+										otros
 										jugadores.</b.html:Paragraph>
+									<b.html:Paragraph>En las siguientes imágenes verás los pasos a
+										seguir para exportar la táctica correctamente.</b.html:Paragraph>
+									<b:Lead
+										text="IMPORTANTE: No es necesario que incluyas el código
+										fuente de tu táctica en el fichero exportado."></b:Lead>
+									<b:Image url="images/export_0.png" type="THUMBNAIL"
+										responsive="true"></b:Image>
+									<b:Image url="images/export_1.png" type="THUMBNAIL"
+										responsive="true"></b:Image>
+									<b.html:Paragraph>
+										Una vez creado el fichero
+										<b.html:Strong>jar</b.html:Strong>
+										con las clases de tu táctica, ya puedes subirla a javaleague.
+										Accede con los datos de tu usuario y selecciona el fichero en
+										la pantalla de tu táctica.
+									</b.html:Paragraph>
+									<b:Image type="THUMBNAIL" url="images/mi-tactica.png"
+										responsive="true"></b:Image>
+									<b.html:Paragraph>El sistema hará una comprobación de que todo
+										está correcto y listo, ya estás inscrito para participar en el
+										torneo y ya podrás disputar partidos amistosos contra otros
+										usuarios para ir mejorando tu táctica.</b.html:Paragraph>
 								</b:PanelBody>
 							</b:PanelCollapse>
 						</b:Panel>
@@ -817,5 +839,4 @@ Command: Clase abstracta, que representa un comando que puede ejecutar un jugado
 			</b:Panel>
 		</b:Column>
 	</b:Row>
-
 </ui:UiBinder>
