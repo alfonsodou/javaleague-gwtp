@@ -822,16 +822,27 @@ Command: Clase abstracta, que representa un comando que puede ejecutar un jugado
 										Una vez creado el fichero
 										<b.html:Strong>jar</b.html:Strong>
 										con las clases de tu táctica, ya puedes subirla a javaleague.
-										Accede con los datos de tu usuario y selecciona el fichero en
-										la pantalla de tu táctica.
+										Accede con los datos de tu usuario, selecciona el fichero en
+										la pantalla de tu táctica y pulsa sobre el botón Enviar.
 									</b.html:Paragraph>
 									<b:Image type="THUMBNAIL" url="images/mi-tactica.png"
 										responsive="true"></b:Image>
 									<b.html:Paragraph>El sistema hará una comprobación de que todo
-										está correcto y listo, ya estás inscrito para participar en el
+										está correcto y listo!, ya estás inscrito para participar en
+										el
 										torneo y ya podrás disputar partidos amistosos contra otros
 										usuarios para ir mejorando tu táctica.</b.html:Paragraph>
 								</b:PanelBody>
+								<b:Lead text="Partidos amistosos"></b:Lead>
+								<b.html:Paragraph>Cuando la táctica que hayas subido sea
+									correcta, se activará el botón que permite jugar partidos
+									amistosos.</b.html:Paragraph>
+								<b.html:Paragraph>Al solicitar juar un partido amistoso, el
+									sistema buscará si ya hay otro equipo que lo ha solicitado. En
+									ese caso se ejecutará un partido emparejando ambos equipos en
+									un intervalo de máximo 20 minutos.</b.html:Paragraph>
+								<b.html:Paragraph>En caso contrario, el equipo quedará a la
+									espera de que otro equipo solicite jugar un partido amistoso.</b.html:Paragraph>
 							</b:PanelCollapse>
 						</b:Panel>
 					</b:PanelGroup>
