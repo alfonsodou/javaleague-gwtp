@@ -25,6 +25,7 @@ import org.javahispano.javaleague.client.application.manufacturer.ManufacturerMo
 import org.javahispano.javaleague.client.application.rating.RatingModule;
 import org.javahispano.javaleague.client.application.register.RegisterModule;
 import org.javahispano.javaleague.client.application.report.ReportModule;
+import org.javahispano.javaleague.client.application.rules.RulesModule;
 import org.javahispano.javaleague.client.application.stats.StatisticsModule;
 import org.javahispano.javaleague.client.application.tactic.TacticModule;
 import org.javahispano.javaleague.client.application.tournament.TournamentModule;
@@ -51,6 +52,7 @@ public class ApplicationDesktopModule extends AbstractPresenterModule {
 		install(new TournamentModule());
 		install(new DocumentationModule());
 		install(new DownloadModule());
+		install(new RulesModule());
 
 		bindPresenter(ApplicationPresenter.class,
 				ApplicationPresenter.MyView.class, ApplicationView.class,

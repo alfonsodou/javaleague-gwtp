@@ -31,16 +31,18 @@
 					<b:Column size="XS_8">
 						<b:Heading size="H1" text="javacup 2016" />
 						<b.html:Paragraph>
-							¡ Por fin estamos de vuelta ! Actualiza o crea tu equipo para el
-							nuevo torneo
+							Descárgate el
+							<b:Anchor href="framework/javaleagueframework2016.zip">framework</b:Anchor>
+							de esta edición para comenzar a preparar tu táctica.
 						</b.html:Paragraph>
 						<b.html:Paragraph>
-							Hay novedades en esta edición. No lo pienses más y participa.
-							Tienes hasta el 30 de abril de 2016 para preparar tu equipo.
-						</b.html:Paragraph>
+							Visita la página de Documentación para la
+							instalación y para la creación de tu primera táctica.</b.html:Paragraph>
+						<b.html:Paragraph>No lo pienses más y participa en este
+							apasionante torneo.</b.html:Paragraph>
 					</b:Column>
 					<b:Column size="XS_4">
-						<b:Image type="THUMBNAIL" url="images/duke-futbol.png"></b:Image>
+						<b:Image type="THUMBNAIL" url="images/Duke3D.png"></b:Image>
 					</b:Column>
 				</b:Row>
 			</b:Jumbotron>

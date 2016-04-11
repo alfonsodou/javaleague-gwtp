@@ -18,7 +18,7 @@ public class UploadParameters {
 	private static String PACKAGENAME = "org.javahispano.javaleague.tactic.ID_";
 	private static String AGENTCLASS = "org.javahispano.javacup.model.engine.AgentPartido";
 	private static String FILENAMETACTIC = "tactica.jar";
-	private static String FILENAMEFRAMEWORK = "framework_20150901.jar";
+	private static String FILENAMEFRAMEWORK = "javaleagueframework2016.jar";
 	private static String FILENAMEIMAGE = "escudo";
 	private static String FILENAMEIMAGEMIN = "escudo-min";
 	private static int NUMITER = 600;
