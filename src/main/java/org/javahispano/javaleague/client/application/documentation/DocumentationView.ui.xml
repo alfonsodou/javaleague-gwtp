@@ -837,7 +837,7 @@ Command: Clase abstracta, que representa un comando que puede ejecutar un jugado
 								<b.html:Paragraph>Cuando la táctica que hayas subido sea
 									correcta, se activará el botón que permite jugar partidos
 									amistosos.</b.html:Paragraph>
-								<b.html:Paragraph>Al solicitar juar un partido amistoso, el
+								<b.html:Paragraph>Al solicitar jugar un partido amistoso, el
 									sistema buscará si ya hay otro equipo que lo ha solicitado. En
 									ese caso se ejecutará un partido emparejando ambos equipos en
 									un intervalo de máximo 20 minutos.</b.html:Paragraph>

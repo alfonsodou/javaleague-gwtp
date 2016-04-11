@@ -31,7 +31,47 @@
 	</ui:style>
 
 	<b:Container>
-		<b:NavTabs>
+		<b:Jumbotron>
+			<b:Row>
+				<b:Column size="XS_12">
+					<b:Heading size="H1" text="javacup 2016" />
+				</b:Column>
+			</b:Row>
+			<b:Row>
+				<b:Column size="XS11" offset="XS_1">
+					<b:Image url="images/DukeFriends.png" type="THUMBNAIL"
+						responsive="true"></b:Image>
+				</b:Column>
+			</b:Row>
+			<b:Row>
+				<b:Column size="XS_12">
+					<b.html:Paragraph>Si te gusta el fútbol y te apasiona programar ...
+						Estás en el sitio correcto!</b.html:Paragraph>
+					<b.html:Paragraph>Descárgate el framework y comienza a preparar tu
+						táctica para el torneo.</b.html:Paragraph>
+					<b.html:Paragraph>Puedes inscribirte hasta el 31 de Mayo de 2016.
+						No
+						lo pienses más y participa.</b.html:Paragraph>
+					<b.html:Paragraph>Una vez terminado el plazo de inscripción al
+						torneo
+						se publicará en esta página el calendario de partidos y la
+						clasificación ser irá actualizando automáticamente.</b.html:Paragraph>
+					<b.html:Paragraph>Desafía a tus amigos y compite con tu equipo que
+						puedes ir mejorando durante el torneo.</b.html:Paragraph>
+					<b.html:Paragraph>Habrá una primera fase de liguilla todos contra
+						todos a una vuelta. Para la siguiente fase de eliminatorias se
+						clasificarán los 16 primeros de la primera fase de liguilla.</b.html:Paragraph>
+				</b:Column>
+			</b:Row>
+			<b:Row>
+				<b:Column size="XS_11" offset="XS_1">
+					<b:ImageAnchor href="https://youtu.be/Dvbkd_OpHYg"
+						url="images/final2013.png" type="THUMBNAIL" responsive="true"></b:ImageAnchor>
+					<b.html:Paragraph>Vídeo de la final del torneo javacup 2013</b.html:Paragraph>
+				</b:Column>
+			</b:Row>
+		</b:Jumbotron>
+		<b:NavTabs visible="false">
 			<b:TabListItem active="true" dataTarget="#tab1" text="Calendario">
 			</b:TabListItem>
 			<b:TabListItem dataTarget="#tab2" text="Clasificación"></b:TabListItem>
@@ -41,7 +81,8 @@
 				<b:Container ui:field="journeyContainer" addStyleNames="{style.push}"></b:Container>
 			</b:TabPane>
 			<b:TabPane b:id="tab2">
-				<b:Container ui:field="clasificationContainer" addStyleNames="{style.push}"></b:Container>
+				<b:Container ui:field="clasificationContainer"
+					addStyleNames="{style.push}"></b:Container>
 			</b:TabPane>
 		</b:TabContent>
 	</b:Container>

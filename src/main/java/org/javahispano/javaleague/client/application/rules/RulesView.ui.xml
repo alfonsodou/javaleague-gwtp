@@ -28,21 +28,135 @@
 		<b:Column size="XS_12">
 			<b:Jumbotron>
 				<b:Row>
-					<b:Column size="XS_8">
+					<b:Column size="XS_12">
 						<b:Heading size="H1" text="javacup 2016" />
 						<b.html:Paragraph>
-							Descárgate el
-							<b:Anchor href="framework/javaleagueframework2016.zip">framework</b:Anchor>
-							de esta edición para comenzar a preparar tu táctica.
-						</b.html:Paragraph>
+							La organización sin ánimo de lucro javaHispano
+							organiza el torneo
+							virtual de fútbol javacup 2016 donde cada
+							equipo es una clase
+							Java que implementa una interfaz predefinida.</b.html:Paragraph>
 						<b.html:Paragraph>
-							Visita la página de Documentación para la
-							instalación y para la creación de tu primera táctica.</b.html:Paragraph>
-						<b.html:Paragraph>No lo pienses más y participa en este
-							apasionante torneo.</b.html:Paragraph>
-					</b:Column>
-					<b:Column size="XS_4">
-						<b:Image type="THUMBNAIL" url="images/DukeFriends.png"></b:Image>
+							Desarrollar un equipo de fútbol es
+							extremadamente simple ya que el
+							software en el cual se basa el
+							concurso se encarga de dibujar en
+							la pantalla y gestionar los
+							movimientos de la pelota y de los dos
+							equipos. Para crear un
+							equipo lo único que hay que indicar es qué
+							movimientos quieres que
+							realice tu equipo en cada situación, lo
+							cual es sencillo gracias a
+							la API que expone a los equipos el
+							software. Puedes descargar todo
+							lo que necesitas para comenzar a
+							crear tus equipo y participar, en
+							la zona de descargas de esta
+							web.</b.html:Paragraph>
+
+						<b:Lead text="Bases"></b:Lead>
+						<b.html:OrderedList>
+							<b:ListItem text="1) Cada participante podrá enviar un único equipo de
+								fútbol."></b:ListItem>
+							<b:ListItem text="2) El plazo para el envío de equipos de fútbol es
+								desde el xx de
+								Abril hasta el 31 de Mayo de 2016 a las 23:59:59
+								horas de Madrid."></b:ListItem>
+							<b:ListItem text="3) El código fuente de todos los equipos enviados al
+								concurso
+								deberá estar bajo licencia GPL v3. Esto es necesario ya
+								que el
+								framework que permitirá la realización de los partidos
+								tienen
+								licencia GPL v3 y, por tanto, todos los software que ese
+								enlace
+								con el debe tener la misma licencia."></b:ListItem>
+							<b:ListItem text="4) Todos los participantes en el concurso deberán
+								registrarse a
+								través de la web http://javaleague.appspot.com
+								empleando su
+								nombre y apellidos reales."></b:ListItem>
+							<b:ListItem text="5) El torneo consistirá en una primera fase donde
+								todos los
+								equipos jugarán una liga entre todos ellos a una
+								vuelta.
+								Los 16
+								mejores equipos pasarán a jugar elminitorias
+								(octavos, cuartos,
+								semifinales y final) hasta llegar a la final.
+								Para los
+								emparejamientos de esta ronda final se tendrá en cuenta
+								la
+								clasificación obtenida en la fase de liga.">
+							</b:ListItem>
+							<b:ListItem text="6) El usuario podrá actualizar la táctica siempre que
+								lo desee hasta un límite de dos horas antes de la ejecución del
+								partido de liga o de las fases eliminatorias, es decir, si un
+								partido de liga está fijado para las 17:00 horas del día 5 de
+								Junio, la táctica podrá ser actualizada hasta las 15:00 horas de
+								ese día, y podrá volver a actualizarse inmediatamente después de
+								la ejecución del partido (las 17:00 horas) hasta las dos horas
+								antes del siguiente
+								partido.">
+							</b:ListItem>
+							<b:ListItem text="7) Los partidos podrán visualizarse y ser descargados
+								desde la página del torneo http://javaleague.appspot.com"></b:ListItem>
+							<b:ListItem text="8) La organización se
+								reserva el derecho de rechazar
+								cualquier
+								equipo de fútbol que
+								considere que no cumple las
+								especificaciones.
+								La participación en
+								el concurso implica acatar
+								las decisiones de
+								aceptación y rechazo
+								de equipos de la
+								organización."></b:ListItem>
+							<b:ListItem text="9) Los
+								resultados del torneo son
+								inapelables. La
+								participación en
+								él
+								implica acatar dichos
+								resultados."></b:ListItem>
+						</b.html:OrderedList>
+						<b:Lead text="Normas de aceptación"></b:Lead>
+						<b.html:OrderedList>
+							<b:ListItem text="a) El código debe compilar para el jdk 1.5 o
+								superior."></b:ListItem>
+							<b:ListItem text="b)
+								Incluye clase que implementa la interfaz Tactica."></b:ListItem>
+							<b:ListItem text="c) Si usa
+								librerías externas, debe incluir las fuentes
+								de dichas
+								librerías."></b:ListItem>
+							<b:ListItem text="d) No accede al sistema de archivos, a Internet o a
+								otros
+								recursos externos (Si se podrá acceder recursos URL de
+								archivos
+								ubicados en el paquete de la táctica)."></b:ListItem>
+							<b:ListItem text="e) No realiza
+								consumo excesivo de memoria o CPU (Los
+								partidos se ejecutan en Google
+								App Engine. Se recomienda
+								comprobar la táctica en dicho entorno
+								ejecutando partidos
+								amistosos).">
+							</b:ListItem>
+							<b:ListItem text="f) No contiene clases que extienden
+								clases del
+								framework."></b:ListItem>
+							<b:ListItem text="g) No se aceptara carga dinámica
+								de clases ya
+								compiladas."></b:ListItem>
+							<b:ListItem text="h) Y en general, no explotar agujeros
+								que afecten el
+								normal
+								funcionamiento del framework en beneficio
+								de la táctica."></b:ListItem>
+						</b.html:OrderedList>
 					</b:Column>
 				</b:Row>
 			</b:Jumbotron>

@@ -75,8 +75,8 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 
 	@Override
 	protected void onReveal() {
-		getListClasification();
-		getListJourney();
+		//getListClasification();
+		//getListJourney();
 	}
 
 	private void getListClasification() {

@@ -31,16 +31,21 @@
 					<b:Column size="XS_8">
 						<b:Heading size="H1" text="javacup 2016" />
 						<b.html:Paragraph>
-							¡ Por fin estamos de vuelta ! Actualiza o crea
-							tu equipo para el
+							¡ Por fin estamos de vuelta ! Crea
+							tu equipo para
+							el
 							nuevo torneo
 						</b.html:Paragraph>
 						<b.html:Paragraph>
 							Hay novedades en esta edición. No lo pienses más
-							y participa.
-							Tienes hasta el 30 de abril de 2016 para preparar tu
+							y participa. Podrás ir actualizando y mejorando tu táctica según
+							vaya avanzando el torneo.
+							Tienes hasta el 31 de Mayo de 2016 para
+							preparar tu
 							equipo.
 						</b.html:Paragraph>
+						<b.html:Paragraph>Desafía a tus amigos, compañeros de trabajo, de
+							clase ... No te arrepentirás.</b.html:Paragraph>
 					</b:Column>
 					<b:Column size="XS_4">
 						<b:Image type="THUMBNAIL" url="images/duke-futbol.png"></b:Image>
