@@ -49,17 +49,22 @@ public class DispatchClasificationServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		League league = leagueDao.get(LeagueParameters.getLeagueId());
-		int round = league.getRound() + 1;
-		Journey journey = Deref.deref(league.getJourneys().get(round));
-		logger.info("**** Jornada: " + round + " :: Fecha: "
-				+ journey.getDate());
-		if (journey.getDate().compareTo(new Date()) < 0) {
-			queue.add(TaskOptions.Builder.withUrl("/clasificationServlet")
-					.param("round", String.valueOf(round)));
-			logger.info("**** Creada tarea actualización clasificación ronda: "
-					+ round);
+
+		if (league.getRound() < league.getRoundMax()) {
+			int round = league.getRound() + 1;
+			Journey journey = Deref.deref(league.getJourneys().get(round));
+			logger.info("**** Jornada: " + round + " :: Fecha: "
+					+ journey.getDate());
+			if (journey.getDate().compareTo(new Date()) < 0) {
+				queue.add(TaskOptions.Builder.withUrl("/clasificationServlet")
+						.param("round", String.valueOf(round)));
+				logger.info("**** Creada tarea actualización clasificación ronda: "
+						+ round);
+			} else {
+				logger.info("**** La fecha actual es menor que la fecha de la jornada. No se ejecuta la actualización de la clasificación");
+			}
 		} else {
-			logger.info("**** La fecha actual es menor que la fecha de la jornada. No se ejecuta la actualización de la clasificación");
+			logger.info("**** Ya se ejecutó la última jornada de liga. No es necesario actualizar la clasificación");
 		}
 
 	}
