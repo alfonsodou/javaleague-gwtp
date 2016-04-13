@@ -19,6 +19,7 @@ package org.javahispano.javaleague.server.guice;
 import javax.inject.Singleton;
 
 import org.javahispano.javaleague.server.servlet.AuthenticateUserServlet;
+import org.javahispano.javaleague.server.servlet.BounceHandlerServlet;
 import org.javahispano.javaleague.server.servlet.ClasificationServlet;
 import org.javahispano.javaleague.server.servlet.DispatchClasificationServlet;
 import org.javahispano.javaleague.server.servlet.DispatchMatchServlet;
@@ -26,6 +27,7 @@ import org.javahispano.javaleague.server.servlet.FrameworkServlet;
 import org.javahispano.javaleague.server.servlet.GWTUploadTacticServlet;
 import org.javahispano.javaleague.server.servlet.ImageServlet;
 import org.javahispano.javaleague.server.servlet.PlayMatchServlet;
+import org.javahispano.javaleague.server.servlet.SendEmailServlet;
 import org.javahispano.javaleague.server.servlet.ServeMatchBinServlet;
 import org.javahispano.javaleague.server.servlet.ServeMatchServlet;
 import org.javahispano.javaleague.server.servlet.ServeTeamImageServlet;
@@ -74,12 +76,18 @@ public class DispatchServletModule extends ServletModule {
 		serve("/tournamentServlet").with(TournamentServlet.class);
 		bind(TournamentServlet.class).in(Singleton.class);
 
+		serve("/sendEmailServlet").with(SendEmailServlet.class);
+		bind(SendEmailServlet.class).in(Singleton.class);
+		
 		serve("/imageTransform").with(ImageServlet.class);
 		bind(ImageServlet.class).in(Singleton.class);
 
 		serve("/clasificationServlet").with(ClasificationServlet.class);
 		bind(ClasificationServlet.class).in(Singleton.class);
 
+		serve("/_ah/bounce").with(BounceHandlerServlet.class);
+		bind(BounceHandlerServlet.class).in(Singleton.class);
+		
 		bind(GWTUploadTacticServlet.class).in(Singleton.class);
 		serve("*.gupld").with(GWTUploadTacticServlet.class);
 	}

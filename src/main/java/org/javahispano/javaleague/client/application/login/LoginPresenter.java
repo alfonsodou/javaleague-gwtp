@@ -235,7 +235,6 @@ public class LoginPresenter extends
 			public void onSuccess(RegisterResult result) {
 				if (result.isStatus()) {
 					onRegisterCallSucceededOK(result.getUserDto());
-					
 					getView().setFormRegisterReset();
 				} else {
 					onRegisterCallSucceededKO(result.getUserDto());
@@ -243,7 +242,7 @@ public class LoginPresenter extends
 			}
 		});
 	}
-
+	
 	private void onRegisterCallSucceededOK(UserDto userDto) {
 		DisplayMessageEvent.fire(LoginPresenter.this,
 				new Message(messages.onSuccessfulRegister(),
