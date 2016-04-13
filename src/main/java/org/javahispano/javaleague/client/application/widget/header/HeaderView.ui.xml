@@ -34,8 +34,8 @@
 					<b:ListDropDown ui:field="userLogin" pull="RIGHT">
 						<b:AnchorButton ui:field="userName" dataToggle="DROPDOWN" />
 						<b:DropDownMenu>
-							<b:AnchorListItem ui:field="perfil"
-								targetHistoryToken="{PROFILE}">Perfil</b:AnchorListItem>
+							<!-- <b:AnchorListItem ui:field="perfil"
+								targetHistoryToken="{PROFILE}">Perfil</b:AnchorListItem>  -->
 							<b:AnchorListItem ui:field="logout">Salir</b:AnchorListItem>
 						</b:DropDownMenu>
 					</b:ListDropDown>

@@ -49,7 +49,10 @@ public class Authenticator {
 		try {
 			User user = userDao.findByEmail(email);
 
-			if (passwordSecurity.check(password, user.getHashPassword())) {
+			if ((user != null)
+					&& (user.isActive())
+					&& (passwordSecurity
+							.check(password, user.getHashPassword()))) {
 				UserDto userDto = User.createDto(user);
 				persistHttpSessionCookie(userDto);
 
