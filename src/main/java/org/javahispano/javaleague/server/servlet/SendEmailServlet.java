@@ -4,21 +4,27 @@
 package org.javahispano.javaleague.server.servlet;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.mail.Message;
-import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+import com.google.api.services.urlshortener.model.Url;
+import com.google.api.services.urlshortener.Urlshortener;
+import com.google.api.services.urlshortener.UrlshortenerScopes;
 
 /**
  * @author alfonso
@@ -51,17 +57,22 @@ public class SendEmailServlet extends HttpServlet {
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 
-			String url = "http://javaleague.appspot.com/authenticate?token="
+			String url = "javaleague.appspot.com/authenticatetoken?token="
 					+ token + "&email=" + email;
-			String mensaje = "Hola "
+			
+			Urlshortener shortener = newUrlshortener();
+			Url toInsert = new Url().setLongUrl(url);		
+			
+			String mensaje = "<p>Hola "
 					+ username
-					+ ". Gracias por registrarte en javaleague!. Pulsa en este enlace "
-					+ url
-					+ " para verificar tu cuenta de correo y activar tu usuario. Bienvenido!";
+					+ ".</p><p>Gracias por registrarte en javaleague!. Pulsa en este "
+					+ shortener.url().insert(toInsert).execute().getId()
+					+ " para verificar tu cuenta de correo y activar tu usuario.</p><p>Bienvenido!</p>";
 			logger.warning(token + " :: " + email + " :: " + username + " :: "
 					+ url + " :: " + mensaje);
 
 			Properties props = new Properties();
+
 			Session session = Session.getDefaultInstance(props, null);
 
 			Message msg = new MimeMessage(session);
@@ -70,17 +81,11 @@ public class SendEmailServlet extends HttpServlet {
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					email, username));
 			msg.setSubject("Bienvenido a javaleague!");
-
-			Multipart mp = new MimeMultipart();
-
-			MimeBodyPart htmlPart = new MimeBodyPart();
-			htmlPart.setContent(mensaje, "text/html");
-			mp.addBodyPart(htmlPart);
-
 			msg.setText(mensaje);
-			// msg.setContent(mp);
 
 			Transport.send(msg);
+
+			logger.warning("SendEmailServlet: Ok!");
 		} catch (Exception e) {
 			logger.warning("SendEmailServlet: Sending mail error :: "
 					+ e.getMessage());
@@ -88,4 +93,11 @@ public class SendEmailServlet extends HttpServlet {
 		}
 
 	}
+	
+	  static Urlshortener newUrlshortener() {
+		    AppIdentityCredential credential =
+		        new AppIdentityCredential(Arrays.asList(UrlshortenerScopes.URLSHORTENER));
+		    return new Urlshortener.Builder(new UrlFetchTransport(), new JacksonFactory(), credential)
+		        .build();
+		  }
 }

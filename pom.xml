@@ -396,6 +396,12 @@
 			<artifactId>pngj</artifactId>
 			<version>${pngj.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-urlshortener</artifactId>
+			<version>v1-rev43-1.21.0</version>
+		</dependency>
+
 
 		<!-- REST -->
 		<dependency>
