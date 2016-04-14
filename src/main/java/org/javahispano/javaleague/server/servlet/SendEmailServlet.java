@@ -57,7 +57,7 @@ public class SendEmailServlet extends HttpServlet {
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 
-			String url = "javaleague.appspot.com/authenticatetoken?token="
+			String url = "http://javaleague.appspot.com/authenticate?token="
 					+ token + "&email=" + email;
 			
 			Urlshortener shortener = newUrlshortener();
