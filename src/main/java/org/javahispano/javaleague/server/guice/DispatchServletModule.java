@@ -76,8 +76,8 @@ public class DispatchServletModule extends ServletModule {
 		serve("/tournamentServlet").with(TournamentServlet.class);
 		bind(TournamentServlet.class).in(Singleton.class);
 
-		serve("/sendEmailServlet").with(SendEmailServlet.class);
-		bind(SendEmailServlet.class).in(Singleton.class);
+		//serve("/sendEmailServlet").with(SendEmailServlet.class);
+		//bind(SendEmailServlet.class).in(Singleton.class);
 		
 		serve("/imageTransform").with(ImageServlet.class);
 		bind(ImageServlet.class).in(Singleton.class);
@@ -85,8 +85,8 @@ public class DispatchServletModule extends ServletModule {
 		serve("/clasificationServlet").with(ClasificationServlet.class);
 		bind(ClasificationServlet.class).in(Singleton.class);
 
-		serve("/_ah/bounce").with(BounceHandlerServlet.class);
-		bind(BounceHandlerServlet.class).in(Singleton.class);
+		//serve("/_ah/bounce").with(BounceHandlerServlet.class);
+		//bind(BounceHandlerServlet.class).in(Singleton.class);
 		
 		bind(GWTUploadTacticServlet.class).in(Singleton.class);
 		serve("*.gupld").with(GWTUploadTacticServlet.class);
