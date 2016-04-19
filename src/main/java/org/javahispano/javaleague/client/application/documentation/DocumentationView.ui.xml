@@ -118,11 +118,54 @@
 										type="THUMBNAIL" responsive="true"></b:Image>
 									<b:Image url="images/import_project_eclipse.png" type="THUMBNAIL"
 										responsive="true" addStyleNames="{style.push}"></b:Image>
+									<b.html:Paragraph addStyleNames="{style.push}">Ahora es
+										necesario configurar el directorio de las librerías nativas de
+										lwjgl para que funcione correctamente el entorno gráfico.
+										Sigue los siguientes pasos:</b.html:Paragraph>
+									<b.html:OrderedList>
+										<b:ListItem>
+											<b.html:Paragraph>
+												1) Desplegar el proyecto importado</b.html:Paragraph>
+										</b:ListItem>
+										<b:ListItem>
+											<b.html:Paragraph>
+												2) Click derecho en "JRE System Library" -> Build
+												Path ->
+												Configure Build Path
+											</b.html:Paragraph>
+										</b:ListItem>
+										<b:ListItem>
+											<b.html:Paragraph>
+												3) Seleccionar "Native library location: (None)"
+											</b.html:Paragraph>
+											<b:Image url="images/natives_1.png" type="THUMBNAIL"
+												responsive="true" addStyleNames="{style.push}"></b:Image>
+										</b:ListItem>
+										<b:ListItem>
+											<b.html:Paragraph>
+												4) Click en "Editar ..."
+											</b.html:Paragraph>
+										</b:ListItem>
+										<b:ListItem>
+											<b.html:Paragraph>
+												5) Click en "Workspace ..."
+											</b.html:Paragraph>
+										</b:ListItem>
+										<b:ListItem>
+											<b.html:Paragraph>
+												6) Seleccionar la carpeta "libs/native"" dentro
+												del proyecto
+												javaleagueframework
+											</b.html:Paragraph>
+											<b:Image url="images/natives_2.png" type="THUMBNAIL"
+												responsive="true" addStyleNames="{style.push}"></b:Image>
+										</b:ListItem>
+									</b.html:OrderedList>
 									<b.html:Paragraph addStyleNames="{style.push}">
 										Ya tienes
 										correctamente instalado el
 										framework. Ahora, el siguiente paso
-										es crear tu tácitca!
+										es crear tu táctica!
 									</b.html:Paragraph>
 								</b:PanelBody>
 							</b:PanelCollapse>
