@@ -38,4 +38,10 @@
 		<param-name>resteasy.servlet.mapping.prefix</param-name>
 		<param-value>/api</param-value>
 	</context-param>
+
+	<context-param>
+		<!-- match all domains -->
+		<param-name>corsDomainsRegex</param-name>
+		<param-value>.*</param-value>
+	</context-param>
 </web-app>
