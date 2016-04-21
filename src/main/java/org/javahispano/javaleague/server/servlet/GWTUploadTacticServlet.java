@@ -239,8 +239,11 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		if (existInterfaceTactic == false) {
 			return UploadParameters.getERRORINTERFACETACTIC();
 		} else {
-			a.testTactic(objectTactic, objectTactic,
+			String result = a.testTactic(objectTactic, objectTactic,
 					UploadParameters.getNUMITER());
+			if (!result.equals("OK")) {
+				return result;
+			}
 		}
 
 		return UploadParameters.getVALIDATETACTICOK();
