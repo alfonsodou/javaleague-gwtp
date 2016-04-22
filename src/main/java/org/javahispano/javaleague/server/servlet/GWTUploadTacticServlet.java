@@ -50,24 +50,21 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 	 * 
 	 */
 	private static final long serialVersionUID = -8341308719085191264L;
-	private final GcsService gcsService = GcsServiceFactory
-			.createGcsService(RetryParams.getDefaultInstance());
+	private final GcsService gcsService = GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
 	private MyDataStoreClassLoader myDataStoreClassLoader;
 	private final Authenticator authenticator;
 	private final UserDao userDao;
 	private final Logger logger;
 
 	@Inject
-	GWTUploadTacticServlet(Logger logger, Authenticator authenticator,
-			UserDao userDao) {
+	GWTUploadTacticServlet(Logger logger, Authenticator authenticator, UserDao userDao) {
 		this.logger = logger;
 		this.authenticator = authenticator;
 		this.userDao = userDao;
 	}
 
 	@Override
-	public String executeAction(HttpServletRequest request,
-			List<FileItem> sessionFiles) throws UploadActionException {
+	public String executeAction(HttpServletRequest request, List<FileItem> sessionFiles) throws UploadActionException {
 		String out = super.executeAction(request, sessionFiles);
 
 		for (FileItem item : sessionFiles) {
@@ -75,18 +72,12 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 				byte[] tacticBytes = IOUtils.toByteArray(item.getInputStream());
 				if (tacticBytes != null) {
 					Long userSessionKey = authenticator.getUserSessionKey();
-					if (item.getName()
-							.substring(item.getName().lastIndexOf('.') + 1)
-							.equals("jar")) {
+					if (item.getName().substring(item.getName().lastIndexOf('.') + 1).equals("jar")) {
 
-						String result = validateTactic(tacticBytes,
-								userSessionKey);
-						if (result.equals(UploadParameters
-								.getVALIDATETACTICOK())) {
+						String result = validateTactic(tacticBytes, userSessionKey);
+						if (result.equals(UploadParameters.getVALIDATETACTICOK())) {
 							GcsFilename fileName = new GcsFilename(
-									UploadParameters.getGCS_BUCKET()
-											+ UploadParameters.getGCS_USERS()
-											+ userSessionKey,
+									UploadParameters.getGCS_BUCKET() + UploadParameters.getGCS_USERS() + userSessionKey,
 									UploadParameters.getFILENAMETACTIC());
 							writeToFile(fileName, tacticBytes);
 
@@ -99,10 +90,8 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 						out = result;
 					} else {
 
-						resizeImage(tacticBytes, 150, 150, userSessionKey,
-								UploadParameters.getFILENAMEIMAGE());
-						resizeImage(tacticBytes, 30, 30, userSessionKey,
-								UploadParameters.getFILENAMEIMAGEMIN());
+						resizeImage(tacticBytes, 150, 150, userSessionKey, UploadParameters.getFILENAMEIMAGE());
+						resizeImage(tacticBytes, 30, 30, userSessionKey, UploadParameters.getFILENAMEIMAGEMIN());
 
 						User user = userDao.get(userSessionKey);
 						user.setLogo(true);
@@ -123,8 +112,8 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		return out;
 	}
 
-	private void resizeImage(byte[] bytesImage, int width, int height,
-			Long userSessionKey, String name) throws IOException {
+	private void resizeImage(byte[] bytesImage, int width, int height, Long userSessionKey, String name)
+			throws IOException {
 		ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
 		Image oldImage = ImagesServiceFactory.makeImage(bytesImage);
@@ -132,15 +121,13 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 
 		Image newImage = imagesService.applyTransform(resize, oldImage);
 
-		GcsFilename fileName = new GcsFilename(UploadParameters.getGCS_BUCKET()
-				+ UploadParameters.getGCS_USERS() + userSessionKey, name);
+		GcsFilename fileName = new GcsFilename(
+				UploadParameters.getGCS_BUCKET() + UploadParameters.getGCS_USERS() + userSessionKey, name);
 		writeToFile(fileName, newImage.getImageData());
 	}
 
-	private void writeToFile(GcsFilename fileName, byte[] content)
-			throws IOException {
-		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName,
-				GcsFileOptions.getDefaultInstance());
+	private void writeToFile(GcsFilename fileName, byte[] content) throws IOException {
+		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
 	}
@@ -153,8 +140,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 			fileSize = (int) gcsService.getMetadata(fileName).getLength();
 			result = ByteBuffer.allocate(fileSize);
 
-			GcsInputChannel readChannel = gcsService.openReadChannel(fileName,
-					0);
+			GcsInputChannel readChannel = gcsService.openReadChannel(fileName, 0);
 			readChannel.read(result);
 
 		} catch (Exception e) {
@@ -164,36 +150,29 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		return result.array();
 	}
 
-	private String validateTactic(byte[] tactic, Long userSessionKey)
-			throws Exception {
+	private String validateTactic(byte[] tactic, Long userSessionKey) throws Exception {
 		String result = UploadParameters.getVALIDATETACTICOK();
 
-		myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
-				.getClassLoader());
+		myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass().getClassLoader());
 
 		// Cargamos el framework
 		GcsFilename fileNameFramework = new GcsFilename(
-				UploadParameters.getGCS_BUCKET()
-						+ UploadParameters.getGCS_FRAMEWORK(),
+				UploadParameters.getGCS_BUCKET() + UploadParameters.getGCS_FRAMEWORK(),
 				UploadParameters.getFILENAMEFRAMEWORK());
 
-		myDataStoreClassLoader
-				.addClassJarFramework(readFile(fileNameFramework));
+		myDataStoreClassLoader.addClassJarFramework(readFile(fileNameFramework));
 
-		Class<? extends Agent> cz = Class.forName(
-				UploadParameters.getAGENTCLASS(), true, myDataStoreClassLoader)
+		Class<? extends Agent> cz = Class.forName(UploadParameters.getAGENTCLASS(), true, myDataStoreClassLoader)
 				.asSubclass(Agent.class);
 
 		Agent a = cz.newInstance();
 
-		result = loadClass(tactic, a, UploadParameters.getPACKAGENAME()
-				+ userSessionKey);
+		result = loadClass(tactic, a, UploadParameters.getPACKAGENAME() + userSessionKey);
 
 		return result;
 	}
 
-	private String loadClass(byte[] tactic, Agent a, String packagePath)
-			throws Exception {
+	private String loadClass(byte[] tactic, Agent a, String packagePath) throws Exception {
 		Class<?> cz = null;
 		Map<String, byte[]> byteStream;
 		boolean errorPackageName, existInterfaceTactic;
@@ -239,11 +218,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		if (existInterfaceTactic == false) {
 			return UploadParameters.getERRORINTERFACETACTIC();
 		} else {
-			String result = a.testTactic(objectTactic, objectTactic,
-					UploadParameters.getNUMITER());
-			if (!result.equals("OK")) {
-				return result;
-			}
+			a.testTactic(objectTactic, objectTactic, UploadParameters.getNUMITER());
 		}
 
 		return UploadParameters.getVALIDATETACTICOK();
