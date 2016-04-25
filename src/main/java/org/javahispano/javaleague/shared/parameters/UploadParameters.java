@@ -19,6 +19,7 @@ public class UploadParameters {
 	private static String AGENTCLASS = "org.javahispano.javacup.model.engine.AgentPartido";
 	private static String FILENAMETACTIC = "tactica.jar";
 	private static String FILENAMEFRAMEWORK = "javaleagueframework2016.jar";
+	private static String FILENAMETACTICSAMPLE = "tacticaEjemplo.jar";
 	private static String FILENAMEIMAGE = "escudo";
 	private static String FILENAMEIMAGEMIN = "escudo-min";
 	private static int NUMITER = 600;
@@ -96,6 +97,9 @@ public class UploadParameters {
 	 */
 	public static String getFILENAMEIMAGEMIN() {
 		return FILENAMEIMAGEMIN;
+	}
+	public static String getFILENAMETACTICSAMPLE() {
+		return FILENAMETACTICSAMPLE;
 	}	
 	
 	

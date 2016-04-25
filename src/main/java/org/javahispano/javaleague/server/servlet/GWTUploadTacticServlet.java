@@ -177,6 +177,7 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		Map<String, byte[]> byteStream;
 		boolean errorPackageName, existInterfaceTactic;
 		Object objectTactic = null;
+		Object objectTacticSample = null;
 
 		byteStream = myDataStoreClassLoader.addClassJar(tactic);
 
@@ -218,7 +219,39 @@ public class GWTUploadTacticServlet extends AppEngineUploadAction {
 		if (existInterfaceTactic == false) {
 			return UploadParameters.getERRORINTERFACETACTIC();
 		} else {
-			a.testTactic(objectTactic, objectTactic, UploadParameters.getNUMITER());
+			// Cargamos la táctica de ejemplo
+			GcsFilename fileNameTacticSample = new GcsFilename(
+					UploadParameters.getGCS_BUCKET() + UploadParameters.getGCS_FRAMEWORK(),
+					UploadParameters.getFILENAMETACTICSAMPLE());
+
+			byteStream = myDataStoreClassLoader.addClassJar(readFile(fileNameTacticSample));
+
+			Iterator it3 = byteStream.entrySet().iterator();
+			while (it3.hasNext()) {
+
+				Map.Entry e = (Map.Entry) it3.next();
+
+				String name = new String((String) e.getKey());
+
+				myDataStoreClassLoader.addClass(name, (byte[]) e.getValue());
+			}
+
+			Iterator it2 = byteStream.entrySet().iterator();
+			while (it2.hasNext()) {
+				Map.Entry e = (Map.Entry) it2.next();
+
+				String name = new String((String) e.getKey());
+
+				cz = myDataStoreClassLoader.loadClass(name);
+
+				if (a.isTactic(cz)) {
+					objectTacticSample = cz.newInstance();
+					break;
+				}
+
+			}
+
+			a.testTactic(objectTactic, objectTacticSample, UploadParameters.getNUMITER());
 		}
 
 		return UploadParameters.getVALIDATETACTICOK();

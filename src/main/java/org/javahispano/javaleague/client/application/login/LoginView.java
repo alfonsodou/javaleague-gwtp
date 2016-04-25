@@ -39,8 +39,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements
-		LoginPresenter.MyView {
+public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements LoginPresenter.MyView {
 	interface Binder extends UiBinder<Widget, LoginView> {
 	}
 
@@ -75,122 +74,101 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements
 		password.getElement().setAttribute("placeholder", "Contraseña");
 
 		email.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
-				"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$",
-				"Email no válido"));
+				"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$", "Email no válido"));
 
-		password.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(
-				4, 12, "La contraseña debe tener entre 4 y 12 caracteres"));
+		password.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(4, 12,
+				"La contraseña debe tener entre 4 y 12 caracteres"));
 
-		emailRegister
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
-						"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$",
-						"Email no válido"));
+		emailRegister.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
+				"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$", "Email no válido"));
 
-		passwordRegister
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(
-						4, 12,
-						"La contraseña debe tener entre 4 y 12 caracteres"));
+		passwordRegister.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(4, 12,
+				"La contraseña debe tener entre 4 y 12 caracteres"));
 
-		confirmEmail
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
-						"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$",
-						"Email no válido"));
+		confirmEmail.addValidator(new org.gwtbootstrap3.client.ui.form.validator.RegExValidator(
+				"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$", "Email no válido"));
 
-		confirmPassword
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(
-						4, 12,
-						"La contraseña debe tener entre 4 y 12 caracteres"));
+		confirmPassword.addValidator(new org.gwtbootstrap3.client.ui.form.validator.SizeValidator<String>(4, 12,
+				"La contraseña debe tener entre 4 y 12 caracteres"));
 
-		passwordRegister
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+		passwordRegister.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
 
-					@Override
-					public int getPriority() {
-						return Priority.MEDIUM;
-					}
+			@Override
+			public int getPriority() {
+				return Priority.MEDIUM;
+			}
 
-					@Override
-					public List<EditorError> validate(Editor<String> editor,
-							String value) {
-						List<EditorError> result = new ArrayList<EditorError>();
-						String valueStr = value == null ? "" : value.toString();
-						if (!confirmPassword.getText().equals(valueStr)) {
-							result.add(new BasicEditorError(passwordRegister,
-									value, "Las contraseñas no coinciden"));
-						}
+			@Override
+			public List<EditorError> validate(Editor<String> editor, String value) {
+				List<EditorError> result = new ArrayList<EditorError>();
+				String valueStr = value == null ? "" : value.toString();
+				if (!confirmPassword.getText().equals(valueStr)) {
+					result.add(new BasicEditorError(passwordRegister, value, "Las contraseñas no coinciden"));
+				}
 
-						return result;
-					}
+				return result;
+			}
 
-				});
+		});
 
-		emailRegister
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+		emailRegister.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
 
-					@Override
-					public int getPriority() {
-						return Priority.MEDIUM;
-					}
+			@Override
+			public int getPriority() {
+				return Priority.MEDIUM;
+			}
 
-					@Override
-					public List<EditorError> validate(Editor<String> editor,
-							String value) {
-						List<EditorError> result = new ArrayList<EditorError>();
-						String valueStr = value == null ? "" : value.toString();
-						if (!confirmEmail.getText().equals(valueStr)) {
-							result.add(new BasicEditorError(emailRegister,
-									value, "El email no coincide"));
-						}
+			@Override
+			public List<EditorError> validate(Editor<String> editor, String value) {
+				List<EditorError> result = new ArrayList<EditorError>();
+				String valueStr = value == null ? "" : value.toString();
+				if (!confirmEmail.getText().equals(valueStr)) {
+					result.add(new BasicEditorError(emailRegister, value, "El email no coincide"));
+				}
 
-						return result;
-					}
-				});
+				return result;
+			}
+		});
 
-		confirmPassword
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+		confirmPassword.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
 
-					@Override
-					public int getPriority() {
-						return Priority.MEDIUM;
-					}
+			@Override
+			public int getPriority() {
+				return Priority.MEDIUM;
+			}
 
-					@Override
-					public List<EditorError> validate(Editor<String> editor,
-							String value) {
-						List<EditorError> result = new ArrayList<EditorError>();
-						String valueStr = value == null ? "" : value.toString();
-						if (!passwordRegister.getText().equals(valueStr)) {
-							result.add(new BasicEditorError(confirmPassword,
-									value, "Las contraseñas no coinciden"));
-						}
+			@Override
+			public List<EditorError> validate(Editor<String> editor, String value) {
+				List<EditorError> result = new ArrayList<EditorError>();
+				String valueStr = value == null ? "" : value.toString();
+				if (!passwordRegister.getText().equals(valueStr)) {
+					result.add(new BasicEditorError(confirmPassword, value, "Las contraseñas no coinciden"));
+				}
 
-						return result;
-					}
+				return result;
+			}
 
-				});
+		});
 
-		confirmEmail
-				.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
+		confirmEmail.addValidator(new org.gwtbootstrap3.client.ui.form.validator.Validator<String>() {
 
-					@Override
-					public int getPriority() {
-						return Priority.MEDIUM;
-					}
+			@Override
+			public int getPriority() {
+				return Priority.MEDIUM;
+			}
 
-					@Override
-					public List<EditorError> validate(Editor<String> editor,
-							String value) {
-						List<EditorError> result = new ArrayList<EditorError>();
-						String valueStr = value == null ? "" : value.toString();
-						if (!emailRegister.getText().equals(valueStr)) {
-							result.add(new BasicEditorError(confirmEmail,
-									value, "El email no coincide"));
-						}
+			@Override
+			public List<EditorError> validate(Editor<String> editor, String value) {
+				List<EditorError> result = new ArrayList<EditorError>();
+				String valueStr = value == null ? "" : value.toString();
+				if (!emailRegister.getText().equals(valueStr)) {
+					result.add(new BasicEditorError(confirmEmail, value, "El email no coincide"));
+				}
 
-						return result;
-					}
+				return result;
+			}
 
-				});
+		});
 
 		emailRegister.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -199,14 +177,13 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements
 			}
 		});
 
-		passwordRegister
-				.addValueChangeHandler(new ValueChangeHandler<String>() {
-					@Override
-					public void onValueChange(ValueChangeEvent<String> event) {
-						formRegister.validate();
-					}
+		passwordRegister.addValueChangeHandler(new ValueChangeHandler<String>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				formRegister.validate();
+			}
 
-				});
+		});
 
 		confirmEmail.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -228,12 +205,12 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements
 	public void setLoginButtonEnabled(boolean enabled) {
 		login.setEnabled(enabled);
 	}
-	
+
 	@Override
 	public void setFormLoginReset() {
 		formLogin.reset();
 	}
-	
+
 	@Override
 	public void setFormRegisterReset() {
 		formRegister.reset();
@@ -257,13 +234,16 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements
 	}
 
 	private void processLogin() {
-		getUiHandlers()
-				.login(email.getValue(), password.getValue());
+		getUiHandlers().login(email.getValue(), password.getValue());
 	}
 
 	private void processRegister() {
-		getUiHandlers().registerUser(userName.getValue(),
-				passwordRegister.getValue(), emailRegister.getValue());
+		getUiHandlers().registerUser(userName.getValue(), passwordRegister.getValue(), emailRegister.getValue());
+	}
+
+	@Override
+	public TextBox getEmail() {
+		return email;
 	}
 
 }
