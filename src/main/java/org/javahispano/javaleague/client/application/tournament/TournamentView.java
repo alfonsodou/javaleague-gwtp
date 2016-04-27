@@ -56,8 +56,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
  * @author alfonso
  *
  */
-public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
-		implements TournamentPresenter.MyView {
+public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers> implements TournamentPresenter.MyView {
 
 	interface Binder extends UiBinder<Widget, TournamentView> {
 	}
@@ -72,10 +71,8 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	private void initTableClasification(
-			final AbstractCellTable<ClasificationDto> grid,
-			final SimplePager pager, final Pagination pagination,
-			final ListDataProvider<ClasificationDto> dataProvider) {
+	private void initTableClasification(final AbstractCellTable<ClasificationDto> grid, final SimplePager pager,
+			final Pagination pagination, final ListDataProvider<ClasificationDto> dataProvider) {
 		final TextColumn<ClasificationDto> numColumn = new TextColumn<ClasificationDto>() {
 
 			@Override
@@ -88,19 +85,15 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		numColumn.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(numColumn);
 
-		final Column<ClasificationDto, String> imageColumn = new Column<ClasificationDto, String>(
-				new ImageCell()) {
+		final Column<ClasificationDto, String> imageColumn = new Column<ClasificationDto, String>(new ImageCell()) {
 
 			@Override
 			public String getValue(ClasificationDto object) {
 				if (object.getTeam().isLogo()) {
-					return UploadParameters.getBASE_URL()
-							+ "/serveTeamImageServlet?id="
-							+ object.getTeam().getId() + "&min=OK&"
-							+ System.currentTimeMillis();
+					return UploadParameters.getBASE_URL() + "/serveTeamImageServlet?id=" + object.getTeam().getId()
+							+ "&min=OK&" + System.currentTimeMillis();
 				} else {
-					return UploadParameters.getBASE_URL()
-							+ "/images/sin_escudo_min.png";
+					return UploadParameters.getBASE_URL() + "/images/sin_escudo_min.png";
 				}
 			}
 		};
@@ -280,37 +273,34 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 
 	@Override
 	public void viewJourney(List<JourneyDto> listJourneyDto, Date serverDate) {
+		Container container = new Container();
+		container.setFluid(true);
 		Row row = new Row();
 		int count = 0;
 		int journey = 0;
 		for (JourneyDto journeyDto : listJourneyDto) {
 			count++;
 			journey++;
-			org.gwtbootstrap3.client.ui.Column column = new org.gwtbootstrap3.client.ui.Column(
-					ColumnSize.XS_6);
+			org.gwtbootstrap3.client.ui.Column column = new org.gwtbootstrap3.client.ui.Column(ColumnSize.XS_6,
+					ColumnSize.SM_6, ColumnSize.MD_6, ColumnSize.LG_6);
 			Panel panel = new Panel();
 			panel.setType(PanelType.INFO);
 			PanelHeader panelHeader = new PanelHeader();
-			panelHeader.setText("Jornada "
-					+ journey
-					+ " :: "
-					+ DateTimeFormat.getFormat(
-							PredefinedFormat.DATE_TIME_MEDIUM).format(
-							journeyDto.getDate()));
+			panelHeader.setText("Jornada " + journey + " :: "
+					+ DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_MEDIUM).format(journeyDto.getDate()));
 			panel.add(panelHeader);
 			PanelBody panelBody = new PanelBody();
-			CellTable<MatchDto> cellTableJourney = new CellTable<MatchDto>(
-					journeyDto.getMatchs().size());
+			CellTable<MatchDto> cellTableJourney = new CellTable<MatchDto>(journeyDto.getMatchs().size());
 			ListDataProvider<MatchDto> listMatchDto = new ListDataProvider<MatchDto>();
 			listMatchDto.setList(journeyDto.getMatchs());
 			Pagination pagination = new Pagination();
 			SimplePager simplePager = new SimplePager();
-			initJourneyTable(cellTableJourney, simplePager, pagination,
-					listMatchDto, serverDate);
+			initJourneyTable(cellTableJourney, simplePager, pagination, listMatchDto, serverDate);
 			panelBody.add(cellTableJourney);
 			panel.add(panelBody);
 			column.add(panel);
 			row.add(column);
+			container.add(row);
 			if (count == 2) {
 				journeyContainer.add(row);
 				row = new Row();
@@ -319,9 +309,8 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		}
 	}
 
-	private void initJourneyTable(final AbstractCellTable<MatchDto> grid,
-			final SimplePager pager, final Pagination pagination,
-			final ListDataProvider<MatchDto> dataProvider, final Date serverDate) {
+	private void initJourneyTable(final AbstractCellTable<MatchDto> grid, final SimplePager pager,
+			final Pagination pagination, final ListDataProvider<MatchDto> dataProvider, final Date serverDate) {
 		final TextColumn<MatchDto> col1 = new TextColumn<MatchDto>() {
 
 			@Override
@@ -341,19 +330,15 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		});
 		grid.addColumn(col1, headerCol1);
 
-		final Column<MatchDto, String> imageColumn = new Column<MatchDto, String>(
-				new ImageCell()) {
+		final Column<MatchDto, String> imageColumn = new Column<MatchDto, String>(new ImageCell()) {
 
 			@Override
 			public String getValue(MatchDto object) {
 				if (object.getUserHome().isLogo()) {
-					return UploadParameters.getBASE_URL()
-							+ "/serveTeamImageServlet?id="
-							+ object.getUserHome().getId() + "&min=OK&"
-							+ System.currentTimeMillis();
+					return UploadParameters.getBASE_URL() + "/serveTeamImageServlet?id=" + object.getUserHome().getId()
+							+ "&min=OK&" + System.currentTimeMillis();
 				} else {
-					return UploadParameters.getBASE_URL()
-							+ "/images/sin_escudo_min.png";
+					return UploadParameters.getBASE_URL() + "/images/sin_escudo_min.png";
 				}
 			}
 		};
@@ -361,24 +346,19 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		imageColumn.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(imageColumn);
 
-		final Column<MatchDto, SafeHtml> col2 = new Column<MatchDto, SafeHtml>(
-				new ResultMatchCell()) {
+		final Column<MatchDto, SafeHtml> col2 = new Column<MatchDto, SafeHtml>(new ResultMatchCell()) {
 			@Override
 			public SafeHtml getValue(MatchDto object) {
 				SafeHtmlBuilder sb = new SafeHtmlBuilder();
 				if (object.getMatchPropertiesDto() != null) {
-					long d = (serverDate.getTime() - object
-							.getDate().getTime()) / (1000 * 60);
+					long d = (serverDate.getTime() - object.getDate().getTime()) / (1000 * 60);
 					if (d < 60) {
 						sb.appendHtmlConstant("<a href=\"javascript:;\">");
 						sb.appendEscaped("Pulsa para ver el resultado");
 						sb.appendHtmlConstant("</a>");
 					} else {
-						sb.appendHtmlConstant("<div>"
-								+ object.getMatchPropertiesDto().getGoalsHome()
-								+ " - "
-								+ object.getMatchPropertiesDto().getGoalsAway()
-								+ "</div>");
+						sb.appendHtmlConstant("<div>" + object.getMatchPropertiesDto().getGoalsHome() + " - "
+								+ object.getMatchPropertiesDto().getGoalsAway() + "</div>");
 					}
 				} else {
 					sb.appendHtmlConstant("<div>En juego</div>");
@@ -394,10 +374,10 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 				settings.setType(NotifyType.INFO);
 				settings.setPlacement(NotifyPlacement.TOP_CENTER);
 				settings.setAllowDismiss(true);
-				Notify.notify("", object.getUserHome().getTeamName() + " "
-						+ object.getMatchPropertiesDto().getGoalsHome() + " - "
-						+ object.getMatchPropertiesDto().getGoalsAway() + " "
-						+ object.getUserAway().getTeamName(),
+				Notify.notify("",
+						object.getUserHome().getTeamName() + " " + object.getMatchPropertiesDto().getGoalsHome() + " - "
+								+ object.getMatchPropertiesDto().getGoalsAway() + " "
+								+ object.getUserAway().getTeamName(),
 						IconType.CALENDAR, settings);
 			}
 		});
@@ -405,24 +385,19 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		col2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(col2);
 
-		final Column<MatchDto, String> imageColumn2 = new Column<MatchDto, String>(
-				new ImageCell()) {
+		final Column<MatchDto, String> imageColumn2 = new Column<MatchDto, String>(new ImageCell()) {
 
 			@Override
 			public String getValue(MatchDto object) {
 				if (object.getUserAway().isLogo()) {
-					return UploadParameters.getBASE_URL()
-							+ "/serveTeamImageServlet?id="
-							+ object.getUserAway().getId() + "&min=OK&"
-							+ System.currentTimeMillis();
+					return UploadParameters.getBASE_URL() + "/serveTeamImageServlet?id=" + object.getUserAway().getId()
+							+ "&min=OK&" + System.currentTimeMillis();
 				} else {
-					return UploadParameters.getBASE_URL()
-							+ "/images/sin_escudo_min.png";
+					return UploadParameters.getBASE_URL() + "/images/sin_escudo_min.png";
 				}
 			}
 		};
-		imageColumn2
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		imageColumn2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		imageColumn2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		grid.addColumn(imageColumn2);
 
@@ -457,17 +432,14 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			public void update(int index, MatchDto object, String value) {
 				if (object.getState() == MatchParameters.getMATCHSTATE_FINISH()) {
 					Window.open(
-							UploadParameters.getBASE_URL()
-									+ "/serveMatchServlet?id="
-									+ Long.toString(object.getId()), "_blank",
-							"");
+							UploadParameters.getBASE_URL() + "/serveMatchServlet?id=" + Long.toString(object.getId()),
+							"_blank", "");
 				} else {
 					NotifySettings settings = NotifySettings.newSettings();
 					settings.setType(NotifyType.INFO);
 					settings.setPlacement(NotifyPlacement.TOP_CENTER);
 					settings.setAllowDismiss(true);
-					Notify.notify("", "Partido no disponible",
-							IconType.CALENDAR, settings);
+					Notify.notify("", "Partido no disponible", IconType.CALENDAR, settings);
 				}
 			}
 		});
@@ -488,17 +460,14 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 			public void update(int index, MatchDto object, String value) {
 				if (object.getState() == MatchParameters.getMATCHSTATE_FINISH()) {
 					Window.open(
-							UploadParameters.getBASE_URL()
-									+ "/visorwebgl/play.html?"
-									+ Long.toString(object.getId()), "_blank",
-							"");
+							UploadParameters.getBASE_URL() + "/visorwebgl/play.html?" + Long.toString(object.getId()),
+							"_blank", "");
 				} else {
 					NotifySettings settings = NotifySettings.newSettings();
 					settings.setType(NotifyType.INFO);
 					settings.setPlacement(NotifyPlacement.TOP_CENTER);
 					settings.setAllowDismiss(true);
-					Notify.notify("", "Partido no disponible",
-							IconType.CALENDAR, settings);
+					Notify.notify("", "Partido no disponible", IconType.CALENDAR, settings);
 				}
 			}
 		});
@@ -522,8 +491,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 	@Override
 	public void viewClasification(List<ClasificationDto> listClasificationDto) {
 		Row row = new Row();
-		org.gwtbootstrap3.client.ui.Column column = new org.gwtbootstrap3.client.ui.Column(
-				ColumnSize.XS_12);
+		org.gwtbootstrap3.client.ui.Column column = new org.gwtbootstrap3.client.ui.Column(ColumnSize.XS_12);
 		Panel panel = new Panel();
 		panel.setType(PanelType.INFO);
 		PanelHeader panelHeader = new PanelHeader();
@@ -536,8 +504,7 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 		listClasificationDataDto.setList(listClasificationDto);
 		Pagination pagination = new Pagination();
 		SimplePager simplePager = new SimplePager();
-		initTableClasification(cellTableClasification, simplePager, pagination,
-				listClasificationDataDto);
+		initTableClasification(cellTableClasification, simplePager, pagination, listClasificationDataDto);
 		panelBody.add(cellTableClasification);
 		panel.add(panelBody);
 		column.add(panel);

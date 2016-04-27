@@ -71,7 +71,7 @@
 				</b:Column>
 			</b:Row>
 		</b:Jumbotron>
-		<b:NavTabs visible="false">
+		<b:NavTabs visible="true">
 			<b:TabListItem active="true" dataTarget="#tab1" text="Calendario">
 			</b:TabListItem>
 			<b:TabListItem dataTarget="#tab2" text="Clasificación"></b:TabListItem>
