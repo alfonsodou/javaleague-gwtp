@@ -19,6 +19,7 @@ package org.javahispano.javaleague.server.dao.objectify;
 import org.javahispano.javaleague.server.dao.domain.Car;
 import org.javahispano.javaleague.server.dao.domain.CarProperties;
 import org.javahispano.javaleague.server.dao.domain.Clasification;
+import org.javahispano.javaleague.server.dao.domain.FinalMatch;
 import org.javahispano.javaleague.server.dao.domain.Journey;
 import org.javahispano.javaleague.server.dao.domain.League;
 import org.javahispano.javaleague.server.dao.domain.Manufacturer;
@@ -47,6 +48,7 @@ public class OfyService {
         factory().register(League.class);
         factory().register(Clasification.class);
         factory().register(Journey.class);
+        factory().register(FinalMatch.class);
     }
 
     public static ObjectifyFactory factory() {
