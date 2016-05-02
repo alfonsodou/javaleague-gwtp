@@ -18,13 +18,15 @@ import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificatio
 import org.javahispano.javaleague.shared.dispatch.clasification.ListClasificationResult;
 import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyAction;
 import org.javahispano.javaleague.shared.dispatch.journey.ListJourneyResult;
+import org.javahispano.javaleague.shared.dispatch.match.ListFinalMatchAction;
+import org.javahispano.javaleague.shared.dispatch.match.ListFinalMatchResult;
 import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeAction;
 import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeResult;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
+import org.javahispano.javaleague.shared.dto.FinalMatchDto;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rpc.shared.DispatchAsync;
@@ -44,12 +46,16 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		TournamentUiHandlers {
 	interface MyView extends View, HasUiHandlers<TournamentUiHandlers> {
 		Container getJourneyContainer();
-		
+
 		Container getClasificationContainer();
+
+		Container getFinalMatchContainer();
 
 		void viewJourney(List<JourneyDto> listJourneyDto, Date serverDate);
 
 		void viewClasification(List<ClasificationDto> listClasificationDto);
+		
+		void viewFinalMatch(List<FinalMatchDto> listFinalMatchDto);
 	}
 
 	@ProxyCodeSplit
@@ -64,7 +70,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	private final DispatchAsync dispatcher;
 
 	private Date serverDate;
-	
+
 	@Inject
 	TournamentPresenter(EventBus eventBus, MyView view, MyProxy proxy,
 			DispatchAsync dispatcher) {
@@ -77,6 +83,35 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	protected void onReveal() {
 		getListClasification();
 		getListJourney();
+		getListFinalMatch();
+	}
+
+	private void getListFinalMatch() {
+		getView().getFinalMatchContainer().clear();
+		ListFinalMatchAction listFinalMatchAction = new ListFinalMatchAction(
+				null);
+		callListFinalMatchAction(listFinalMatchAction);
+	}
+
+	private void callListFinalMatchAction(ListFinalMatchAction listFinalMatchAction) {
+		dispatcher.execute(listFinalMatchAction, new AsyncCallback<ListFinalMatchResult>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				LOGGER.warning("Error on callListFinalMatchAction: "
+						+ caught.toString());
+			}
+
+			@Override
+			public void onSuccess(ListFinalMatchResult result) {
+				if (result.getListFinalMatchDto() == null) {
+					LOGGER.warning("*** No están creados los partidos finales ***");
+				} else {
+					
+				}
+			}
+			
+		});
 	}
 
 	private void getListClasification() {
@@ -135,13 +170,14 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 							LOGGER.warning("** No hay jornadas creadas **");
 						} else {
 							serverDate = result.getServerDate();
-							getView().viewJourney(result.getListJourneyDto(), serverDate);
+							getView().viewJourney(result.getListJourneyDto(),
+									serverDate);
 						}
 					}
 
 				});
 	}
-	
+
 	private void getServerTime() {
 		callGetServerTime(new GetServerTimeAction());
 	}
@@ -168,5 +204,5 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	@Override
 	public Date getServerDate() {
 		return serverDate;
-	}	
+	}
 }

@@ -83,6 +83,8 @@
 			<b:TabPane b:id="tab2">
 				<b:Container ui:field="clasificationContainer"
 					addStyleNames="{style.push}"></b:Container>
+				<b:Container ui:field="finalMatchContainer"
+					addStyleNames="{style.push"></b:Container>
 			</b:TabPane>
 		</b:TabContent>
 	</b:Container>
