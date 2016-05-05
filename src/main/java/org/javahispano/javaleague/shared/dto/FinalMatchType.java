@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.javahispano.javaleague.server.dao.domain;
+package org.javahispano.javaleague.shared.dto;
 
 /**
  * @author alfonso

@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.shared.dispatch.match;
 
-import org.javahispano.javaleague.server.dao.domain.FinalMatchType;
+import org.javahispano.javaleague.shared.dto.FinalMatchType;
 
 import com.gwtplatform.dispatch.rpc.shared.ActionImpl;
 

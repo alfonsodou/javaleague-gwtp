@@ -3,7 +3,6 @@
  */
 package org.javahispano.javaleague.shared.dto;
 
-import org.javahispano.javaleague.server.dao.domain.FinalMatchType;
 
 /**
  * @author alfonso

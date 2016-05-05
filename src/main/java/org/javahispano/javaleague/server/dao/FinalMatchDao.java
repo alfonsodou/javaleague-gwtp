@@ -6,7 +6,7 @@ package org.javahispano.javaleague.server.dao;
 import java.util.List;
 
 import org.javahispano.javaleague.server.dao.domain.FinalMatch;
-import org.javahispano.javaleague.server.dao.domain.FinalMatchType;
+import org.javahispano.javaleague.shared.dto.FinalMatchType;
 
 /**
  * @author alfonso

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.gwtbootstrap3.client.ui.Container;
+import org.gwtbootstrap3.client.ui.Image;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.Panel;
 import org.gwtbootstrap3.client.ui.PanelBody;
@@ -27,6 +28,7 @@ import org.gwtbootstrap3.extras.notify.client.ui.NotifySettings;
 import org.javahispano.javaleague.client.application.ui.ResultMatchCell;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.FinalMatchDto;
+import org.javahispano.javaleague.shared.dto.FinalMatchType;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.dto.MatchDto;
 import org.javahispano.javaleague.shared.parameters.MatchParameters;
@@ -565,6 +567,37 @@ public class TournamentView extends ViewWithUiHandlers<TournamentUiHandlers>
 
 	@Override
 	public void viewFinalMatch(List<FinalMatchDto> listFinalMatchDto) {
+		Row row = new Row();
+		org.gwtbootstrap3.client.ui.Column column = new org.gwtbootstrap3.client.ui.Column(
+				ColumnSize.XS_1, ColumnSize.SM_1, ColumnSize.MD_1,
+				ColumnSize.LG_1);
+		FinalMatchDto finalMatchDto = getFinalMatch(listFinalMatchDto,
+				FinalMatchType.OCTAVOS, 0);
 
+		Image image = new Image();
+		if (finalMatchDto.getMatchDto().getUserAway().isLogo()) {
+			image.setUrl(UploadParameters.getBASE_URL()
+					+ "/serveTeamImageServlet?id="
+					+ finalMatchDto.getMatchDto().getUserHome().getId()
+					+ "&min=OK&" + System.currentTimeMillis());
+		} else {
+			image.setUrl(UploadParameters.getBASE_URL()
+					+ "/images/sin_escudo_min.png");
+		}
+		column.add(image);
+		row.add(column);
+		finalMatchContainer.add(row);
+	}
+
+	private FinalMatchDto getFinalMatch(List<FinalMatchDto> listFinalMatchDto,
+			FinalMatchType finalMatchType, Integer order) {
+		for (FinalMatchDto finalMatchDto : listFinalMatchDto) {
+			if ((finalMatchDto.getFinalMatchType() == finalMatchType)
+					&& (finalMatchDto.getOrder() == order)) {
+				return finalMatchDto;
+			}
+		}
+
+		return null;
 	}
 }

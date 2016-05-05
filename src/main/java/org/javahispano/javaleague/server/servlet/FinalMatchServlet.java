@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.dao.FinalMatchDao;
 import org.javahispano.javaleague.server.dao.domain.FinalMatch;
-import org.javahispano.javaleague.server.dao.domain.FinalMatchType;
+import org.javahispano.javaleague.shared.dto.FinalMatchType;
 
 /**
  * @author alfonso

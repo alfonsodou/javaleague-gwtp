@@ -9,6 +9,7 @@ import java.util.List;
 import org.javahispano.javaleague.server.dao.objectify.Deref;
 import org.javahispano.javaleague.shared.dto.BaseEntity;
 import org.javahispano.javaleague.shared.dto.FinalMatchDto;
+import org.javahispano.javaleague.shared.dto.FinalMatchType;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;

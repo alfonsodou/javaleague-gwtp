@@ -54,7 +54,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		void viewJourney(List<JourneyDto> listJourneyDto, Date serverDate);
 
 		void viewClasification(List<ClasificationDto> listClasificationDto);
-		
+
 		void viewFinalMatch(List<FinalMatchDto> listFinalMatchDto);
 	}
 
@@ -93,25 +93,27 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 		callListFinalMatchAction(listFinalMatchAction);
 	}
 
-	private void callListFinalMatchAction(ListFinalMatchAction listFinalMatchAction) {
-		dispatcher.execute(listFinalMatchAction, new AsyncCallback<ListFinalMatchResult>() {
+	private void callListFinalMatchAction(
+			ListFinalMatchAction listFinalMatchAction) {
+		dispatcher.execute(listFinalMatchAction,
+				new AsyncCallback<ListFinalMatchResult>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				LOGGER.warning("Error on callListFinalMatchAction: "
-						+ caught.toString());
-			}
+					@Override
+					public void onFailure(Throwable caught) {
+						LOGGER.warning("Error on callListFinalMatchAction: "
+								+ caught.toString());
+					}
 
-			@Override
-			public void onSuccess(ListFinalMatchResult result) {
-				if (result.getListFinalMatchDto() == null) {
-					LOGGER.warning("*** No están creados los partidos finales ***");
-				} else {
-					
-				}
-			}
-			
-		});
+					@Override
+					public void onSuccess(ListFinalMatchResult result) {
+						if (result.getListFinalMatchDto() == null) {
+							LOGGER.warning("*** No están creados los partidos finales ***");
+						} else {
+							getView().viewFinalMatch(
+									result.getListFinalMatchDto());
+						}
+					}
+				});
 	}
 
 	private void getListClasification() {
