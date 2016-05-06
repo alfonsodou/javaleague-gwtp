@@ -105,7 +105,8 @@ public class FinalMatch extends BaseEntity {
 	public static List<FinalMatchDto> createList(List<FinalMatch> listFinalMatch) {
 		List<FinalMatchDto> listFinalMatchDto = new ArrayList<FinalMatchDto>();
 		for(FinalMatch finalMatch : listFinalMatch) {
-			listFinalMatchDto.add(FinalMatch.createDto(finalMatch));
+			FinalMatchDto finalMatchDto = FinalMatch.createDto(finalMatch);
+			listFinalMatchDto.add(finalMatchDto);
 		}
 		return listFinalMatchDto;
 	}

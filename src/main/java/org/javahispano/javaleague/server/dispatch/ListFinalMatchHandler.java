@@ -43,6 +43,10 @@ public class ListFinalMatchHandler extends
 			listFinalMatch = finalMatchDao.findByType(arg0.getFinalMatchType());
 		}
 
+		if (listFinalMatch == null) {
+			return new ListFinalMatchResult(null);
+		}
+		
 		return new ListFinalMatchResult(FinalMatch.createList(listFinalMatch));
 	}
 
