@@ -20,7 +20,6 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 
 public interface AppResources extends ClientBundle {
     public interface Styles extends CssResource {

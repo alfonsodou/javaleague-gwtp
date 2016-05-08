@@ -28,6 +28,11 @@
 	.push {
 		padding-top: 10px;
 	}
+	
+	.column {
+		border: 1px solid #000000;
+		text-align: center;
+	}
 	</ui:style>
 
 	<b:Container>

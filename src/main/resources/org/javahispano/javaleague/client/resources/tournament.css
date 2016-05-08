@@ -1,0 +1,8 @@
+@external gwt-TabBar, gwt-TabBarFirst, gwt-TabBarRest, gwt-TabBarItem,
+	gwt-TabBarItem-wrapper, gwt-TabBarItem-selected,
+	gwt-TabBarItem-wrapper-selected ; 
+	
+.column {
+	border: 1px solid #000000;
+	text-align: center;
+}
