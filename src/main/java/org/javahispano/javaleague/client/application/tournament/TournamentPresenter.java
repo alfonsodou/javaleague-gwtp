@@ -24,6 +24,7 @@ import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeAction;
 import org.javahispano.javaleague.shared.dispatch.time.GetServerTimeResult;
 import org.javahispano.javaleague.shared.dto.ClasificationDto;
 import org.javahispano.javaleague.shared.dto.FinalMatchDto;
+import org.javahispano.javaleague.shared.dto.FinalMatchType;
 import org.javahispano.javaleague.shared.dto.JourneyDto;
 import org.javahispano.javaleague.shared.parameters.LeagueParameters;
 
@@ -89,7 +90,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	private void getListFinalMatch() {
 		getView().getFinalMatchContainer().clear();
 		ListFinalMatchAction listFinalMatchAction = new ListFinalMatchAction(
-				null);
+				FinalMatchType.OCTAVOS);
 		callListFinalMatchAction(listFinalMatchAction);
 	}
 

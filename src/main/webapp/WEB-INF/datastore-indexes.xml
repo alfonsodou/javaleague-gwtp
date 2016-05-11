@@ -10,4 +10,11 @@
 		<property name="state" direction="asc" />
 		<property name="date" direction="asc" />
 	</datastore-index>
+
+	<datastore-index kind="FinalMatch" ancestor="false"
+		source="manual">
+		<property name="type" direction="asc" />
+		<property name="order" direction="asc" />
+		<property name="__key__" direction="desc" />
+	</datastore-index>
 </datastore-indexes>
