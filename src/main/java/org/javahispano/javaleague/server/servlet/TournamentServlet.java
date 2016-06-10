@@ -46,8 +46,7 @@ public class TournamentServlet extends HttpServlet {
 	private final MatchDao matchDao;
 
 	@Inject
-	TournamentServlet(Logger logger, LeagueDao leagueDao,
-			ClasificationDao clasificationDao, JourneyDao journeyDao,
+	TournamentServlet(Logger logger, LeagueDao leagueDao, ClasificationDao clasificationDao, JourneyDao journeyDao,
 			UserDao userDao, MatchDao matchDao) {
 		this.logger = logger;
 		this.leagueDao = leagueDao;
@@ -58,17 +57,22 @@ public class TournamentServlet extends HttpServlet {
 	}
 
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
 
 		if (action.equals("add")) {
 			League league = new League();
 			league.setDescription("javaleague 2016");
+			league.setRound(0);
 			leagueDao.put(league);
 			List<User> usersTacticOK = userDao.getUsersTacticOk();
 			if (usersTacticOK != null) {
-				createCalendarLeague(league, new Date(), usersTacticOK, 2);
+				String rounds = req.getParameter("rounds");
+				int num_rounds = 1;
+				if (rounds != null) {
+					num_rounds = Integer.parseInt(rounds);
+				}
+				createCalendarLeague(league, new Date(), usersTacticOK, num_rounds);
 			} else {
 				logger.warning("TournamentServlet: add: No hay usuarios con táctica OK!");
 			}
@@ -92,8 +96,8 @@ public class TournamentServlet extends HttpServlet {
 		logger.warning("Total fechas: " + fechas);
 		logger.warning("Partidos por fecha: " + partidosPorFecha);
 
-		league.setMatchs(partidos * fechas);
-		league.setRoundMax(fechas * fechas);
+		league.setMatchs(partidos);
+		league.setRoundMax(fechas);
 
 		for (int f = 0; f < vueltas; f++) {
 			if (f % 2 == 0) { // es par
@@ -101,10 +105,10 @@ public class TournamentServlet extends HttpServlet {
 			} else {
 				swap = false;
 			}
-			
+
 			for (int round = 0; round < fechas; round++) {
 				logger.warning("Fecha: " + round);
-				
+
 				Journey journey = new Journey();
 				journey.setDate(start);
 				journey.setRound((round * f) + 1);
@@ -116,8 +120,7 @@ public class TournamentServlet extends HttpServlet {
 					match.setFriendly(false);
 					match.setDate(start);
 
-					int found[] = new int[] { temp[round][m][0],
-							temp[round][m][1] };
+					int found[] = new int[] { temp[round][m][0], temp[round][m][1] };
 
 					if (swap) {
 						home = found[1];
@@ -133,7 +136,7 @@ public class TournamentServlet extends HttpServlet {
 					match.setUserAway(users.get(away));
 					match.setUserHome(users.get(home));
 					match = matchDao.put(match);
-					
+
 					journey.getMatchs().add(Ref.create(match));
 				}
 				journeyDao.put(journey);
@@ -199,8 +202,7 @@ public class TournamentServlet extends HttpServlet {
 			}
 			int k = 0;
 			for (int j = 0; j < ppf; j++) {
-				if (!impar
-						|| (impar && subTmp[j][0] != n - 1 && subTmp[j][1] != n - 1)) {
+				if (!impar || (impar && subTmp[j][0] != n - 1 && subTmp[j][1] != n - 1)) {
 					if (((subTmp[j][0] + subTmp[j][1]) % 2) == 0) {
 						int temp = subTmp[j][0];
 						subTmp[j][0] = subTmp[j][1];

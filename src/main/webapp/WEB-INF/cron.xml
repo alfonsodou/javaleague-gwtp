@@ -10,6 +10,6 @@
 	<cron>
 		<url>/cron/dispatchClasificationServlet</url>
 		<description>Actualiza la clasificación de la liga</description>
-		<schedule>every day 18:00</schedule>
+		<schedule>every day 15:00</schedule>
 	</cron>
 </cronentries>

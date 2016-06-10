@@ -84,7 +84,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 	protected void onReveal() {
 		getListClasification();
 		getListJourney();
-		getListFinalMatch();
+		//getListFinalMatch();
 	}
 
 	private void getListFinalMatch() {

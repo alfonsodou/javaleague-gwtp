@@ -45,6 +45,10 @@ public class ListClasificationHandler extends
 		League league = leagueDao.get(arg0.getLeagueId());
 		List<Ref<Clasification>> listClasification = new ArrayList<Ref<Clasification>>();
 
+		if (league.getRound() == 0) {
+			return new ListClasificationResult(null, 0);
+		}
+		
 		Journey journey = Deref.deref(league.getJourneys().get(
 				league.getRound() - 1));
 		listClasification.addAll(journey.getClasifications());

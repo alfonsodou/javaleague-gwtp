@@ -55,9 +55,10 @@ public class ClasificationServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		int round = Integer
-				.parseInt(req.getParameter("round").replace("_", ""));
+		//int round = Integer
+				//.parseInt(req.getParameter("round").replace("_", ""));
 		League league = leagueDao.get(LeagueParameters.getLeagueId());
+		int round = league.getRound();
 
 		if (round > 1) {
 			Journey journeyAnt = journeyDao.findByRound(round - 1);
@@ -153,6 +154,7 @@ public class ClasificationServlet extends HttpServlet {
 			journey.setClasification(listRef);
 			journeyDao.put(journey);
 		} else {
+			round = 1;
 			Journey journey = journeyDao.findByRound(round);
 
 			if (journey.getClasifications().size() > 0) {
@@ -208,6 +210,7 @@ public class ClasificationServlet extends HttpServlet {
 			journeyDao.put(journey);
 		}
 
+		round++;
 		league.setRound(round);
 		leagueDao.put(league);
 	}

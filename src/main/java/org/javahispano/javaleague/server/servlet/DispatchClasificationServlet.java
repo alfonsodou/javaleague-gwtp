@@ -48,6 +48,7 @@ public class DispatchClasificationServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		logger.warning("**** LeagueID: " + LeagueParameters.getLeagueId());
 		League league = leagueDao.get(LeagueParameters.getLeagueId());
 
 		if (league.getRound() < league.getRoundMax()) {
