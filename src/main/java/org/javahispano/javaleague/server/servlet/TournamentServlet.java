@@ -92,12 +92,12 @@ public class TournamentServlet extends HttpServlet {
 		Date start = init;
 
 		logger.warning("Equipos: " + n);
-		logger.warning("Total partidos: " + partidos);
-		logger.warning("Total fechas: " + fechas);
+		logger.warning("Total partidos: " + partidos * vueltas);
+		logger.warning("Total fechas: " + fechas * vueltas);
 		logger.warning("Partidos por fecha: " + partidosPorFecha);
 
-		league.setMatchs(partidos);
-		league.setRoundMax(fechas);
+		league.setMatchs(partidos * vueltas);
+		league.setRoundMax(fechas * vueltas);
 
 		for (int f = 0; f < vueltas; f++) {
 			if (f % 2 == 0) { // es par
@@ -111,7 +111,7 @@ public class TournamentServlet extends HttpServlet {
 
 				Journey journey = new Journey();
 				journey.setDate(start);
-				journey.setRound((round * f) + 1);
+				journey.setRound((round + 1 ) + (fechas * f));
 
 				for (int m = 0; m < partidosPorFecha; m++) {
 					logger.warning("Fecha: " + round + " :: Partido: " + m);
@@ -248,7 +248,7 @@ public class TournamentServlet extends HttpServlet {
 	private static Date getNextDate(Date date, int day) {
 		Calendar calendarDate = Calendar.getInstance();
 		calendarDate.setTime(date);
-		calendarDate.add(Calendar.MINUTE, 1440 * day);
+		calendarDate.add(Calendar.MINUTE, 60 * day);
 		return calendarDate.getTime();
 	}
 

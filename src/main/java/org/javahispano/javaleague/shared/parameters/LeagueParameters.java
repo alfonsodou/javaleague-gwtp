@@ -8,7 +8,7 @@ package org.javahispano.javaleague.shared.parameters;
  *
  */
 public class LeagueParameters {
-	private static Long leagueId = 6455992791334912L;
+	private static Long leagueId = 6143508150747136L;
 
 	/**
 	 * @return the leagueId

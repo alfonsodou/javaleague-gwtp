@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import org.javahispano.javaleague.server.dao.JourneyDao;
 import org.javahispano.javaleague.server.dao.LeagueDao;
 import org.javahispano.javaleague.server.dao.domain.Clasification;
 import org.javahispano.javaleague.server.dao.domain.Journey;
@@ -31,12 +32,14 @@ public class ListClasificationHandler extends
 		AbstractActionHandler<ListClasificationAction, ListClasificationResult> {
 	private final Logger logger;
 	private final LeagueDao leagueDao;
+	private final JourneyDao journeyDao;
 
 	@Inject
-	ListClasificationHandler(Logger logger, LeagueDao leagueDao) {
+	ListClasificationHandler(Logger logger, LeagueDao leagueDao, JourneyDao journeyDao) {
 		super(ListClasificationAction.class);
 		this.logger = logger;
 		this.leagueDao = leagueDao;
+		this.journeyDao = journeyDao;
 	}
 
 	@Override
@@ -49,8 +52,9 @@ public class ListClasificationHandler extends
 			return new ListClasificationResult(null, 0);
 		}
 		
-		Journey journey = Deref.deref(league.getJourneys().get(
-				league.getRound() - 1));
+		Journey journey = journeyDao.findByRound(league.getRound() - 1);
+		//Journey journey = Deref.deref(league.getJourneys().get(
+		//		league.getRound() - 2)); // Empieza en cero el índice y league.getRound apunta a la próxima jornada
 		listClasification.addAll(journey.getClasifications());
 
 		List<ClasificationDto> listClasificationDto = new ArrayList<ClasificationDto>();

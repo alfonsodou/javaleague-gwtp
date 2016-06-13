@@ -193,7 +193,17 @@ public class Clasification extends BaseEntity implements
 				else if (c1.getPoints() < c2.getPoints()) 
 					return 1;
 				else {
-					return 0;
+					// Tienen los mismos puntos. Comparamos la diferencia de goles
+					int diff_c1 = c1.getMyGoals() - c1.getGoalsAgainst();
+					int diff_c2 = c2.getMyGoals() - c2.getGoalsAgainst();
+					if (diff_c1 > diff_c2) 
+						return -1;
+					else if (diff_c1 < diff_c2) 
+						return 1;
+					else {
+						// Tienen los mismos puntos y la misma diferencia de goles
+						return 0;
+					}
 				}
 			}
 		};
