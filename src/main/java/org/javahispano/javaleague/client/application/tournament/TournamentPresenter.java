@@ -54,7 +54,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 
 		void viewJourney(List<JourneyDto> listJourneyDto, Date serverDate);
 
-		void viewClasification(List<ClasificationDto> listClasificationDto);
+		void viewClasification(List<ClasificationDto> listClasificationDto, int round);
 
 		void viewFinalMatch(List<FinalMatchDto> listFinalMatchDto);
 	}
@@ -142,7 +142,7 @@ public class TournamentPresenter extends Presenter<MyView, MyProxy> implements
 							LOGGER.warning("*** No hay clasificación creada ***");
 						} else {
 							getView().viewClasification(
-									result.getListClasification());
+									result.getListClasification(), result.getRound());
 						}
 
 					}

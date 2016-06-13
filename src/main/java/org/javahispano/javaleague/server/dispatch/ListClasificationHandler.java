@@ -63,7 +63,7 @@ public class ListClasificationHandler extends
 					.deref(refClasification)));
 		}
 		return new ListClasificationResult(listClasificationDto,
-				league.getRound());
+				league.getRound() - 1);
 	}
 
 	@Override
