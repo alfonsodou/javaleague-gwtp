@@ -4,6 +4,8 @@
 package org.javahispano.javaleague.server.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +48,8 @@ public class TournamentServlet extends HttpServlet {
 	private final MatchDao matchDao;
 
 	@Inject
-	TournamentServlet(Logger logger, LeagueDao leagueDao, ClasificationDao clasificationDao, JourneyDao journeyDao,
+	TournamentServlet(Logger logger, LeagueDao leagueDao,
+			ClasificationDao clasificationDao, JourneyDao journeyDao,
 			UserDao userDao, MatchDao matchDao) {
 		this.logger = logger;
 		this.leagueDao = leagueDao;
@@ -57,7 +60,8 @@ public class TournamentServlet extends HttpServlet {
 	}
 
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String action = req.getParameter("action");
 
 		if (action.equals("add")) {
@@ -72,14 +76,26 @@ public class TournamentServlet extends HttpServlet {
 				if (rounds != null) {
 					num_rounds = Integer.parseInt(rounds);
 				}
-				createCalendarLeague(league, new Date(), usersTacticOK, num_rounds);
+				SimpleDateFormat sdf = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm");
+				try {
+					createCalendarLeague(league,
+							sdf.parse(req.getParameter("date")), usersTacticOK,
+							num_rounds);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.warning("TournamentServlet: Error al crear el torneo en la fecha indicada: "
+							+ e.getMessage());
+				}
 			} else {
 				logger.warning("TournamentServlet: add: No hay usuarios con táctica OK!");
 			}
 		}
 	}
 
-	public League createCalendarLeague(League league, Date init, List<User> users, int vueltas) {
+	public League createCalendarLeague(League league, Date init,
+			List<User> users, int vueltas) {
 		int n = users.size();
 		int[][][] temp = crearLiguilla(n);
 
@@ -111,7 +127,7 @@ public class TournamentServlet extends HttpServlet {
 
 				Journey journey = new Journey();
 				journey.setDate(start);
-				journey.setRound((round + 1 ) + (fechas * f));
+				journey.setRound((round + 1) + (fechas * f));
 
 				for (int m = 0; m < partidosPorFecha; m++) {
 					logger.warning("Fecha: " + round + " :: Partido: " + m);
@@ -120,7 +136,8 @@ public class TournamentServlet extends HttpServlet {
 					match.setFriendly(false);
 					match.setDate(start);
 
-					int found[] = new int[] { temp[round][m][0], temp[round][m][1] };
+					int found[] = new int[] { temp[round][m][0],
+							temp[round][m][1] };
 
 					if (swap) {
 						home = found[1];
@@ -141,7 +158,7 @@ public class TournamentServlet extends HttpServlet {
 				}
 				journeyDao.put(journey);
 				league.getJourneys().add(Ref.create(journey));
-				start = getNextDate(start, 1);
+				start = getNextDate(start, 2);
 			}
 		}
 
@@ -202,7 +219,8 @@ public class TournamentServlet extends HttpServlet {
 			}
 			int k = 0;
 			for (int j = 0; j < ppf; j++) {
-				if (!impar || (impar && subTmp[j][0] != n - 1 && subTmp[j][1] != n - 1)) {
+				if (!impar
+						|| (impar && subTmp[j][0] != n - 1 && subTmp[j][1] != n - 1)) {
 					if (((subTmp[j][0] + subTmp[j][1]) % 2) == 0) {
 						int temp = subTmp[j][0];
 						subTmp[j][0] = subTmp[j][1];
@@ -248,7 +266,7 @@ public class TournamentServlet extends HttpServlet {
 	private static Date getNextDate(Date date, int day) {
 		Calendar calendarDate = Calendar.getInstance();
 		calendarDate.setTime(date);
-		calendarDate.add(Calendar.MINUTE, 60 * day);
+		calendarDate.add(Calendar.MINUTE, 1440 * day);
 		return calendarDate.getTime();
 	}
 
