@@ -5,7 +5,7 @@
 		<description>Comprueba cada día los partidos de liga pendientes de
 			ejecutar
 		</description>
-		<schedule>every 5 minutes</schedule>
+		<schedule>every 15 minutes</schedule>
 	</cron>
 	<cron>
 		<url>/cron/dispatchClasificationServlet</url>
