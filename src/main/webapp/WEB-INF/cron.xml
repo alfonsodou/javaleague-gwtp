@@ -15,7 +15,7 @@
 		<schedule>every day 19:01</schedule>
 	</cron>
 	<cron>
-		<url>/cron/dispatchClasificationServlet</url>
+		<url>/clasificationServlet</url>
 		<description>Actualiza la clasificación de la liga</description>
 		<schedule>every day 20:00</schedule>
 	</cron>
